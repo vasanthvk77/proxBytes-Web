@@ -673,122 +673,116 @@ export default function Hero() {
           ================================================== */}
 
           <MotionBox
-            initial={{
-              opacity: 0,
+              initial={{
+                opacity: 0,
+                scale: 0.7,
+              }}
 
-              scale: 0.7,
-            }}
+              animate={{
+                opacity: 1,
+                scale: 1,
+              }}
 
-            animate={{
-              opacity: 1,
+              transition={{
+                duration: 0.6,
+                delay: 1.1,
+                type: "spring",
+                stiffness: 160,
+              }}
 
-              scale: 1,
-            }}
+              style={{
+                x: youX,
+                y: youY,
+              }}
 
-            transition={{
-              duration: 0.6,
-
-              delay: 1.1,
-
-              type: "spring",
-
-              stiffness: 160,
-            }}
-
-            style={{
-              x: youX,
-
-              y: youY,
-            }}
-
-            sx={{
-              position: "absolute",
-
-              left: {
-                xs: "0%",
-                md: "-9%",
-              },
-
-              top: "58%",
-
-              display: {
-                xs: "none",
-                md: "block",
-              },
-
-              zIndex: 5,
-
-              willChange:
-                "transform",
-            }}
-          >
-
-
-            {/* Arrow */}
-
-            <Box
               sx={{
                 position: "absolute",
 
-                top: "-16px",
-
-                right: "-30px",
-
-                color: "#ffff00",
-
-                fontSize: "25px",
-
-                transform:
-                  "rotate(-25deg)",
-              }}
-            >
-              ↗
-            </Box>
-
-
-            {/* Badge */}
-
-            <Box
-              sx={{
-                width: {
-                  md: "98px",
-                  lg: "108px",
+                left: {
+                  xs: "0%",
+                  md: "-9%",
                 },
 
-                height: {
-                  md: "48px",
-                  lg: "52px",
+                top: "58%",
+
+                display: {
+                  xs: "none",
+                  md: "block",
                 },
 
-                borderRadius:
-                  "999px",
+                zIndex: 5,
 
-                background:
-                  "#ffff00",
-
-                color: "#111111",
-
-                display: "flex",
-
-                alignItems: "center",
-
-                justifyContent:
-                  "center",
-
-                fontFamily:
-                  "Manrope, sans-serif",
-
-                fontSize: "18px",
-
-                fontWeight: 500,
-
-                userSelect: "none",
+                willChange: "transform",
               }}
             >
-              YOU
-            </Box>
+              {/* =================================================
+                  POINTER ARROW
+              ================================================== */}
 
-          </MotionBox>
+              <Box
+                sx={{
+                  position: "absolute",
+
+                  top: "-22px",
+                  right: "-27px",
+
+                  width: "28px",
+                  height: "28px",
+
+                  transform: "rotate(90deg)",
+
+                  zIndex: 2,
+
+                  pointerEvents: "none",
+                }}
+              >
+                <CursorArrow color="#ffff00" />
+              </Box>
+
+
+              {/* =================================================
+                  YOU PILL
+              ================================================== */}
+
+              <Box
+                sx={{
+                  width: {
+                    md: "108px",
+                    lg: "118px",
+                  },
+
+                  height: {
+                    md: "58px",
+                    lg: "62px",
+                  },
+
+                  borderRadius: "999px",
+
+                  background: "#ffff00",
+
+                  color: "#111111",
+
+                  display: "flex",
+
+                  alignItems: "center",
+
+                  justifyContent: "center",
+
+                  fontFamily:
+                    "Manrope, sans-serif",
+
+                  fontSize: "20px",
+
+                  fontWeight: 500,
+
+                  lineHeight: 1,
+
+                  userSelect: "none",
+                }}
+              >
+                YOU
+              </Box>
+            </MotionBox>
 
 
           {/* =================================================
@@ -804,29 +798,23 @@ export default function Hero() {
           <MotionBox
             initial={{
               opacity: 0,
-
               scale: 0.7,
             }}
 
             animate={{
               opacity: 1,
-
               scale: 1,
             }}
 
             transition={{
               duration: 0.6,
-
               delay: 1.25,
-
               type: "spring",
-
               stiffness: 160,
             }}
 
             style={{
               x: agencyX,
-
               y: agencyY,
             }}
 
@@ -847,53 +835,53 @@ export default function Hero() {
 
               zIndex: 5,
 
-              willChange:
-                "transform",
+              willChange: "transform",
             }}
           >
-
-
-            {/* Arrow */}
+            {/* =================================================
+                POINTER ARROW
+            ================================================== */}
 
             <Box
               sx={{
                 position: "absolute",
 
-                top: "-22px",
+                top: "-24px",
+                left: "-27px",
 
-                left: "-30px",
+                width: "28px",
+                height: "28px",
 
-                color: "#a95cff",
+                transform: "rotate(-8deg)",
 
-                fontSize: "25px",
+                zIndex: 2,
 
-                transform:
-                  "rotate(18deg)",
+                pointerEvents: "none",
               }}
             >
-              ↖
+              <CursorArrow color="#9b52f5" />
             </Box>
 
 
-            {/* Badge */}
+            {/* =================================================
+                AGENCY PILL
+            ================================================== */}
 
             <Box
               sx={{
                 width: {
-                  md: "85px",
-                  lg: "135px",
+                  md: "145px",
+                  lg: "155px",
                 },
 
                 height: {
-                  md: "44px",
-                  lg: "50px",
+                  md: "58px",
+                  lg: "62px",
                 },
 
-                borderRadius:
-                  "999px",
+                borderRadius: "999px",
 
-                background:
-                  "#9b52f5",
+                background: "#9b52f5",
 
                 color: "#ffffff",
 
@@ -901,22 +889,22 @@ export default function Hero() {
 
                 alignItems: "center",
 
-                justifyContent:
-                  "center",
+                justifyContent: "center",
 
                 fontFamily:
                   "Manrope, sans-serif",
 
-                fontSize: "18px",
+                fontSize: "20px",
 
                 fontWeight: 600,
+
+                lineHeight: 1,
 
                 userSelect: "none",
               }}
             >
               AGENCY
             </Box>
-
           </MotionBox>
 
         </Box>
