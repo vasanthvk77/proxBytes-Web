@@ -1042,13 +1042,13 @@ export default function Hero() {
           position: "relative",
 
           minWidth: {
-            xs: "180px",
-            md: "230px",
+            xs: "150px",
+            md: "210px",
           },
 
           height: {
-            xs: "62px",
-            md: "74px",
+            xs: "45px",
+            md: "60px",
           },
 
           px: 4,
