@@ -82,11 +82,11 @@ export default function Hero() {
     [0, -130]
   );
 
-  // AGENCY moves downward
+  // AGENCY moves upward so it stays clear above the text
   const agencyScrollY = useTransform(
     scrollYProgress,
     [0, 1],
-    [0, 110]
+    [0, -120]
   );
 
 
@@ -823,10 +823,14 @@ export default function Hero() {
 
               right: {
                 xs: "0%",
-                md: "-1%",
+                md: "-4%",
+                lg: "-6%",
               },
 
-              top: "28%",
+              top: {
+                md: "-14%",
+                lg: "-16%",
+              },
 
               display: {
                 xs: "none",
@@ -846,8 +850,8 @@ export default function Hero() {
               sx={{
                 position: "absolute",
 
-                top: "-24px",
-                left: "-27px",
+                top: "-22px",
+                left: "-25px",
 
                 width: "28px",
                 height: "28px",
