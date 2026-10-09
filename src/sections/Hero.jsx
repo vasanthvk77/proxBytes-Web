@@ -907,7 +907,7 @@ export default function Hero() {
                 userSelect: "none",
               }}
             >
-              AGENCY
+              INDUSTRY
             </Box>
           </MotionBox>
 
