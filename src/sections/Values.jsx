@@ -207,42 +207,42 @@ function StaggerWordReveal({
 const steps = [
   {
     number: "01",
-    tag: "FOUNDATION",
-    title: "Learn something.",
+    tag: "CHALLENGE ARENA",
+    title: "Enter the challenge.",
     description:
-      "Build the knowledge that gives you the foundation to go further.",
+      "Pick from live industry problem briefs, open-source issue bounties, and timed hackathon tracks. Access production specifications provided directly by real tech companies.",
     metric:
-      "Build knowledge that can actually be applied.",
+      "Active industry problem tracks & live challenge briefs.",
   },
 
   {
     number: "02",
-    tag: "EXECUTION",
-    title: "Build something.",
+    tag: "SPRINT & BUILD",
+    title: "Build the solution.",
     description:
-      "Turn what you learn into something real, useful and tangible.",
+      "Code production-grade architectures and ship working software to solve the brief. Run against automated test suites, linting gates, and benchmark runners.",
     metric:
-      "Turn knowledge into working solutions.",
+      "Working prototypes, clean repositories & passing test suites.",
   },
 
   {
     number: "03",
-    tag: "RESOLUTION",
-    title: "Solve something.",
+    tag: "LEADERBOARD",
+    title: "Compete & rank.",
     description:
-      "Take on challenges that require you to think, adapt and create.",
+      "Go head-to-head with top student developers nationwide. Your solutions are benchmarked on performance, code quality, speed, and real-world edge-case handling.",
     metric:
-      "Develop real problem-solving ability.",
+      "Live contest standings & automated performance scores.",
   },
 
   {
     number: "04",
-    tag: "DEMONSTRATION",
-    title: "Prove what you can do.",
+    tag: "WIN & PROVE",
+    title: "Win cash bounties.",
     description:
-      "Show your ability through work that speaks for itself.",
+      "Top contenders claim direct cash rewards, earn cryptographic skill badges, and get discovered by sponsoring recruiters looking to hire verified winners.",
     metric:
-      "Create proof that others can evaluate.",
+      "Direct bounty rewards & recruiter fast-track discovery.",
   },
 ];
 
@@ -880,11 +880,17 @@ export default function Values() {
 
         overflow: "hidden",
 
-        py: {
-          xs: "85px",
-          sm: "105px",
-          md: "135px",
-          lg: "155px",
+        pt: {
+          xs: "80px",
+          sm: "100px",
+          md: "120px",
+          lg: "140px",
+        },
+        pb: {
+          xs: "40px",
+          sm: "50px",
+          md: "60px",
+          lg: "70px",
         },
       }}
     >
@@ -1001,7 +1007,7 @@ export default function Values() {
                 color: "#111111",
               }}
             >
-              Learning gives you knowledge.
+              Real problems. Real stakes.
             </Typography>
           </MaskTextReveal>
 
@@ -1038,9 +1044,9 @@ export default function Values() {
             }}
           >
             <StaggerWordReveal
-              text="ProxBytes helps you turn that knowledge into capability."
+              text="ProxBytes turns real engineering challenges into high-stakes student competitions."
               delay={0.2}
-              highlightWord="capability."
+              highlightWord="competitions."
             />
           </Box>
         </Box>
@@ -1133,7 +1139,7 @@ export default function Values() {
                 },
               }}
             >
-              THE PROXBYTES WAY
+              HOW THE ARENA WORKS
             </Typography>
           </MaskTextReveal>
 
@@ -1147,28 +1153,28 @@ export default function Values() {
                   "Manrope, sans-serif",
 
                 fontSize: {
-                  xs: "20px",
-                  sm: "24px",
-                  md: "29px",
+                  xs: "19px",
+                  sm: "23px",
+                  md: "27px",
                 },
 
-                lineHeight: 1.35,
+                lineHeight: 1.45,
 
                 letterSpacing:
-                  "-.04em",
+                  "-.035em",
 
                 color: "#222222",
               }}
             >
-              Knowledge becomes valuable when you can use it,
-              apply it and prove it in the real world.
+              Skip passive tutorials. Take on verified industry problem briefs,
+              submit production-grade code, climb the leaderboard, and claim winner bounties.
             </Typography>
           </MaskTextReveal>
         </Box>
 
 
         {/* ==================================================
-            IMAGE 01 — LEARN
+            IMAGE 01 — ENTER THE CHALLENGE
         ================================================== */}
 
         <Box
@@ -1181,9 +1187,9 @@ export default function Values() {
         >
           <EditorialImage
             src={learningImage}
-            alt="Learning at ProxBytes"
+            alt="Students solving real-world challenge briefs on ProxBytes"
             number="01"
-            label="LEARN"
+            label="CHALLENGE BRIEF"
             height={{
               xs: "300px",
               sm: "390px",
@@ -1264,9 +1270,9 @@ export default function Values() {
 
           <EditorialImage
             src={buildingImage}
-            alt="Building projects at ProxBytes"
+            alt="Students building production solutions for contest challenges"
             number="02"
-            label="BUILD"
+            label="SPRINT"
             height={{
               xs: "300px",
               sm: "380px",
@@ -1285,7 +1291,7 @@ export default function Values() {
 
 
         {/* ==================================================
-            SOLVE
+            SOLVE / COMPETE
         ================================================== */}
 
         <Box
@@ -1323,8 +1329,8 @@ export default function Values() {
 
           <VisualPlaceholder
             number="03"
-            label="SOLVE"
-            title="Real problems."
+            label="LEADERBOARD"
+            title="Real-time ranking."
             accent="#c9a8ff"
           />
         </Box>
@@ -1398,7 +1404,7 @@ export default function Values() {
                   lg: "68px",
                 },
 
-                lineHeight: 1.02,
+                lineHeight: 1.05,
 
                 letterSpacing:
                   "-.06em",
@@ -1408,17 +1414,47 @@ export default function Values() {
                 color: "#111111",
               }}
             >
-              Don't just know it.
+              Don't just complete tutorials.
               <br />
 
               <Box
                 component="span"
                 sx={{
-                  color: "#777777",
+                  color: "#9b52f5",
                 }}
               >
-                Show what you can do.
+                Win contests. Prove capability.
               </Box>
+            </Typography>
+
+            <Typography
+              sx={{
+                mt: {
+                  xs: "16px",
+                  md: "22px",
+                },
+
+                maxWidth: "740px",
+
+                fontFamily:
+                  "Manrope, sans-serif",
+
+                fontSize: {
+                  xs: "16px",
+                  sm: "18px",
+                  md: "20px",
+                },
+
+                lineHeight: 1.55,
+
+                letterSpacing:
+                  "-.02em",
+
+                color: "#666666",
+              }}
+            >
+              When you submit high-performing solutions to live sponsor challenges, you don't just gain experience—you
+              take home verified cash bounties, climb global ranks, and get scouted directly by top hiring teams.
             </Typography>
           </MaskTextReveal>
         </Box>
@@ -1455,8 +1491,8 @@ export default function Values() {
 
           <VisualPlaceholder
             number="04"
-            label="PROVE"
-            title="Show your capability."
+            label="WINNERS"
+            title="Claim your bounties."
             accent="#e8c6ff"
           />
 
@@ -1472,19 +1508,18 @@ export default function Values() {
 
         {/* ==================================================
             FINAL SIMPLE STATEMENT
-            No black box.
         ================================================== */}
 
         <Box
           sx={{
             mt: {
-              xs: "85px",
-              md: "120px",
+              xs: "50px",
+              md: "70px",
             },
 
             pt: {
-              xs: "35px",
-              md: "50px",
+              xs: "25px",
+              md: "35px",
             },
 
             borderTop:
@@ -1516,11 +1551,11 @@ export default function Values() {
                 color: "#111111",
               }}
             >
-              Learn something.
+              Choose a challenge.
               {" "}
-              Build something.
+              Build the solution.
               {" "}
-              Solve something.
+              Top the leaderboard.
               {" "}
               <Box
                 component="span"
@@ -1528,7 +1563,7 @@ export default function Values() {
                   color: "#9b52f5",
                 }}
               >
-                Prove what you can do.
+                Claim the bounty.
               </Box>
             </Typography>
           </MaskTextReveal>
