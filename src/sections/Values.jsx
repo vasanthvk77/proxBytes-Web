@@ -886,15 +886,15 @@ function ScrollTrackedChallenges() {
     offset: ["start start", "end end"],
   });
 
-  useMotionValueEvent(scrollYProgress, "change", (progress) => {
-    const nextStep =
-      progress < 0.34 ? 0 :
-      progress < 0.67 ? 1 : 2;
 
-    setActiveStep((current) =>
-      current === nextStep ? current : nextStep
-    );
-  });
+useMotionValueEvent(scrollYProgress, "change", (progress) => {
+  const nextStep = Math.min(3, Math.floor(progress * 4));
+
+  setActiveStep((current) =>
+    current === nextStep ? current : nextStep
+  );
+});
+
 
   const visuals = [
     {
@@ -912,6 +912,11 @@ function ScrollTrackedChallenges() {
       alt: "",
       label: "03 — COMPETE",
     },
+    {
+      src: null,
+      alt: "Winning cash bounties and rewards",
+      label: "04 — WIN CASH BOUNTIES",
+    },
   ];
 
   return (
@@ -921,7 +926,7 @@ function ScrollTrackedChallenges() {
       aria-label="How the ProxBytes challenge arena works"
       sx={{
         position: "relative",
-        minHeight: { xs: "auto", md: "240vh" },
+        minHeight: { xs: "auto", md: "320vh" },
         width: "100%",
       }}
     >
@@ -929,10 +934,10 @@ function ScrollTrackedChallenges() {
       <Box
         sx={{
           position: { xs: "relative", md: "sticky" },
-          top: { md: "8vh" },
-          minHeight: { xs: "auto", md: "84vh" },
-          height: { md: "84vh" },
-          maxHeight: { md: "900px" },
+          top: { md: "4vh" },
+          minHeight: { xs: "auto", md: "92vh" },
+          height: { md: "92vh" },
+          maxHeight: { md: "none" },
 
           display: "grid",
           gridTemplateColumns: {
@@ -956,11 +961,11 @@ function ScrollTrackedChallenges() {
             flexDirection: "column",
             justifyContent: "center",
             height: { md: "100%" },
-            gap: { xs: "42px", md: 0 },
+            gap: { xs: "42px", md: "2px" },
             minWidth: 0,
           }}
         >
-          {steps.slice(0, 3).map((step, index) => (
+          {steps.slice(0, 4).map((step, index) => (
             <Box
               key={step.number}
               sx={{
@@ -969,7 +974,7 @@ function ScrollTrackedChallenges() {
                 display: "flex",
                 flexDirection: { xs: "column", md: "initial" },
                 alignItems: { xs: "stretch", md: "center" },
-                py: { md: "12px" },
+                py: { md: "4px" },
                 boxSizing: "border-box",
               }}
             >
@@ -993,7 +998,7 @@ function ScrollTrackedChallenges() {
                     justifyContent: "space-between",
                     alignItems: "center",
                     gap: "12px",
-                    mb: { xs: "14px", md: "18px" },
+                    mb: { xs: "14px", md: "8px" },
                   }}
                 >
                   <Typography
@@ -1031,7 +1036,7 @@ function ScrollTrackedChallenges() {
                     fontSize: {
                       xs: "28px",
                       sm: "32px",
-                      md: "clamp(25px, 2.4vw, 40px)",
+                      md: "clamp(22px, 1.8vw, 30px)",
                     },
                     fontWeight: 500,
                     lineHeight: 1.12,
@@ -1045,14 +1050,15 @@ function ScrollTrackedChallenges() {
 
                 <Typography
                   sx={{
-                    mt: { xs: "14px", md: "16px" },
+                    mt: { xs: "14px", md: "8px" },
                     maxWidth: "560px",
                     fontFamily: "Manrope, sans-serif",
                     fontSize: {
                       xs: "14px",
-                      md: "clamp(12px, 1vw, 16px)",
+                      md: "clamp(12px, 0.85vw, 14px)",
                     },
-                    lineHeight: 1.65,
+
+                    lineHeight: 1.4,
                     color: "#707070",
                   }}
                 >
@@ -1061,7 +1067,7 @@ function ScrollTrackedChallenges() {
 
                 <Box
                   sx={{
-                    mt: { xs: "17px", md: "20px" },
+                    mt: { xs: "17px", md: "8px" },
                     display: "flex",
                     alignItems: "flex-start",
                     gap: "10px",
@@ -1081,8 +1087,8 @@ function ScrollTrackedChallenges() {
                   <Typography
                     sx={{
                       fontFamily: "Manrope, sans-serif",
-                      fontSize: "11px",
-                      lineHeight: 1.6,
+                      fontSize: "10px",
+                      lineHeight: 1.35,
                       color: "#888888",
                     }}
                   >
@@ -1814,91 +1820,12 @@ export default function Values() {
             },
 
             alignItems: "center",
-          }}
-        >
-
-          {/* PROVE VISUAL */}
-
-          <VisualPlaceholder
-            number="04"
-            label="WINNERS"
-            title="Claim your bounties."
-            accent="#e8c6ff"
-          />
-
-
-          {/* PROVE TEXT */}
-
-          <StepText
-            step={steps[3]}
-            index={3}
-          />
-        </Box>
-
-
-        {/* ==================================================
-            FINAL SIMPLE STATEMENT
-        ================================================== */}
-
-        <Box
-          sx={{
-            mt: {
-              xs: "50px",
-              md: "70px",
-            },
-
-            pt: {
-              xs: "25px",
-              md: "35px",
-            },
-
             borderTop:
               "1px solid #dedede",
           }}
         >
-          <MaskTextReveal>
-            <Typography
-              sx={{
-                maxWidth: "1100px",
 
-                fontFamily:
-                  "Manrope, sans-serif",
-
-                fontSize: {
-                  xs: "30px",
-                  sm: "40px",
-                  md: "54px",
-                  lg: "64px",
-                },
-
-                lineHeight: 1.04,
-
-                letterSpacing:
-                  "-.055em",
-
-                fontWeight: 500,
-
-                color: "#111111",
-              }}
-            >
-              Choose a challenge.
-              {" "}
-              Build the solution.
-              {" "}
-              Top the leaderboard.
-              {" "}
-              <Box
-                component="span"
-                sx={{
-                  color: "#9b52f5",
-                }}
-              >
-                Claim the bounty.
-              </Box>
-            </Typography>
-          </MaskTextReveal>
         </Box>
-
       </Box>
     </Box>
   );
