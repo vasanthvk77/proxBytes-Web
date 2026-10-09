@@ -34,12 +34,12 @@ export default function App() {
         <Hero />
         <Values />
         <About />
-        <Services />
+        {/* <Services /> */}
         <Growth />
-        <Works />
+        {/* <Works /> */}
         <Testimonials />
         <Blogs />
-        <CTA />
+        {/* <CTA /> */}
       </main>
       <Footer />
     </Box>

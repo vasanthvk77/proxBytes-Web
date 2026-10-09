@@ -13,7 +13,7 @@ export default function CTA() {
           <Typography className="display-xl">
             We believe in more than just delivering services – we believe in building long-term partnerships reach us.
           </Typography>
-        </Reveal>
+        </Reveal>f
         <motion.button className="cta-circle" whileHover={{ scale: 1.06, rotate: 5 }}>
           <span>Let’s Talk</span><ArrowOutward />
         </motion.button>

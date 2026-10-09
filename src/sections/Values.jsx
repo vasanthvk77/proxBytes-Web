@@ -228,7 +228,7 @@ const steps = [
   {
     number: "03",
     tag: "LEADERBOARD",
-    title: "Compete & rank.",
+    title: "Compete.",
     description:
       "Go head-to-head with top student developers nationwide. Your solutions are benchmarked on performance, code quality, speed, and real-world edge-case handling.",
     metric:
@@ -238,7 +238,7 @@ const steps = [
   {
     number: "04",
     tag: "WIN & PROVE",
-    title: "Win cash bounties.",
+    title: "Win bounties.",
     description:
       "Top contenders claim direct cash rewards, earn cryptographic skill badges, and get discovered by sponsoring recruiters looking to hire verified winners.",
     metric:
@@ -915,7 +915,7 @@ useMotionValueEvent(scrollYProgress, "change", (progress) => {
     {
       src: null,
       alt: "Winning cash bounties and rewards",
-      label: "04 — WIN CASH BOUNTIES",
+      label: "04 — WIN BOUNTIES",
     },
   ];
 
@@ -1432,7 +1432,7 @@ export default function Values() {
 
                 fontSize: {
                   xs: "15px",
-                  md: "17px",
+                  md: "20px",
                 },
 
                 fontWeight: 500,
@@ -1471,11 +1471,11 @@ export default function Values() {
                   "Manrope, sans-serif",
 
                 fontSize: {
-                  xs: "40px",
-                  sm: "52px",
-                  md: "70px",
-                  lg: "86px",
-                  xl: "96px",
+                   xs: "40px",
+                  sm: "50px",
+                  md: "55px",
+                  lg: "60px",
+                  xl: "65px",
                 },
 
                 lineHeight: {
@@ -1509,11 +1509,11 @@ export default function Values() {
                 "Manrope, sans-serif",
 
               fontSize: {
-                xs: "28px",
-                sm: "38px",
-                md: "52px",
-                lg: "64px",
-                xl: "72px",
+                 xs: "40px",
+                  sm: "50px",
+                  md: "55px",
+                  lg: "60px",
+                  xl: "65px",
               },
 
               lineHeight: {
@@ -1606,7 +1606,7 @@ export default function Values() {
 
           }}
         >
-          <MaskTextReveal>
+          {/* <MaskTextReveal>
             <Typography
               sx={{
                 fontFamily:
@@ -1632,35 +1632,59 @@ export default function Values() {
             >
               HOW THE ARENA WORKS
             </Typography>
-          </MaskTextReveal>
+          </MaskTextReveal> */}
 
+          <FadeScaleReveal>
+          <Box
+            sx={{
+              display: "flex",
 
-          <MaskTextReveal delay={0.1}>
+              alignItems: "center",
+
+              gap: "13px",
+              
+
+              mb: {
+                xs: "28px",
+                md: "42px",
+              },
+            }}
+          >
+            <Box
+              sx={{
+                width: "15px",
+                height: "12px",
+
+                borderRadius: "50%",
+
+                background: "#c9a8ff",
+              }}
+            />
+
             <Typography
               sx={{
-                maxWidth: "850px",
-
                 fontFamily:
                   "Manrope, sans-serif",
 
                 fontSize: {
-                  xs: "19px",
-                  sm: "23px",
-                  md: "27px",
+                  xs: "15px",
+                  md: "20px",
                 },
 
-                lineHeight: 1.45,
+                fontWeight: 500,
 
                 letterSpacing:
                   "-.035em",
 
-                color: "#222222",
+                color: "#111111",
+                
               }}
             >
-              Skip passive tutorials. Take on verified industry problem briefs,
-              submit production-grade code, climb the leaderboard, and claim winner bounties.
+              HOW THE ARENA WORKS
             </Typography>
-          </MaskTextReveal>
+          </Box>
+        </FadeScaleReveal>
+
         </Box>
 
 

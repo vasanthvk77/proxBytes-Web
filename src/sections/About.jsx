@@ -1,7 +1,7 @@
 
-import React, { useRef } from "react";
+import React, { useRef,useState } from "react";
 import { Box, Typography, Button } from "@mui/material";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView,AnimatePresence } from "framer-motion";
 import {
   ArrowOutward,
   GroupsRounded,
@@ -9,6 +9,7 @@ import {
   FactCheckRounded,
   LightbulbRounded,
   NorthEastRounded,
+
 } from "@mui/icons-material";
 
 const ease = [0.16, 1, 0.3, 1];
@@ -188,6 +189,7 @@ const principles = [
     description:
       "Give actual work a meaningful place in the conversation about capability, rather than relying on credentials alone.",
     accent: "#a56af5",
+    image: "/images/evidence-over-assumptions.jpg",
   },
   {
     number: "02",
@@ -196,6 +198,7 @@ const principles = [
     description:
       "Connect technical ambition with opportunities that give students a reason to apply themselves and grow.",
     accent: "#7d83ff",
+    image: "/images/evidence-over-assumptions.jpg",
   },
   {
     number: "03",
@@ -204,10 +207,12 @@ const principles = [
     description:
       "Bring students and industry closer together through a shared focus on practical ability and meaningful outcomes.",
     accent: "#e58bc8",
+    image: "/images/evidence-over-assumptions.jpg",
   },
 ];
 
 export default function About() {
+  const [activePrinciple, setActivePrinciple] = useState(0);
   return (
     <Box
       component="section"
@@ -744,7 +749,7 @@ export default function About() {
 
         {/* SECTION 04 — OUR PRINCIPLES */}
 
-        <Box
+        {/* <Box
           sx={{
             mb: { xs: 13, md: 20 },
             borderTop: "1px solid #ded9e4",
@@ -888,299 +893,490 @@ export default function About() {
               </Reveal>
             ))}
           </Box>
+        </Box> */}
+
+
+        
+{/* SECTION 04 — OUR PRINCIPLES ACCORDION */}
+
+<Box
+  sx={{
+    mb: { xs: 13, md: 20 },
+    borderTop: "1px solid #ded9e4",
+    pt: { xs: 6, md: 9 },
+  }}
+>
+  {/* Section heading */}
+  <Box
+    sx={{
+      display: "grid",
+      gridTemplateColumns: {
+        xs: "1fr",
+        md: "minmax(0, .85fr) minmax(0, 1.15fr)",
+      },
+      gap: { xs: 5, md: 10 },
+      alignItems: "end",
+      mb: { xs: 6, md: 9 },
+    }}
+  >
+    <Reveal variant="fadeUp" duration={0.8}>
+      <Eyebrow number="04">What guides us</Eyebrow>
+
+      <Typography
+        component="h2"
+        sx={{
+          m: 0,
+          fontSize: {
+            xs: "clamp(40px, 9vw, 58px)",
+            md: "clamp(62px, 5.7vw, 84px)",
+          },
+          lineHeight: 1,
+          letterSpacing: "-.075em",
+          fontWeight: 500,
+        }}
+      >
+        The thinking
+        <br />
+        <Box component="span" sx={{ color: "#a56af5" }}>
+          behind the platform.
         </Box>
+      </Typography>
+    </Reveal>
 
-        {/* SECTION 05 — CLOSING STATEMENT */}
+    
+  </Box>
 
-        <Reveal>
-          <Box
+  {/* Accordion */}
+  <Box sx={{ borderTop: "1px solid #ded9e4" }}>
+    {principles.map((item, index) => {
+      const isOpen = activePrinciple === index;
+
+      return (
+        <Box
+          key={item.number}
+          sx={{
+            borderBottom: "1px solid #ded9e4",
+          }}
+        >
+          {/* Accordion header */}
+        <Box
+  component="button"
+  type="button"
+  aria-expanded={isOpen}
+  onMouseEnter  ={() => setActivePrinciple(index)}
+  onFocus={() => setActivePrinciple(index)}
+  onClick={() =>
+    setActivePrinciple(isOpen ? -1 : index)
+  }
             sx={{
-              position: "relative",
-              overflow: "hidden",
-              bgcolor: "#15121a",
-              color: "#ffffff",
-              p: {
-                xs: "34px 24px",
-                sm: "46px 36px",
-                md: "68px 60px",
+              width: "100%",
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "42px minmax(0, 1fr) 32px",
+                md: "70px minmax(0, 1fr) 42px",
               },
-              borderRadius: { xs: "6px", md: "10px" },
+              alignItems: "center",
+              gap: { xs: 1.5, md: 4 },
+              py: { xs: 4, md: 5 },
+              px: 0,
+              border: 0,
+              bgcolor: "transparent",
+              color: "#17131d",
+              textAlign: "left",
+              cursor: "pointer",
+              fontFamily: "inherit",
+              "&:hover .principle-accordion-title": {
+                color: item.accent,
+              },
+              "&:focus-visible": {
+                outline: `2px solid ${item.accent}`,
+                outlineOffset: 4,
+              },
             }}
           >
-            <Box
-              aria-hidden
+            <Typography
+              component="span"
               sx={{
-                position: "absolute",
-                width: { xs: 250, md: 430 },
-                height: { xs: 250, md: 430 },
-                right: { xs: -140, md: -40 },
-                top: { xs: -160, md: -230 },
-                border: "1px solid rgba(181,138,255,.22)",
-                borderRadius: "50%",
-                boxShadow:
-                  "0 0 0 35px rgba(181,138,255,.025), 0 0 0 70px rgba(181,138,255,.02)",
-                pointerEvents: "none",
-              }}
-            />
-
-            <Box
-              sx={{
-                position: "relative",
-                zIndex: 1,
-                maxWidth: 900,
+                fontSize: 11,
+                fontWeight: 800,
+                letterSpacing: ".08em",
+                color: item.accent,
               }}
             >
-              <Eyebrow number="05">
-                The future we're working toward
-              </Eyebrow>
+              {item.number}
+            </Typography>
 
-              <Typography
-                component="h2"
-                sx={{
-                  m: 0,
-                  fontSize: {
-                    xs: "clamp(40px, 10vw, 58px)",
-                    sm: 68,
-                    md: "clamp(64px, 6vw, 88px)",
+            <Typography
+              component="span"
+              className="principle-accordion-title"
+              sx={{
+                fontSize: {
+                  xs: 21,
+                  sm: 25,
+                  md: 30,
+                },
+                lineHeight: 1.25,
+                letterSpacing: "-.045em",
+                fontWeight: 500,
+                transition: "color .3s ease",
+              }}
+            >
+              {item.title}
+            </Typography>
+
+            {/* Plus / minus control */}
+            
+<Box
+  component="span"
+  aria-hidden="true"
+  sx={{
+    width: 36,
+    height: 36,
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    justifySelf: "end",
+    borderRadius: "50%",
+    bgcolor: isOpen ? "#f3ebfc" : "transparent",
+    color: isOpen ? item.accent : "#17131d",
+    transition: "background-color .2s ease, color .2s ease",
+  }}
+>
+  <svg
+    width="20"
+    height="20"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    aria-hidden="true"
+  >
+    {/* Horizontal line remains visible */}
+    <path d="M5 12h14" />
+
+    {/* Vertical line disappears to form a minus */}
+    <motion.path
+      d="M12 5v14"
+      animate={{
+        scaleY: isOpen ? 0 : 1,
+        opacity: isOpen ? 0 : 1,
+      }}
+      transition={{ duration: 0.18, ease: "easeOut" }}
+      style={{ transformOrigin: "center" }}
+    />
+  </svg>
+</Box>
+
+          </Box>
+
+          {/* Expandable content */}
+          <AnimatePresence initial={false}>
+            {isOpen && (
+              <motion.div
+                key={`content-${item.number}`}
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{
+                  height: {
+                    duration: 0.55,
+                    ease: [0.22, 1, 0.36, 1],
                   },
-                  lineHeight: 1,
-                  letterSpacing: "-.075em",
-                  fontWeight: 500,
+                  opacity: {
+                    duration: 0.25,
+                  },
+                }}
+                style={{
+                  overflow: "hidden",
                 }}
               >
-                Let ability
-                <br />
-                speak for itself.
-              </Typography>
+                <Box
+                  sx={{
+                    display: "grid",
+                    gridTemplateColumns: {
+                      xs: "1fr",
+                      md: "minmax(0, .9fr) minmax(0, 1.1fr)",
+                    },
+                    gap: { xs: 4, md: 7 },
+                    pb: { xs: 5, md: 7 },
+                    alignItems: "center",
+                  }}
+                >
+                  {/* Image: closes toward its vertical center */}
+                  <Box
+                    sx={{
+                      position: "relative",
+                      overflow: "hidden",
+                      borderRadius: { xs: "6px", md: "9px" },
+                      bgcolor: "#f5f0fa",
+                      aspectRatio: { xs: "16 / 10", md: "5 / 4" },
+                    }}
+                  >
+                    <motion.img
+                      key={`image-${item.number}`}
+                      src={item.image}
+                      alt={item.title}
+                      initial={{
+                        clipPath: "inset(50% 0 50% 0)",
+                        scale: 1.04,
+                        opacity: 0,
+                      }}
+                      animate={{
+                        clipPath: "inset(0% 0 0% 0)",
+                        scale: 1,
+                        opacity: 1,
+                      }}
+                      exit={{
+                        clipPath: "inset(50% 0 50% 0)",
+                        scale: 1.02,
+                        opacity: 0,
+                      }}
+                      transition={{
+                        clipPath: {
+                          duration: 1,
+                          ease: [0.76, 0, 0.24, 1],
+                        },
+                        scale: {
+                          duration: 2,
+                          ease: [0.22, 1, 0.36, 1],
+                        },
+                        opacity: {
+                          duration: 2,
+                        },
+                      }}
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        display: "block",
+                      }}
+                    />
 
-              <Typography
-                sx={{
-                  mt: 3,
-                  maxWidth: 620,
-                  color: "#b8b2c0",
-                  fontSize: { xs: 14, md: 16 },
-                  lineHeight: 1.85,
-                }}
-              >
-                We believe the next opportunity should
-                be shaped by more than where someone
-                started. ProxBytes aims to make practical
-                capability more visible and create
-                stronger connections between emerging
-                talent and the wider industry.
-              </Typography>
-
-              <Button
+                    {/* Image index */}
+                    <Box
                       sx={{
-                        position: "relative",
-                        top: 20,
-                        minWidth: {
-                          xs: "150px",
-                          md: "210px",
-                        },
-              
-                        height: {
-                          xs: "45px",
-                          md: "60px",
-                        },
-              
-                        px: 4,
-              
-                        borderRadius: "6px",
-              
-                        background: "#cbb0f5",
-              
-                        color: "#111111",
-              
-                        textTransform: "none",
-              
-                        fontFamily: "Manrope, sans-serif",
-              
-                        fontSize: {
-                          xs: "17px",
-                          md: "20px",
-                        },
-              
-                        fontWeight: 500,
-              
-                        letterSpacing: "-.035em",
-              
-                        justifyContent: "center",
-              
-                        overflow: "hidden",
-              
-                        transition:
-                          "background-color .35s ease",
-              
-                        "&:hover": {
-                          background: "#ffff00",
-                        },
-              
-                        /* =====================================================
-                          CONTENT WRAPPER
-                        ====================================================== */
-              
-                        "& .button-content-wrapper": {
-                          position: "relative",
-              
-                          display: "block",
-              
-                          height: "1.4em",
-              
-                          overflow: "hidden",
-              
-                          lineHeight: 1.4,
-                        },
-              
-                        /* =====================================================
-                          EACH CONTENT ROW
-                        ====================================================== */
-              
-                        "& .button-content": {
-                          display: "flex",
-              
-                          alignItems: "center",
-              
-                          justifyContent: "center",
-              
-                          gap: "25px",
-              
-                          whiteSpace: "nowrap",
-              
-                          transition:
-                            "transform .45s cubic-bezier(.76,0,.24,1)",
-                        },
-              
-                        /* =====================================================
-                          FIRST / VISIBLE CONTENT
-                        ====================================================== */
-              
-                        "& .button-content.current": {
-                          transform: "translateY(0)",
-                        },
-              
-                        /* =====================================================
-                          SECOND CONTENT
-                          Starts below the visible area
-                        ====================================================== */
-              
-                        "& .button-content.next": {
-                          position: "absolute",
-              
-                          left: 0,
-              
-                          top: 0,
-              
-                          width: "100%",
-              
-                          transform: "translateY(110%)",
-                        },
-              
-                        /* =====================================================
-                          HOVER
-              
-                          Current content goes UP.
-                          New content comes FROM BELOW.
-                        ====================================================== */
-              
-                        "&:hover .button-content.current": {
-                          transform: "translateY(-110%)",
-                        },
-              
-                        "&:hover .button-content.next": {
-                          transform: "translateY(0)",
-                        },
-              
-                        /* =====================================================
-                          ARROW
-                        ====================================================== */
-              
-                        "& .button-arrow": {
-                          display: "flex",
-              
-                          alignItems: "center",
-              
-                          justifyContent: "center",
-              
-                          flexShrink: 0,
-              
-                          transition:
-                            "transform .45s cubic-bezier(.76,0,.24,1)",
-                        },
-              
-                        "&:hover .button-content.current .button-arrow": {
-                          transform:
-                            "translateY(-2px) rotate(0deg)",
-                        },
-              
-                        "&:hover .button-content.next .button-arrow": {
-                          transform:
-                            "translateY(0) rotate(0deg)",
-                        },
+                        position: "absolute",
+                        left: 16,
+                        bottom: 16,
+                        px: 1.5,
+                        py: 0.75,
+                        borderRadius: "30px",
+                        bgcolor: "rgba(255,255,255,.92)",
+                        color: "#17131d",
+                        fontSize: 10,
+                        fontWeight: 800,
+                        letterSpacing: ".08em",
+                      }}
+                    >
+                      {item.number} / 03
+                    </Box>
+                  </Box>
+
+                  {/* Description */}
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        gap: 1.25,
+                        mb: 2.5,
                       }}
                     >
                       <Box
-                        className="button-content-wrapper"
+                        sx={{
+                          width: 36,
+                          height: 36,
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          borderRadius: "50%",
+                          bgcolor: `${item.accent}18`,
+                          color: item.accent,
+                          "& svg": { fontSize: 19 },
+                        }}
                       >
-              
-                        {/* =================================================
-                            CURRENT CONTENT
-                        ================================================== */}
-              
-                        <Box
-                          className="button-content current"
-                        >
-                          <span>
-                            Enter ProxBytes
-                          </span>
-              
+                        {item.icon}
+                      </Box>
+
+                      <Typography
+                        sx={{
+                          fontSize: 10,
+                          fontWeight: 800,
+                          letterSpacing: ".12em",
+                          color: item.accent,
+                          textTransform: "uppercase",
+                        }}
+                      >
+                        Our principle
+                      </Typography>
+                    </Box>
+
+                    <Typography
+                      component="h3"
+                      sx={{
+                        m: 0,
+                        fontSize: {
+                          xs: 25,
+                          md: 34,
+                        },
+                        lineHeight: 1.2,
+                        letterSpacing: "-.055em",
+                        fontWeight: 500,
+                        color: "#17131d",
+                      }}
+                    >
+                      {item.title}
+                    </Typography>
+
+                    <Typography
+                      sx={{
+                        mt: 2,
+                        maxWidth: 520,
+                        fontSize: { xs: 14, md: 15 },
+                        lineHeight: 1.85,
+                        color: "#77717c",
+                      }}
+                    >
+                      {item.description}
+                    </Typography>
+
+                    <Box
+                      sx={{
+                        mt: 3,
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 1.75,
+                      }}
+                    >
+                      {item.title === "Evidence over assumptions" &&
+                        [
+                          "Practical work matters",
+                          "Show what you can build",
+                          "Make capability easier to recognise",
+                        ].map((point) => (
                           <Box
-                            component="span"
-                            className="button-arrow"
+                            key={point}
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 1.5,
+                            }}
                           >
-                            <ArrowOutward
+                            <Box
                               sx={{
-                                fontSize: {
-                                  xs: "22px",
-                                  md: "24px",
-                                },
+                                width: 6,
+                                height: 6,
+                                borderRadius: "50%",
+                                bgcolor: item.accent,
+                                flexShrink: 0,
                               }}
                             />
+                            <Typography
+                              sx={{
+                                fontSize: 12,
+                                lineHeight: 1.6,
+                                color: "#514b58",
+                              }}
+                            >
+                              {point}
+                            </Typography>
                           </Box>
-                        </Box>
-              
-              
-                  {/* =================================================
-                      NEW CONTENT
-                  ================================================== */}
-              
-                  <Box
-                    className="button-content next"
-                  >
-                    <span>
-                      Enter ProxBytes
-                    </span>
-              
-                    <Box
-                      component="span"
-                      className="button-arrow"
-                    >
-                      <ArrowOutward
-                        sx={{
-                          fontSize: {
-                            xs: "22px",
-                            md: "24px",
-                          },
-                        }}
-                      />
+                        ))}
+
+                      {item.title === "Opportunity with purpose" &&
+                        [
+                          "Turn ambition into action",
+                          "Learn through real challenges",
+                          "Create meaningful outcomes",
+                        ].map((point) => (
+                          <Box
+                            key={point}
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 1.5,
+                            }}
+                          >
+                            <Box
+                              sx={{
+                                width: 6,
+                                height: 6,
+                                borderRadius: "50%",
+                                bgcolor: item.accent,
+                                flexShrink: 0,
+                              }}
+                            />
+                            <Typography
+                              sx={{
+                                fontSize: 12,
+                                lineHeight: 1.6,
+                                color: "#514b58",
+                              }}
+                            >
+                              {point}
+                            </Typography>
+                          </Box>
+                        ))}
+
+                      {item.title === "A stronger connection" &&
+                        [
+                          "Connect students with industry",
+                          "Highlight demonstrated skills",
+                          "Build pathways to opportunity",
+                        ].map((point) => (
+                          <Box
+                            key={point}
+                            sx={{
+                              display: "flex",
+                              alignItems: "center",
+                              gap: 1.5,
+                            }}
+                          >
+                            <Box
+                              sx={{
+                                width: 6,
+                                height: 6,
+                                borderRadius: "50%",
+                                bgcolor: item.accent,
+                                flexShrink: 0,
+                              }}
+                            />
+                            <Typography
+                              sx={{
+                                fontSize: 12,
+                                lineHeight: 1.6,
+                                color: "#514b58",
+                              }}
+                            >
+                              {point}
+                            </Typography>
+                          </Box>
+                        ))}
                     </Box>
                   </Box>
-              
                 </Box>
-                          </Button>
-            </Box>
-          </Box>
-        </Reveal>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </Box>
+      );
+    })}
+  </Box>
+</Box>
+
+
+        {/* SECTION 05 — CLOSING STATEMENT */}
+
+        
       </Box>
     </Box>
   );

@@ -375,7 +375,7 @@ export default function Hero() {
               "rotate(-12deg)",
 
             boxShadow:
-              "-35px 0 80px rgba(0,0,0,.45)",
+              "-35px 0 80px rgba(85, 29, 169, 0.62)",
 
             opacity: 0.95,
           }}
@@ -386,7 +386,7 @@ export default function Hero() {
             CURVED LINE 1
         ================================================== */}
 
-        <Box
+        {/* <Box
           sx={{
             position: "absolute",
 
@@ -408,14 +408,14 @@ export default function Hero() {
 
             opacity: 0.8,
           }}
-        />
+        /> */}
 
 
         {/* =================================================
             CURVED LINE 2
         ================================================== */}
 
-        <Box
+        {/* <Box
           sx={{
             position: "absolute",
 
@@ -437,14 +437,14 @@ export default function Hero() {
 
             opacity: 0.8,
           }}
-        />
+        /> */}
 
 
         {/* =================================================
             CURVED LINE 3
         ================================================== */}
 
-        <Box
+        {/* <Box
           sx={{
             position: "absolute",
 
@@ -466,7 +466,7 @@ export default function Hero() {
 
             opacity: 0.7,
           }}
-        />
+        /> */}
 
 
         {/* =================================================
