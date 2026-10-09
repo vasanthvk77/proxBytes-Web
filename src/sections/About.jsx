@@ -1,52 +1,37 @@
+
 import React, { useRef } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import { motion, useInView } from "framer-motion";
 import {
   ArrowOutward,
-  CodeRounded,
-  FolderSpecialRounded,
-  EmojiEventsRounded,
-  WorkspacePremiumRounded,
-  VerifiedRounded,
+  GroupsRounded,
+  BusinessCenterRounded,
+  FactCheckRounded,
+  LightbulbRounded,
+  NorthEastRounded,
 } from "@mui/icons-material";
 
 const ease = [0.16, 1, 0.3, 1];
 
-/* ============================================================
-   ANIMATION HELPERS
-============================================================ */
-
-function MaskReveal({ children, delay = 0, duration = 0.8, sx = {} }) {
+function Reveal({ children, delay = 0, sx = {} }) {
   const ref = useRef(null);
-  const isInView = useInView(ref, {
+
+  const visible = useInView(ref, {
     once: true,
-    amount: 0.3,
-    margin: "0px 0px -8% 0px",
+    amount: 0.2,
+    margin: "0px 0px -6% 0px",
   });
 
   return (
-    <Box ref={ref} sx={{ overflow: "hidden", ...sx }}>
-      <motion.div
-        initial={{ y: "105%", opacity: 0 }}
-        animate={{
-          y: isInView ? "0%" : "105%",
-          opacity: isInView ? 1 : 0,
-        }}
-        transition={{ duration, delay, ease }}
-      >
-        {children}
-      </motion.div>
-    </Box>
-  );
-}
-
-function FadeUp({ children, delay = 0, duration = 0.7, sx = {} }) {
-  return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: 0.15 }}
-      transition={{ duration, delay, ease }}
+      ref={ref}
+      initial={{ opacity: 0, y: 26 }}
+      animate={
+        visible
+          ? { opacity: 1, y: 0 }
+          : { opacity: 0, y: 26 }
+      }
+      transition={{ duration: 0.75, delay, ease }}
       style={{ width: "100%" }}
     >
       <Box sx={sx}>{children}</Box>
@@ -54,77 +39,106 @@ function FadeUp({ children, delay = 0, duration = 0.7, sx = {} }) {
   );
 }
 
-/* ============================================================
-   DATA CONFIGURATIONS
-============================================================ */
+function Eyebrow({ children, number }) {
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        gap: 1.25,
+        mb: { xs: 3, md: 4 },
+      }}
+    >
+      <Box
+        sx={{
+          width: 8,
+          height: 8,
+          borderRadius: "50%",
+          bgcolor: "#b58aff",
+          flexShrink: 0,
+        }}
+      />
 
-const bountyTiers = [
+      <Typography
+        sx={{
+          fontFamily: "Manrope, sans-serif",
+          color: "#77717f",
+          fontSize: { xs: 11, md: 12 },
+          fontWeight: 700,
+          letterSpacing: ".12em",
+          textTransform: "uppercase",
+        }}
+      >
+        {number && (
+          <Box
+            component="span"
+            sx={{ color: "#9b52f5", mr: 1.5 }}
+          >
+            {number}
+          </Box>
+        )}
+        {children}
+      </Typography>
+    </Box>
+  );
+}
+
+const audiences = [
   {
-    tier: "Standard Bounty",
-    amount: "₹1,000",
-    badge: "Entry to Intermediate",
+    number: "01",
+    icon: <GroupsRounded />,
+    label: "FOR STUDENTS",
+    title: "Potential deserves a platform.",
     description:
-      "Targeted challenges designed to validate clean architecture, performance optimization, and modular component design.",
-    perks: ["Instant Verified Badge", "Direct Byte Points", "Automated Benchmark Review"],
-    accent: "#9b52f5",
-    highlight: false,
+      "Your college, degree, or background should not be the only things that shape how others see your ability. ProxBytes gives students a place to establish a record of their technical work and progress.",
+    accent: "#a56af5",
+    points: [
+      "A clearer record of your work",
+      "Opportunities to demonstrate your abilities",
+      "Progress you can look back on",
+    ],
   },
   {
-    tier: "Large Bounty",
-    amount: "₹10,000",
-    badge: "Advanced & Flagship",
+    number: "02",
+    icon: <BusinessCenterRounded />,
+    label: "FOR INDUSTRY",
+    title: "Talent deserves better signals.",
     description:
-      "Complex production-grade problems presented with authentic system constraints, real test suites, and high industry visibility.",
-    perks: ["Industry Recruiter Spotlight", "10x Byte Reward", "Live Production Verification"],
-    accent: "#b45309",
-    highlight: true,
+      "Academic credentials tell only part of a candidate's story. ProxBytes creates opportunities for companies to observe how students approach technical work and what their results demonstrate.",
+    accent: "#7d83ff",
+    points: [
+      "More context beyond a résumé",
+      "Evidence from practical work",
+      "A clearer view of emerging talent",
+    ],
   },
 ];
 
-const bytePillars = [
+const principles = [
   {
-    icon: <CodeRounded sx={{ fontSize: 28 }} />,
-    tag: "CAPABILITY",
-    title: "Skills",
-    subtitle: "What you can do.",
-    description: "Concrete languages, frameworks, and low-level algorithmic grasp validated through real code tests.",
-    stat: "14+ Skill Tracks",
-    accent: "#9b52f5",
+    number: "01",
+    icon: <FactCheckRounded />,
+    title: "Evidence over assumptions",
+    description:
+      "Give actual work a meaningful place in the conversation about capability, rather than relying on credentials alone.",
+    accent: "#a56af5",
   },
   {
-    icon: <FolderSpecialRounded sx={{ fontSize: 28 }} />,
-    tag: "PORTFOLIO",
-    title: "Projects",
-    subtitle: "What you have built.",
-    description: "Production deployments and end-to-end applications that withstand real stress and user interaction.",
-    stat: "Production Artifacts",
-    accent: "#4f46e5",
+    number: "02",
+    icon: <LightbulbRounded />,
+    title: "Opportunity with purpose",
+    description:
+      "Connect technical ambition with opportunities that give students a reason to apply themselves and grow.",
+    accent: "#7d83ff",
   },
   {
-    icon: <EmojiEventsRounded sx={{ fontSize: 28 }} />,
-    tag: "MASTERY",
-    title: "Challenges",
-    subtitle: "What you have solved.",
-    description: "Real-world bug sprints, architectural puzzles, and competitive challenges resolved under time constraints.",
-    stat: "Live Edge Cases",
-    accent: "#db2777",
+    number: "03",
+    icon: <GroupsRounded />,
+    title: "A stronger connection",
+    description:
+      "Bring students and industry closer together through a shared focus on practical ability and meaningful outcomes.",
+    accent: "#e58bc8",
   },
-  {
-    icon: <WorkspacePremiumRounded sx={{ fontSize: 28 }} />,
-    tag: "VALIDATION",
-    title: "Achievements",
-    subtitle: "What you have proven.",
-    description: "Verifiable badges and cryptographic skill tokens that recruiters and peers can authenticate instantly.",
-    stat: "Public Proof-of-Work",
-    accent: "#d97706",
-  },
-];
-
-const lifecycleSteps = [
-  { step: "01", label: "Participate", detail: "Pick real engineering tracks" },
-  { step: "02", label: "Achieve", detail: "Overcome production constraints" },
-  { step: "03", label: "Earn Bytes", detail: "Accumulate verified platform points" },
-  { step: "04", label: "Build Proof", detail: "Generate undeniable career signal" },
 ];
 
 export default function About() {
@@ -133,489 +147,429 @@ export default function About() {
       component="section"
       id="about"
       sx={{
-        width: "100%",
-        background: "#ffffff",
-        color: "#111111",
-        overflow: "hidden",
         position: "relative",
-        pt: {
-          xs: "30px",
-          sm: "40px",
-          md: "50px",
-          lg: "60px",
-        },
-        pb: {
-          xs: "80px",
+        isolation: "isolate",
+        overflow: "hidden",
+        bgcolor: "#ffffff",
+        color: "#111111",
+        fontFamily: "Manrope, sans-serif",
+        py: {
+          xs: "76px",
           sm: "100px",
           md: "130px",
-          lg: "150px",
         },
       }}
     >
-      {/* Subtle light background ambient tint */}
+      {/* Subtle background details */}
       <Box
+        aria-hidden
         sx={{
           position: "absolute",
-          top: "5%",
-          left: "5%",
-          width: "550px",
-          height: "550px",
+          zIndex: -1,
+          top: "-100px",
+          right: "-180px",
+          width: { xs: 280, md: 520 },
+          height: { xs: 280, md: 520 },
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(155, 82, 245, 0.04) 0%, transparent 70%)",
-          pointerEvents: "none",
+          border: "1px solid #f0e8fb",
+          "&::before": {
+            content: '""',
+            position: "absolute",
+            inset: 35,
+            borderRadius: "50%",
+            border: "1px solid #f6f0fc",
+          },
+          "&::after": {
+            content: '""',
+            position: "absolute",
+            inset: 75,
+            borderRadius: "50%",
+            border: "1px solid #faf6fd",
+          },
         }}
       />
+
       <Box
+        aria-hidden
         sx={{
           position: "absolute",
-          top: "60%",
-          right: "2%",
-          width: "550px",
-          height: "550px",
+          zIndex: -1,
+          top: "42%",
+          left: "-260px",
+          width: 440,
+          height: 440,
           borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(217, 119, 6, 0.03) 0%, transparent 70%)",
-          pointerEvents: "none",
+          background:
+            "radial-gradient(circle, rgba(181,138,255,.08), transparent 68%)",
         }}
       />
 
       <Box
         sx={{
           width: "100%",
-          maxWidth: "1500px",
+          maxWidth: 1500,
           mx: "auto",
           px: {
-            xs: "24px",
-            sm: "40px",
-            md: "70px",
-            lg: "90px",
+            xs: "22px",
+            sm: "36px",
+            md: "64px",
+            lg: "88px",
           },
-          position: "relative",
-          zIndex: 1,
         }}
       >
-        {/* =====================================================
-            HEADER / CHAPTER 1: SOLVE. COMPETE. EARN.
-        ====================================================== */}
-        <FadeUp>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              gap: "12px",
-              mb: { xs: "24px", md: "34px" },
-            }}
-          >
-            <Box
-              sx={{
-                width: "10px",
-                height: "10px",
-                borderRadius: "50%",
-                background: "#c9a8ff",
-              }}
-            />
-            <Typography
-              sx={{
-                fontFamily: "Manrope, sans-serif",
-                fontSize: { xs: "13px", md: "15px" },
-                fontWeight: 600,
-                letterSpacing: ".08em",
-                textTransform: "uppercase",
-                color: "#9b52f5",
-              }}
-            >
-              Bounties & Real Rewards
-            </Typography>
-          </Box>
-        </FadeUp>
+        {/* SECTION 01 — THE MISSION */}
 
-        <Box sx={{ maxWidth: "1250px" }}>
-          <MaskReveal duration={0.9} delay={0.05}>
-            <Typography
-              component="h2"
-              sx={{
-                m: 0,
-                fontFamily: "Manrope, sans-serif",
-                fontSize: {
-                  xs: "40px",
-                  sm: "56px",
-                  md: "74px",
-                  lg: "90px",
-                },
-                lineHeight: { xs: 1.05, md: 0.98 },
-                letterSpacing: "-.06em",
-                fontWeight: 600,
-                color: "#111111",
-              }}
-            >
-              SOLVE. COMPETE. EARN.
-            </Typography>
-          </MaskReveal>
-
-          <MaskReveal duration={0.8} delay={0.15}>
-            <Typography
-              sx={{
-                mt: { xs: "18px", md: "24px" },
-                maxWidth: "800px",
-                fontFamily: "Manrope, sans-serif",
-                fontSize: { xs: "18px", sm: "22px", md: "26px" },
-                lineHeight: 1.4,
-                letterSpacing: "-.03em",
-                color: "#666666",
-              }}
-            >
-              Selected ProxBytes challenges come with real rewards and recognition.{" "}
-              <Box component="span" sx={{ color: "#111111", fontWeight: 600 }}>
-                Your skills can create real value.
-              </Box>
-            </Typography>
-          </MaskReveal>
-        </Box>
-
-        {/* =====================================================
-            BOUNTY REWARD TIERS (₹1,000 & ₹10,000)
-        ====================================================== */}
         <Box
           sx={{
-            mt: { xs: "55px", md: "85px" },
             display: "grid",
             gridTemplateColumns: {
               xs: "1fr",
-              md: "1fr 1fr",
+              md: "minmax(0, 1.3fr) minmax(240px, .7fr)",
             },
-            gap: { xs: "28px", md: "36px" },
+            gap: { xs: 5, md: 8 },
+            alignItems: "end",
+            mb: { xs: 12, md: 18 },
           }}
         >
-          {bountyTiers.map((bounty, i) => (
-            <FadeUp key={bounty.tier} delay={i * 0.1}>
-              <Box
+          <Box>
+            <Reveal>
+              <Eyebrow number="01">
+                About ProxBytes
+              </Eyebrow>
+            </Reveal>
+
+            <Reveal delay={0.08}>
+              <Typography
+                component="h1"
                 sx={{
-                  position: "relative",
-                  height: "100%",
-                  borderRadius: "20px",
-                  p: { xs: "32px", sm: "42px", md: "48px" },
-                  background: bounty.highlight
-                    ? "linear-gradient(145deg, #fffcf4 0%, #faf5ea 100%)"
-                    : "linear-gradient(145deg, #ffffff 0%, #f9f9fb 100%)",
-                  border: bounty.highlight
-                    ? "1px solid rgba(217, 119, 6, 0.35)"
-                    : "1px solid #e5e5ea",
-                  boxShadow: bounty.highlight
-                    ? "0 18px 40px -15px rgba(217, 119, 6, 0.12)"
-                    : "0 18px 40px -15px rgba(0, 0, 0, 0.05)",
-                  overflow: "hidden",
-                  transition: "transform .4s cubic-bezier(.16,1,.3,1), border-color .3s ease",
-                  "&:hover": {
-                    transform: "translateY(-6px)",
-                    borderColor: bounty.accent,
+                  m: 0,
+                  maxWidth: 1000,
+                  fontSize: {
+                    xs: "clamp(46px, 11vw, 66px)",
+                    sm: "76px",
+                    md: "clamp(76px, 7.4vw, 112px)",
                   },
+                  fontWeight: 500,
+                  letterSpacing: "-.075em",
+                  lineHeight: ".96",
                 }}
               >
-                {/* Subtle corner radial */}
+                Potential is
+                <br />
+                everywhere.
+                <br />
+                <Box
+                  component="span"
+                  sx={{ color: "#a56af5" }}
+                >
+                  Opportunity
+                  <br />
+                  should be too.
+                </Box>
+              </Typography>
+            </Reveal>
+          </Box>
+
+          <Reveal delay={0.16}>
+            <Box sx={{ pb: { md: 1.5 }, maxWidth: 420 }}>
+              <Typography
+                sx={{
+                  fontSize: { xs: 16, md: 19 },
+                  lineHeight: 1.8,
+                  color: "#6f6b74",
+                  letterSpacing: "-.025em",
+                }}
+              >
+                ProxBytes exists to help close the gap
+                between what students are capable of and
+                what the world gets to see.
+              </Typography>
+
+              <Typography
+                sx={{
+                  mt: 2,
+                  fontSize: { xs: 16, md: 19 },
+                  lineHeight: 1.8,
+                  color: "#17131d",
+                  fontWeight: 600,
+                  letterSpacing: "-.025em",
+                }}
+              >
+                Because talent should have more than one
+                way to be recognised.
+              </Typography>
+
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1.2,
+                  mt: 3,
+                  color: "#8b58d9",
+                }}
+              >
                 <Box
                   sx={{
-                    position: "absolute",
-                    top: "-50px",
-                    right: "-50px",
-                    width: "160px",
-                    height: "160px",
-                    borderRadius: "50%",
-                    background: `radial-gradient(circle, ${bounty.accent}15 0%, transparent 70%)`,
-                    pointerEvents: "none",
+                    width: 34,
+                    height: 1,
+                    bgcolor: "#b58aff",
                   }}
                 />
 
-                <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
-                  <Typography
-                    sx={{
-                      fontFamily: "Manrope, sans-serif",
-                      fontSize: "13px",
-                      fontWeight: 700,
-                      letterSpacing: ".08em",
-                      textTransform: "uppercase",
-                      color: bounty.accent,
-                    }}
-                  >
-                    {bounty.tier}
-                  </Typography>
-
-                  <Box
-                    sx={{
-                      px: 1.8,
-                      py: 0.5,
-                      borderRadius: "999px",
-                      background: bounty.highlight
-                        ? "rgba(217, 119, 6, 0.08)"
-                        : "rgba(0, 0, 0, 0.04)",
-                      border: "1px solid rgba(0, 0, 0, 0.08)",
-                      fontSize: "11px",
-                      fontFamily: "Manrope, sans-serif",
-                      fontWeight: 600,
-                      color: bounty.highlight ? "#92400e" : "#555555",
-                      letterSpacing: ".04em",
-                    }}
-                  >
-                    {bounty.badge}
-                  </Box>
-                </Box>
-
-                {/* Amount display */}
                 <Typography
                   sx={{
-                    fontFamily: "Manrope, sans-serif",
-                    fontSize: { xs: "50px", sm: "62px", md: "74px" },
+                    fontSize: 11,
                     fontWeight: 700,
-                    lineHeight: 1,
-                    letterSpacing: "-.05em",
-                    color: "#111111",
-                    mb: 2,
+                    letterSpacing: ".1em",
+                    textTransform: "uppercase",
                   }}
                 >
-                  {bounty.amount}
+                  Our reason for existing
                 </Typography>
-
-                <Typography
-                  sx={{
-                    fontFamily: "Manrope, sans-serif",
-                    fontSize: { xs: "14px", md: "16px" },
-                    lineHeight: 1.6,
-                    color: "#666666",
-                    mb: 4,
-                  }}
-                >
-                  {bounty.description}
-                </Typography>
-
-                {/* Perks Checklist */}
-                <Box sx={{ display: "flex", flexDirection: "column", gap: 1.6, mb: 4 }}>
-                  {bounty.perks.map((perk, idx) => (
-                    <Box key={idx} sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-                      <VerifiedRounded sx={{ fontSize: 18, color: bounty.accent }} />
-                      <Typography
-                        sx={{
-                          fontFamily: "Manrope, sans-serif",
-                          fontSize: "13px",
-                          fontWeight: 500,
-                          color: "#333333",
-                        }}
-                      >
-                        {perk}
-                      </Typography>
-                    </Box>
-                  ))}
-                </Box>
-
-                <Button
-                  variant="outlined"
-                  endIcon={<ArrowOutward sx={{ fontSize: 18 }} />}
-                  sx={{
-                    textTransform: "none",
-                    fontFamily: "Manrope, sans-serif",
-                    fontSize: "14px",
-                    fontWeight: 600,
-                    borderRadius: "999px",
-                    px: 3,
-                    py: 1.2,
-                    borderColor: bounty.accent,
-                    color: bounty.accent,
-                    background: "transparent",
-                    "&:hover": {
-                      borderColor: bounty.accent,
-                      background: `${bounty.accent}10`,
-                    },
-                  }}
-                >
-                  View Bounties
-                </Button>
               </Box>
-            </FadeUp>
-          ))}
+            </Box>
+          </Reveal>
         </Box>
 
-        {/* =====================================================
-            CHAPTER 2: EVERY ACTION COUNTS (BYTES ECOSYSTEM)
-        ====================================================== */}
-        <Box sx={{ mt: { xs: "100px", md: "150px" } }}>
-          <FadeUp>
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: "12px",
-                mb: { xs: "20px", md: "28px" },
-              }}
-            >
-              <Box
-                sx={{
-                  width: "10px",
-                  height: "10px",
-                  borderRadius: "50%",
-                  background: "#c9a8ff",
-                }}
-              />
-              <Typography
-                sx={{
-                  fontFamily: "Manrope, sans-serif",
-                  fontSize: { xs: "13px", md: "15px" },
-                  fontWeight: 600,
-                  letterSpacing: ".08em",
-                  textTransform: "uppercase",
-                  color: "#9b52f5",
-                }}
-              >
-                The Proof Economy
-              </Typography>
-            </Box>
-          </FadeUp>
+        {/* SECTION 02 — THE PROBLEM */}
 
-          <MaskReveal duration={0.9}>
-            <Typography
-              component="h2"
-              sx={{
-                m: 0,
-                fontFamily: "Manrope, sans-serif",
-                fontSize: {
-                  xs: "36px",
-                  sm: "52px",
-                  md: "68px",
-                  lg: "82px",
-                },
-                lineHeight: { xs: 1.05, md: 1 },
-                letterSpacing: "-.06em",
-                fontWeight: 600,
-                color: "#111111",
-              }}
-            >
-              EVERY ACTION COUNTS.
-            </Typography>
-          </MaskReveal>
-
-          <MaskReveal duration={0.8} delay={0.1}>
-            <Typography
-              sx={{
-                mt: { xs: "16px", md: "20px" },
-                maxWidth: "850px",
-                fontFamily: "Manrope, sans-serif",
-                fontSize: { xs: "17px", sm: "20px", md: "24px" },
-                lineHeight: 1.45,
-                letterSpacing: "-.03em",
-                color: "#666666",
-              }}
-            >
-              ProxBytes Bytes represent participation, achievements and progress across the platform.
-            </Typography>
-          </MaskReveal>
-
-          {/* Interactive Flow Loop: Participate → Achieve → Earn Bytes → Build Proof */}
-          <FadeUp delay={0.15}>
-            <Box
-              sx={{
-                mt: { xs: "35px", md: "50px" },
-                p: { xs: "24px", md: "32px" },
-                borderRadius: "16px",
-                background: "#fafafc",
-                border: "1px solid #e8e8ed",
-                display: "grid",
-                gridTemplateColumns: {
-                  xs: "1fr",
-                  sm: "1fr 1fr",
-                  lg: "repeat(4, 1fr)",
-                },
-                gap: { xs: "24px", md: "20px" },
-              }}
-            >
-              {lifecycleSteps.map((step) => (
-                <Box
-                  key={step.step}
-                  sx={{
-                    position: "relative",
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: 0.8,
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      fontFamily: "Manrope, sans-serif",
-                      fontSize: "12px",
-                      fontWeight: 700,
-                      color: "#9b52f5",
-                      letterSpacing: ".06em",
-                    }}
-                  >
-                    STEP {step.step}
-                  </Typography>
-
-                  <Typography
-                    sx={{
-                      fontFamily: "Manrope, sans-serif",
-                      fontSize: "20px",
-                      fontWeight: 600,
-                      letterSpacing: "-.03em",
-                      color: "#111111",
-                    }}
-                  >
-                    {step.label}
-                  </Typography>
-
-                  <Typography
-                    sx={{
-                      fontFamily: "Manrope, sans-serif",
-                      fontSize: "13px",
-                      color: "#777777",
-                    }}
-                  >
-                    {step.detail}
-                  </Typography>
-                </Box>
-              ))}
-            </Box>
-          </FadeUp>
-
-          {/* 4 Pillars: Skills, Projects, Challenges, Achievements */}
+        <Box
+          sx={{
+            borderTop: "1px solid #ded9e4",
+            pt: { xs: 6, md: 9 },
+            mb: { xs: 13, md: 20 },
+          }}
+        >
           <Box
             sx={{
-              mt: { xs: "45px", md: "70px" },
               display: "grid",
               gridTemplateColumns: {
                 xs: "1fr",
-                sm: "1fr 1fr",
-                lg: "repeat(4, 1fr)",
+                md: "minmax(0, .8fr) minmax(0, 1.2fr)",
               },
-              gap: { xs: "20px", md: "24px" },
+              gap: { xs: 5, md: 10 },
+              alignItems: "start",
             }}
           >
-            {bytePillars.map((item, idx) => (
-              <FadeUp key={item.title} delay={0.1 + idx * 0.08}>
+            <Reveal>
+              <Eyebrow number="02">
+                The gap we see
+              </Eyebrow>
+
+              <Typography
+                component="h2"
+                sx={{
+                  m: 0,
+                  fontSize: {
+                    xs: "clamp(38px, 9vw, 58px)",
+                    md: "clamp(60px, 5.6vw, 82px)",
+                  },
+                  lineHeight: 1,
+                  letterSpacing: "-.07em",
+                  fontWeight: 500,
+                }}
+              >
+                A résumé tells
+                <br />
+                <Box
+                  component="span"
+                  sx={{ color: "#a56af5" }}
+                >
+                  part of the story.
+                </Box>
+              </Typography>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <Typography
+                sx={{
+                  maxWidth: 700,
+                  fontSize: { xs: 16, md: 20 },
+                  lineHeight: 1.85,
+                  color: "#706b75",
+                }}
+              >
+                Students spend years developing knowledge,
+                experimenting with ideas, and discovering
+                what they can do. Yet communicating that
+                ability to someone outside the classroom
+                is not always straightforward.
+                <br />
+                <br />
+                Meanwhile, companies need ways to look
+                beyond qualifications and understand the
+                people behind an application.
+                <br />
+                <br />
+                <Box
+                  component="span"
+                  sx={{
+                    color: "#17131d",
+                    fontWeight: 600,
+                  }}
+                >
+                  ProxBytes is built around that gap:
+                  making practical ability easier to
+                  demonstrate and easier to discover.
+                </Box>
+              </Typography>
+            </Reveal>
+          </Box>
+
+          {/* Editorial statement */}
+          <Reveal delay={0.12}>
+            <Box
+              sx={{
+                mt: { xs: 7, md: 10 },
+                p: {
+                  xs: "28px 22px",
+                  sm: "36px",
+                  md: "48px 52px",
+                },
+                bgcolor: "#f7f3fc",
+                borderLeft: "3px solid #b58aff",
+                display: "grid",
+                gridTemplateColumns: {
+                  xs: "1fr",
+                  md: "1fr auto",
+                },
+                alignItems: "end",
+                gap: 4,
+              }}
+            >
+              <Typography
+                sx={{
+                  maxWidth: 850,
+                  fontSize: {
+                    xs: 25,
+                    sm: 32,
+                    md: 42,
+                  },
+                  lineHeight: 1.25,
+                  letterSpacing: "-.055em",
+                  fontWeight: 500,
+                  color: "#201b27",
+                }}
+              >
+                Capability should be something you can
+                demonstrate, not just something you claim.
+              </Typography>
+
+              <NorthEastRounded
+                sx={{
+                  fontSize: 32,
+                  color: "#9b52f5",
+                }}
+              />
+            </Box>
+          </Reveal>
+        </Box>
+
+        {/* SECTION 03 — WHO WE SERVE */}
+
+        <Box sx={{ mb: { xs: 13, md: 20 } }}>
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "1fr",
+                md: "1fr .7fr",
+              },
+              gap: { xs: 4, md: 8 },
+              alignItems: "end",
+              mb: { xs: 6, md: 9 },
+            }}
+          >
+            <Reveal>
+              <Eyebrow number="03">
+                One platform, two perspectives
+              </Eyebrow>
+
+              <Typography
+                component="h2"
+                sx={{
+                  m: 0,
+                  fontSize: {
+                    xs: "clamp(40px, 9vw, 60px)",
+                    md: "clamp(64px, 6vw, 90px)",
+                  },
+                  lineHeight: 1,
+                  letterSpacing: "-.075em",
+                  fontWeight: 500,
+                }}
+              >
+                Different needs.
+                <br />
+                <Box
+                  component="span"
+                  sx={{ color: "#a56af5" }}
+                >
+                  Shared purpose.
+                </Box>
+              </Typography>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <Typography
+                sx={{
+                  maxWidth: 450,
+                  color: "#706b75",
+                  fontSize: { xs: 15, md: 18 },
+                  lineHeight: 1.8,
+                }}
+              >
+                Better opportunities for students and
+                better visibility for companies begin
+                with the same thing: a clearer picture
+                of practical capability.
+              </Typography>
+            </Reveal>
+          </Box>
+
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "1fr",
+                md: "1fr 1fr",
+              },
+              gap: { xs: 8, md: 4 },
+            }}
+          >
+            {audiences.map((item, index) => (
+              <Reveal
+                key={item.number}
+                delay={index * 0.1}
+              >
                 <Box
                   sx={{
                     height: "100%",
-                    borderRadius: "16px",
-                    p: { xs: "28px", md: "32px" },
-                    background: "#ffffff",
-                    border: "1px solid #e8e8ee",
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent: "space-between",
-                    boxShadow: "0 10px 30px -15px rgba(0,0,0,0.04)",
-                    transition: "transform .4s cubic-bezier(.16,1,.3,1), border-color .3s ease",
-                    "&:hover": {
-                      transform: "translateY(-6px)",
-                      borderColor: item.accent,
-                    },
+                    borderTop: "1px solid #ded9e4",
+                    pt: { xs: 4, md: 5 },
                   }}
                 >
-                  <Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "space-between",
+                      gap: 2,
+                      mb: 5,
+                    }}
+                  >
                     <Box
                       sx={{
-                        width: "50px",
-                        height: "50px",
-                        borderRadius: "12px",
-                        background: `${item.accent}12`,
-                        color: item.accent,
+                        width: 50,
+                        height: 50,
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        mb: 2.5,
+                        borderRadius: "50%",
+                        bgcolor: `${item.accent}12`,
+                        color: item.accent,
+                        "& svg": { fontSize: 25 },
                       }}
                     >
                       {item.icon}
@@ -623,274 +577,542 @@ export default function About() {
 
                     <Typography
                       sx={{
-                        fontFamily: "Manrope, sans-serif",
-                        fontSize: "11px",
-                        fontWeight: 700,
-                        letterSpacing: ".08em",
+                        fontSize: 11,
+                        fontWeight: 800,
+                        letterSpacing: ".1em",
                         color: item.accent,
-                        mb: 1,
-                        textTransform: "uppercase",
                       }}
                     >
-                      {item.tag}
-                    </Typography>
-
-                    <Typography
-                      variant="h4"
-                      sx={{
-                        fontFamily: "Manrope, sans-serif",
-                        fontSize: { xs: "24px", md: "28px" },
-                        fontWeight: 600,
-                        letterSpacing: "-.04em",
-                        color: "#111111",
-                        mb: 0.6,
-                      }}
-                    >
-                      {item.title}
-                    </Typography>
-
-                    <Typography
-                      sx={{
-                        fontFamily: "Manrope, sans-serif",
-                        fontSize: "13px",
-                        fontWeight: 600,
-                        color: "#9b52f5",
-                        mb: 1.8,
-                      }}
-                    >
-                      {item.subtitle}
-                    </Typography>
-
-                    <Typography
-                      sx={{
-                        fontFamily: "Manrope, sans-serif",
-                        fontSize: "13px",
-                        lineHeight: 1.55,
-                        color: "#666666",
-                      }}
-                    >
-                      {item.description}
+                      {item.number}
                     </Typography>
                   </Box>
+
+                  <Typography
+                    sx={{
+                      fontSize: 10,
+                      fontWeight: 800,
+                      letterSpacing: ".12em",
+                      color: item.accent,
+                      mb: 2,
+                    }}
+                  >
+                    {item.label}
+                  </Typography>
+
+                  <Typography
+                    component="h3"
+                    sx={{
+                      m: 0,
+                      fontSize: {
+                        xs: 32,
+                        md: 40,
+                      },
+                      lineHeight: 1.12,
+                      letterSpacing: "-.06em",
+                      fontWeight: 500,
+                      maxWidth: 450,
+                    }}
+                  >
+                    {item.title}
+                  </Typography>
+
+                  <Typography
+                    sx={{
+                      mt: 2.5,
+                      maxWidth: 510,
+                      fontSize: 14,
+                      lineHeight: 1.85,
+                      color: "#77717c",
+                    }}
+                  >
+                    {item.description}
+                  </Typography>
 
                   <Box
                     sx={{
-                      mt: 3.5,
-                      pt: 2.2,
-                      borderTop: "1px solid #f0f0f4",
+                      mt: 4,
                       display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
+                      flexDirection: "column",
+                      gap: 2,
                     }}
                   >
-                    <Typography
-                      sx={{
-                        fontFamily: "Manrope, sans-serif",
-                        fontSize: "12px",
-                        fontWeight: 600,
-                        color: "#444444",
-                      }}
-                    >
-                      {item.stat}
-                    </Typography>
-                    <ArrowOutward sx={{ fontSize: 16, color: item.accent }} />
-                  </Box>
-                </Box>
-              </FadeUp>
-            ))}
-          </Box>
-
-          {/* Subheading Callout */}
-          <FadeUp delay={0.2}>
-            <Box
-              sx={{
-                mt: { xs: "35px", md: "55px" },
-                textAlign: "center",
-              }}
-            >
-              <Typography
-                sx={{
-                  fontFamily: "Manrope, sans-serif",
-                  fontSize: { xs: "22px", sm: "28px", md: "34px" },
-                  fontWeight: 500,
-                  letterSpacing: "-.04em",
-                  color: "#111111",
-                }}
-              >
-                Make your capability visible.
-              </Typography>
-            </Box>
-          </FadeUp>
-        </Box>
-
-        {/* =====================================================
-            CHAPTER 3: YOUR NEXT LEVEL (FINALE SHOWCASE)
-        ====================================================== */}
-        <Box sx={{ mt: { xs: "100px", md: "150px" } }}>
-          <FadeUp>
-            <Box
-              sx={{
-                position: "relative",
-                borderRadius: "24px",
-                p: { xs: "36px 24px", sm: "50px 36px", md: "75px 60px" },
-                background: "linear-gradient(135deg, #f7f3fd 0%, #f4effa 100%)",
-                border: "1px solid rgba(155, 82, 245, 0.2)",
-                boxShadow: "0 25px 50px -20px rgba(155, 82, 245, 0.08)",
-                overflow: "hidden",
-                display: "grid",
-                gridTemplateColumns: {
-                  xs: "1fr",
-                  md: "1.2fr 0.8fr",
-                },
-                gap: { xs: "36px", md: "55px" },
-                alignItems: "center",
-              }}
-            >
-              {/* Geometric circular decoration */}
-              <Box
-                sx={{
-                  position: "absolute",
-                  right: "-100px",
-                  top: "-100px",
-                  width: "400px",
-                  height: "400px",
-                  borderRadius: "50%",
-                  border: "1px solid rgba(155, 82, 245, 0.12)",
-                  pointerEvents: "none",
-                }}
-              />
-
-              <Box sx={{ position: "relative", zIndex: 1 }}>
-                <Typography
-                  sx={{
-                    fontFamily: "Manrope, sans-serif",
-                    fontSize: "12px",
-                    fontWeight: 700,
-                    letterSpacing: ".12em",
-                    textTransform: "uppercase",
-                    color: "#9b52f5",
-                    mb: 2,
-                  }}
-                >
-                  YOUR NEXT LEVEL
-                </Typography>
-
-                <Typography
-                  variant="h3"
-                  sx={{
-                    fontFamily: "Manrope, sans-serif",
-                    fontSize: { xs: "34px", sm: "46px", md: "58px" },
-                    fontWeight: 700,
-                    lineHeight: 1.05,
-                    letterSpacing: "-.055em",
-                    color: "#111111",
-                    mb: 3,
-                  }}
-                >
-                  PROXBYTES
-                </Typography>
-
-                <Box sx={{ display: "flex", flexDirection: "column", gap: 1.4, mb: 4 }}>
-                  {["Build engagement.", "Take on challenges.", "Discover capability."].map((point, idx) => (
-                    <Box key={idx} sx={{ display: "flex", alignItems: "center", gap: 1.6 }}>
+                    {item.points.map((point) => (
                       <Box
+                        key={point}
                         sx={{
-                          width: "7px",
-                          height: "7px",
-                          borderRadius: "50%",
-                          background: "#9b52f5",
-                        }}
-                      />
-                      <Typography
-                        sx={{
-                          fontFamily: "Manrope, sans-serif",
-                          fontSize: { xs: "17px", md: "19px" },
-                          fontWeight: 500,
-                          color: "#333333",
+                          display: "flex",
+                          alignItems: "flex-start",
+                          gap: 1.5,
                         }}
                       >
-                        {point}
-                      </Typography>
-                    </Box>
-                  ))}
-                </Box>
+                        <Box
+                          sx={{
+                            mt: "7px",
+                            width: 6,
+                            height: 6,
+                            borderRadius: "50%",
+                            bgcolor: item.accent,
+                            flexShrink: 0,
+                          }}
+                        />
 
-                <Button
-                  variant="contained"
-                  endIcon={<ArrowOutward />}
+                        <Typography
+                          sx={{
+                            fontSize: 12,
+                            lineHeight: 1.7,
+                            color: "#514b58",
+                          }}
+                        >
+                          {point}
+                        </Typography>
+                      </Box>
+                    ))}
+                  </Box>
+                </Box>
+              </Reveal>
+            ))}
+          </Box>
+        </Box>
+
+        {/* SECTION 04 — OUR PRINCIPLES */}
+
+        <Box
+          sx={{
+            mb: { xs: 13, md: 20 },
+            borderTop: "1px solid #ded9e4",
+            pt: { xs: 6, md: 9 },
+          }}
+        >
+          <Box
+            sx={{
+              display: "grid",
+              gridTemplateColumns: {
+                xs: "1fr",
+                md: "minmax(0, .85fr) minmax(0, 1.15fr)",
+              },
+              gap: { xs: 5, md: 10 },
+              mb: { xs: 5, md: 8 },
+            }}
+          >
+            <Reveal>
+              <Eyebrow number="04">
+                What guides us
+              </Eyebrow>
+
+              <Typography
+                component="h2"
+                sx={{
+                  m: 0,
+                  fontSize: {
+                    xs: "clamp(40px, 9vw, 58px)",
+                    md: "clamp(62px, 5.7vw, 84px)",
+                  },
+                  lineHeight: 1,
+                  letterSpacing: "-.075em",
+                  fontWeight: 500,
+                }}
+              >
+                The thinking
+                <br />
+                <Box
+                  component="span"
+                  sx={{ color: "#a56af5" }}
+                >
+                  behind the platform.
+                </Box>
+              </Typography>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <Typography
+                sx={{
+                  alignSelf: "end",
+                  maxWidth: 590,
+                  color: "#706b75",
+                  fontSize: { xs: 15, md: 18 },
+                  lineHeight: 1.8,
+                }}
+              >
+                The experience matters, but so does the
+                thinking behind it. These principles
+                shape the kind of opportunities ProxBytes
+                aims to create.
+              </Typography>
+            </Reveal>
+          </Box>
+
+          <Box
+            sx={{
+              borderTop: "1px solid #e7e2eb",
+            }}
+          >
+            {principles.map((item, index) => (
+              <Reveal
+                key={item.number}
+                delay={index * 0.07}
+              >
+                <Box
                   sx={{
-                    textTransform: "none",
-                    fontFamily: "Manrope, sans-serif",
-                    fontSize: "15px",
-                    fontWeight: 600,
-                    borderRadius: "999px",
-                    px: 3.8,
-                    py: 1.4,
-                    background: "#9b52f5",
-                    color: "#ffffff",
-                    boxShadow: "0 10px 25px -8px rgba(155, 82, 245, 0.45)",
-                    "&:hover": {
-                      background: "#873ae8",
+                    display: "grid",
+                    gridTemplateColumns: {
+                      xs: "42px minmax(0, 1fr)",
+                      md: "70px minmax(0, .85fr) minmax(0, 1.15fr)",
+                    },
+                    gap: { xs: 2, md: 4 },
+                    alignItems: "start",
+                    py: { xs: 4, md: 5 },
+                    borderBottom: "1px solid #e7e2eb",
+                    transition: "background .3s",
+                    "&:hover .principle-title": {
+                      color: item.accent,
                     },
                   }}
                 >
-                  Get Started
-                </Button>
-              </Box>
+                  <Typography
+                    sx={{
+                      pt: 0.5,
+                      fontSize: 11,
+                      fontWeight: 800,
+                      letterSpacing: ".08em",
+                      color: item.accent,
+                    }}
+                  >
+                    {item.number}
+                  </Typography>
 
-              {/* Graphic Metric Stat Panel */}
-              <Box
+                  <Typography
+                    className="principle-title"
+                    component="h3"
+                    sx={{
+                      m: 0,
+                      fontSize: {
+                        xs: 22,
+                        md: 28,
+                      },
+                      lineHeight: 1.25,
+                      letterSpacing: "-.045em",
+                      fontWeight: 500,
+                      transition: "color .25s",
+                      gridColumn: {
+                        xs: "2",
+                        md: "2",
+                      },
+                    }}
+                  >
+                    {item.title}
+                  </Typography>
+
+                  <Typography
+                    sx={{
+                      gridColumn: {
+                        xs: "2",
+                        md: "3",
+                      },
+                      fontSize: 13,
+                      lineHeight: 1.85,
+                      color: "#77717c",
+                      maxWidth: 490,
+                    }}
+                  >
+                    {item.description}
+                  </Typography>
+                </Box>
+              </Reveal>
+            ))}
+          </Box>
+        </Box>
+
+        {/* SECTION 05 — CLOSING STATEMENT */}
+
+        <Reveal>
+          <Box
+            sx={{
+              position: "relative",
+              overflow: "hidden",
+              bgcolor: "#15121a",
+              color: "#ffffff",
+              p: {
+                xs: "34px 24px",
+                sm: "46px 36px",
+                md: "68px 60px",
+              },
+              borderRadius: { xs: "6px", md: "10px" },
+            }}
+          >
+            <Box
+              aria-hidden
+              sx={{
+                position: "absolute",
+                width: { xs: 250, md: 430 },
+                height: { xs: 250, md: 430 },
+                right: { xs: -140, md: -40 },
+                top: { xs: -160, md: -230 },
+                border: "1px solid rgba(181,138,255,.22)",
+                borderRadius: "50%",
+                boxShadow:
+                  "0 0 0 35px rgba(181,138,255,.025), 0 0 0 70px rgba(181,138,255,.02)",
+                pointerEvents: "none",
+              }}
+            />
+
+            <Box
+              sx={{
+                position: "relative",
+                zIndex: 1,
+                maxWidth: 900,
+              }}
+            >
+              <Eyebrow number="05">
+                The future we're working toward
+              </Eyebrow>
+
+              <Typography
+                component="h2"
                 sx={{
-                  position: "relative",
-                  zIndex: 1,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 2.5,
+                  m: 0,
+                  fontSize: {
+                    xs: "clamp(40px, 10vw, 58px)",
+                    sm: 68,
+                    md: "clamp(64px, 6vw, 88px)",
+                  },
+                  lineHeight: 1,
+                  letterSpacing: "-.075em",
+                  fontWeight: 500,
                 }}
               >
-                <Box
-                  sx={{
-                    p: 3,
-                    borderRadius: "16px",
-                    background: "#ffffff",
-                    border: "1px solid #e8e4f3",
-                    boxShadow: "0 10px 25px -10px rgba(0,0,0,0.04)",
-                  }}
-                >
-                  <Typography sx={{ fontSize: "11px", color: "#888888", fontWeight: 700, letterSpacing: ".08em", mb: 0.5 }}>
-                    BOUNTY DISTRIBUTION
-                  </Typography>
-                  <Typography sx={{ fontSize: "30px", fontWeight: 700, color: "#111111", fontFamily: "Manrope, sans-serif" }}>
-                    100% Direct & Verified
-                  </Typography>
-                  <Typography sx={{ fontSize: "12px", color: "#666666", mt: 0.5 }}>
-                    Guaranteed milestone payouts for challenge solvers
-                  </Typography>
-                </Box>
+                Let ability
+                <br />
+                speak for itself.
+              </Typography>
 
-                <Box
-                  sx={{
-                    p: 3,
-                    borderRadius: "16px",
-                    background: "#ffffff",
-                    border: "1px solid #e8e4f3",
-                    boxShadow: "0 10px 25px -10px rgba(0,0,0,0.04)",
-                  }}
-                >
-                  <Typography sx={{ fontSize: "11px", color: "#888888", fontWeight: 700, letterSpacing: ".08em", mb: 0.5 }}>
-                    PUBLIC REPUTATION
-                  </Typography>
-                  <Typography sx={{ fontSize: "30px", fontWeight: 700, color: "#9b52f5", fontFamily: "Manrope, sans-serif" }}>
-                    Verifiable Proof
-                  </Typography>
-                  <Typography sx={{ fontSize: "12px", color: "#666666", mt: 0.5 }}>
-                    Git commits, pull requests, and skill tokens attached directly to your profile
-                  </Typography>
+              <Typography
+                sx={{
+                  mt: 3,
+                  maxWidth: 620,
+                  color: "#b8b2c0",
+                  fontSize: { xs: 14, md: 16 },
+                  lineHeight: 1.85,
+                }}
+              >
+                We believe the next opportunity should
+                be shaped by more than where someone
+                started. ProxBytes aims to make practical
+                capability more visible and create
+                stronger connections between emerging
+                talent and the wider industry.
+              </Typography>
+
+              <Button
+                      sx={{
+                        position: "relative",
+                        top: 20,
+                        minWidth: {
+                          xs: "150px",
+                          md: "210px",
+                        },
+              
+                        height: {
+                          xs: "45px",
+                          md: "60px",
+                        },
+              
+                        px: 4,
+              
+                        borderRadius: "6px",
+              
+                        background: "#cbb0f5",
+              
+                        color: "#111111",
+              
+                        textTransform: "none",
+              
+                        fontFamily: "Manrope, sans-serif",
+              
+                        fontSize: {
+                          xs: "17px",
+                          md: "20px",
+                        },
+              
+                        fontWeight: 500,
+              
+                        letterSpacing: "-.035em",
+              
+                        justifyContent: "center",
+              
+                        overflow: "hidden",
+              
+                        transition:
+                          "background-color .35s ease",
+              
+                        "&:hover": {
+                          background: "#ffff00",
+                        },
+              
+                        /* =====================================================
+                          CONTENT WRAPPER
+                        ====================================================== */
+              
+                        "& .button-content-wrapper": {
+                          position: "relative",
+              
+                          display: "block",
+              
+                          height: "1.4em",
+              
+                          overflow: "hidden",
+              
+                          lineHeight: 1.4,
+                        },
+              
+                        /* =====================================================
+                          EACH CONTENT ROW
+                        ====================================================== */
+              
+                        "& .button-content": {
+                          display: "flex",
+              
+                          alignItems: "center",
+              
+                          justifyContent: "center",
+              
+                          gap: "25px",
+              
+                          whiteSpace: "nowrap",
+              
+                          transition:
+                            "transform .45s cubic-bezier(.76,0,.24,1)",
+                        },
+              
+                        /* =====================================================
+                          FIRST / VISIBLE CONTENT
+                        ====================================================== */
+              
+                        "& .button-content.current": {
+                          transform: "translateY(0)",
+                        },
+              
+                        /* =====================================================
+                          SECOND CONTENT
+                          Starts below the visible area
+                        ====================================================== */
+              
+                        "& .button-content.next": {
+                          position: "absolute",
+              
+                          left: 0,
+              
+                          top: 0,
+              
+                          width: "100%",
+              
+                          transform: "translateY(110%)",
+                        },
+              
+                        /* =====================================================
+                          HOVER
+              
+                          Current content goes UP.
+                          New content comes FROM BELOW.
+                        ====================================================== */
+              
+                        "&:hover .button-content.current": {
+                          transform: "translateY(-110%)",
+                        },
+              
+                        "&:hover .button-content.next": {
+                          transform: "translateY(0)",
+                        },
+              
+                        /* =====================================================
+                          ARROW
+                        ====================================================== */
+              
+                        "& .button-arrow": {
+                          display: "flex",
+              
+                          alignItems: "center",
+              
+                          justifyContent: "center",
+              
+                          flexShrink: 0,
+              
+                          transition:
+                            "transform .45s cubic-bezier(.76,0,.24,1)",
+                        },
+              
+                        "&:hover .button-content.current .button-arrow": {
+                          transform:
+                            "translateY(-2px) rotate(0deg)",
+                        },
+              
+                        "&:hover .button-content.next .button-arrow": {
+                          transform:
+                            "translateY(0) rotate(0deg)",
+                        },
+                      }}
+                    >
+                      <Box
+                        className="button-content-wrapper"
+                      >
+              
+                        {/* =================================================
+                            CURRENT CONTENT
+                        ================================================== */}
+              
+                        <Box
+                          className="button-content current"
+                        >
+                          <span>
+                            Enter ProxBytes
+                          </span>
+              
+                          <Box
+                            component="span"
+                            className="button-arrow"
+                          >
+                            <ArrowOutward
+                              sx={{
+                                fontSize: {
+                                  xs: "22px",
+                                  md: "24px",
+                                },
+                              }}
+                            />
+                          </Box>
+                        </Box>
+              
+              
+                  {/* =================================================
+                      NEW CONTENT
+                  ================================================== */}
+              
+                  <Box
+                    className="button-content next"
+                  >
+                    <span>
+                      Enter ProxBytes
+                    </span>
+              
+                    <Box
+                      component="span"
+                      className="button-arrow"
+                    >
+                      <ArrowOutward
+                        sx={{
+                          fontSize: {
+                            xs: "22px",
+                            md: "24px",
+                          },
+                        }}
+                      />
+                    </Box>
+                  </Box>
+              
                 </Box>
-              </Box>
+                          </Button>
             </Box>
-          </FadeUp>
-        </Box>
+          </Box>
+        </Reveal>
       </Box>
     </Box>
   );
