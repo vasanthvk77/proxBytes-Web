@@ -13,7 +13,49 @@ import {
 
 const ease = [0.16, 1, 0.3, 1];
 
-function Reveal({ children, delay = 0, sx = {} }) {
+
+const revealVariants = {
+  fadeUp: {
+    hidden: { opacity: 0, y: 26 },
+    visible: { opacity: 1, y: 0 },
+  },
+  slideLeft: {
+    hidden: { opacity: 0, x: -45 },
+    visible: { opacity: 1, x: 0 },
+  },
+  slideRight: {
+    hidden: { opacity: 0, x: 45 },
+    visible: { opacity: 1, x: 0 },
+  },
+  blur: {
+    hidden: { opacity: 0, y: 12, filter: "blur(8px)" },
+    visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+  },
+  scale: {
+    hidden: { opacity: 0, scale: 0.94 },
+    visible: { opacity: 1, scale: 1 },
+  },
+  mask: {
+    hidden: {
+      opacity: 0,
+      y: 35,
+      clipPath: "inset(0 0 100% 0)",
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      clipPath: "inset(0 0 0% 0)",
+    },
+  },
+};
+
+function Reveal({
+  children,
+  delay = 0,
+  sx = {},
+  variant = "fadeUp",
+  duration = 0.8,
+}) {
   const ref = useRef(null);
 
   const visible = useInView(ref, {
@@ -21,6 +63,30 @@ function Reveal({ children, delay = 0, sx = {} }) {
     amount: 0.2,
     margin: "0px 0px -6% 0px",
   });
+
+  const animation = revealVariants[variant] || revealVariants.fadeUp;
+
+  return (
+    <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={visible ? "visible" : "hidden"}
+      variants={animation}
+      transition={{
+        duration,
+        delay,
+        ease,
+      }}
+      style={{
+        width: "100%",
+        willChange: visible ? "auto" : "transform, opacity",
+      }}
+    >
+      <Box sx={sx}>{children}</Box>
+    </motion.div>
+  );
+
+
 
   return (
     <motion.div
@@ -238,7 +304,7 @@ export default function About() {
               </Eyebrow>
             </Reveal>
 
-            <Reveal delay={0.08}>
+            <Reveal delay={0.08} variant="fadeUp" duration={1}>
               <Typography
                 component="h1"
                 sx={{
@@ -270,7 +336,7 @@ export default function About() {
             </Reveal>
           </Box>
 
-          <Reveal delay={0.16}>
+          <Reveal delay={0.16} variant="blur" duration={0.9}>
             <Box sx={{ pb: { md: 1.5 }, maxWidth: 420 }}>
               <Typography
                 sx={{
@@ -351,7 +417,7 @@ export default function About() {
               alignItems: "start",
             }}
           >
-            <Reveal>
+            <Reveal delay={0.15} variant="blur" duration={0.9}>
               <Eyebrow number="02">
                 The gap we see
               </Eyebrow>
@@ -417,7 +483,7 @@ export default function About() {
           </Box>
 
           {/* Editorial statement */}
-          <Reveal delay={0.12}>
+          <Reveal delay={0.12} variant="scale" duration={0.9}>
             <Box
               sx={{
                 mt: { xs: 7, md: 10 },
@@ -539,7 +605,9 @@ export default function About() {
             {audiences.map((item, index) => (
               <Reveal
                 key={item.number}
-                delay={index * 0.1}
+                delay={index * 0.12}
+                variant={index === 0 ? "slideLeft" : "slideRight"}
+                duration={0.9}
               >
                 <Box
                   sx={{
