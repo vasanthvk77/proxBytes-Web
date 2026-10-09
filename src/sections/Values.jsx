@@ -1,6 +1,6 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Box, Typography } from "@mui/material";
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, useScroll, useMotionValueEvent } from "framer-motion";
 
 import learningImage from "../../assets/Values-1.png";
 import buildingImage from "../../assets/Values-2.png";
@@ -866,6 +866,480 @@ function StepText({ step, index }) {
    MAIN VALUES SECTION
 ============================================================ */
 
+/* ============================================================
+   SCROLL-TRACKED CHALLENGE SECTION
+   Isolated replacement for stages 01, 02 and 03
+============================================================ */
+
+
+function ScrollTrackedChallenges() {
+  const sectionRef = useRef(null);
+  const [activeStep, setActiveStep] = useState(0);
+
+  useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"],
+  });
+
+  const { scrollYProgress } = useScroll({
+    target: sectionRef,
+    offset: ["start start", "end end"],
+  });
+
+  useMotionValueEvent(scrollYProgress, "change", (progress) => {
+    const nextStep =
+      progress < 0.34 ? 0 :
+      progress < 0.67 ? 1 : 2;
+
+    setActiveStep((current) =>
+      current === nextStep ? current : nextStep
+    );
+  });
+
+  const visuals = [
+    {
+      src: learningImage,
+      alt: "Exploring industry challenge briefs",
+      label: "01 — CHALLENGE ARENA",
+    },
+    {
+      src: buildingImage,
+      alt: "Building a software solution",
+      label: "02 — SPRINT & BUILD",
+    },
+    {
+      src: null,
+      alt: "",
+      label: "03 — COMPETE",
+    },
+  ];
+
+  return (
+    <Box
+      component="section"
+      ref={sectionRef}
+      aria-label="How the ProxBytes challenge arena works"
+      sx={{
+        position: "relative",
+        minHeight: { xs: "auto", md: "240vh" },
+        width: "100%",
+      }}
+    >
+      {/* The entire two-column layout stays pinned together */}
+      <Box
+        sx={{
+          position: { xs: "relative", md: "sticky" },
+          top: { md: "8vh" },
+          minHeight: { xs: "auto", md: "84vh" },
+          height: { md: "84vh" },
+          maxHeight: { md: "900px" },
+
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "1fr",
+            md: "0.9fr 1.1fr",
+          },
+          gap: {
+            xs: "35px",
+            md: "65px",
+            lg: "90px",
+          },
+          alignItems: "center",
+          boxSizing: "border-box",
+        }}
+      >
+        {/* LEFT: ALL THREE CARDS VISIBLE TOGETHER */}
+
+        <Box
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            height: { md: "100%" },
+            gap: { xs: "42px", md: 0 },
+            minWidth: 0,
+          }}
+        >
+          {steps.slice(0, 3).map((step, index) => (
+            <Box
+              key={step.number}
+              sx={{
+                flex: { md: "1 1 0" },
+                minHeight: 0,
+                display: "flex",
+                flexDirection: { xs: "column", md: "initial" },
+                alignItems: { xs: "stretch", md: "center" },
+                py: { md: "12px" },
+                boxSizing: "border-box",
+              }}
+            >
+              
+              <Box
+                sx={{
+                  width: "100%",
+                  borderLeft: "1px solid",
+                  borderColor:
+                    activeStep === index
+                      ? "#222222"
+                      : "#dedede",
+                  pl: { xs: "20px", md: "26px" },
+                  py: "4px",
+                  transition: "border-color .35s ease",
+                }}
+              >
+                <Box
+                  sx={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    gap: "12px",
+                    mb: { xs: "14px", md: "18px" },
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontFamily: "Manrope, sans-serif",
+                      fontSize: "12px",
+                      color:
+                        activeStep === index
+                          ? "#222222"
+                          : "#999999",
+                      fontWeight: 600,
+                    }}
+                  >
+                    {step.number}
+                  </Typography>
+
+                  <Typography
+                    sx={{
+                      fontFamily: "Manrope, sans-serif",
+                      fontSize: "10px",
+                      fontWeight: 600,
+                      letterSpacing: ".05em",
+                      color: "#9b52f5",
+                      textAlign: "right",
+                    }}
+                  >
+                    {step.tag}
+                  </Typography>
+                </Box>
+
+                <Typography
+                  component="h3"
+                  sx={{
+                    fontFamily: "Manrope, sans-serif",
+                    fontSize: {
+                      xs: "28px",
+                      sm: "32px",
+                      md: "clamp(25px, 2.4vw, 40px)",
+                    },
+                    fontWeight: 500,
+                    lineHeight: 1.12,
+                    letterSpacing: "-.05em",
+                    color: "#111111",
+                    m: 0,
+                  }}
+                >
+                  {step.title}
+                </Typography>
+
+                <Typography
+                  sx={{
+                    mt: { xs: "14px", md: "16px" },
+                    maxWidth: "560px",
+                    fontFamily: "Manrope, sans-serif",
+                    fontSize: {
+                      xs: "14px",
+                      md: "clamp(12px, 1vw, 16px)",
+                    },
+                    lineHeight: 1.65,
+                    color: "#707070",
+                  }}
+                >
+                  {step.description}
+                </Typography>
+
+                <Box
+                  sx={{
+                    mt: { xs: "17px", md: "20px" },
+                    display: "flex",
+                    alignItems: "flex-start",
+                    gap: "10px",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: "7px",
+                      height: "7px",
+                      flexShrink: 0,
+                      borderRadius: "50%",
+                      background: "#22c55e",
+                      mt: "6px",
+                    }}
+                  />
+
+                  <Typography
+                    sx={{
+                      fontFamily: "Manrope, sans-serif",
+                      fontSize: "11px",
+                      lineHeight: 1.6,
+                      color: "#888888",
+                    }}
+                  >
+                    {step.metric}
+                  </Typography>
+                </Box>
+              </Box>
+              
+{/* MOBILE IMAGE: DIRECTLY AFTER ITS RELATED CARD */}
+
+<Box
+  sx={{
+    display: { xs: "block", md: "none" },
+    mt: "24px",
+    mb: "36px",
+    width: "100%",
+    height: { xs: "175px", sm: "260px" },
+    position: "relative",
+    overflow: "hidden",
+    borderRadius: "5px",
+    background:
+      index === 2
+        ? "linear-gradient(145deg, #f4f0f8, #e5d9f1)"
+        : "#f1eef5",
+  }}
+>
+  {visuals[index].src ? (
+    <Box
+      component="img"
+      src={visuals[index].src}
+      alt={visuals[index].alt}
+      loading="lazy"
+      sx={{
+        display: "block",
+        width: "100%",
+        height: "100%",
+        objectFit: "cover",
+        objectPosition: "center",
+      }}
+    />
+  ) : (
+    <Box
+      sx={{
+        position: "absolute",
+        inset: 0,
+        display: "grid",
+        placeItems: "center",
+        p: "20px",
+      }}
+    >
+      <Box
+        sx={{
+          width: "80%",
+          p: "20px",
+          borderRadius: "10px",
+          background: "rgba(255,255,255,.85)",
+        }}
+      >
+        <Typography
+          sx={{
+            fontFamily: "Manrope, sans-serif",
+            fontSize: "10px",
+            fontWeight: 700,
+            color: "#9b52f5",
+            letterSpacing: ".08em",
+          }}
+        >
+          CONTEST SUBMISSION
+        </Typography>
+
+        <Typography
+          sx={{
+            mt: "12px",
+            fontFamily: "Manrope, sans-serif",
+            fontSize: "24px",
+            lineHeight: 1.15,
+            letterSpacing: "-.04em",
+            color: "#17131d",
+          }}
+        >
+          Your solution.
+          <br />
+          Your opportunity.
+        </Typography>
+      </Box>
+    </Box>
+  )}
+
+  <Box
+    sx={{
+      position: "absolute",
+      left: "10px",
+      bottom: "10px",
+      px: "10px",
+      py: "7px",
+      borderRadius: "999px",
+      background: "rgba(15,15,15,.82)",
+      color: "#ffffff",
+      fontFamily: "Manrope, sans-serif",
+      fontSize: "9px",
+      fontWeight: 600,
+    }}
+  >
+    {visuals[index].label}
+  </Box>
+</Box>
+
+            </Box>
+          ))}
+        </Box>
+
+        {/* RIGHT: FIXED-POSITION IMAGE VIEWPORT */}
+
+        
+        {/* RIGHT: FIXED IMAGE ON DESKTOP */}
+
+        <Box
+          sx={{
+            display: { xs: "none", md: "block" },
+            position: "relative",
+            width: "100%",
+            height: "100%",
+            minHeight: 0,
+            overflow: "hidden",
+            borderRadius: "14px",
+            background: "#f1eef5",
+          }}
+        >
+          {visuals.map((visual, index) => (
+            <Box
+              key={visual.label}
+              sx={{
+                position: "absolute",
+                inset: 0,
+                opacity: activeStep === index ? 1 : 0,
+                visibility:
+                  activeStep === index ? "visible" : "hidden",
+                transition: "opacity .5s ease, visibility .5s ease",
+                pointerEvents: "none",
+              }}
+            >
+              {visual.src ? (
+                <Box
+                  component="img"
+                  src={visual.src}
+                  alt={visual.alt}
+                  sx={{
+                    display: "block",
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    objectPosition: "center",
+                  }}
+                />
+              ) : (
+                <Box
+                  sx={{
+                    width: "100%",
+                    height: "100%",
+                    display: "grid",
+                    placeItems: "center",
+                    background:
+                      "linear-gradient(145deg, #f4f0f8, #e5d9f1)",
+                  }}
+                >
+                  <Box
+                    sx={{
+                      width: "72%",
+                      maxWidth: "420px",
+                      p: "32px",
+                      borderRadius: "14px",
+                      background: "rgba(255,255,255,.8)",
+                      border: "1px solid #ffffff",
+                      boxShadow:
+                        "0 20px 60px rgba(40,20,60,.08)",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontFamily: "Manrope, sans-serif",
+                        fontSize: "11px",
+                        fontWeight: 700,
+                        letterSpacing: ".1em",
+                        color: "#9b52f5",
+                      }}
+                    >
+                      CONTEST SUBMISSION
+                    </Typography>
+
+                    <Typography
+                      sx={{
+                        mt: "16px",
+                        fontFamily: "Manrope, sans-serif",
+                        fontSize: "clamp(28px, 2.5vw, 38px)",
+                        lineHeight: 1.15,
+                        letterSpacing: "-.045em",
+                        fontWeight: 500,
+                        color: "#17131d",
+                      }}
+                    >
+                      Your solution.
+                      <br />
+                      Your opportunity.
+                    </Typography>
+
+                    <Box
+                      sx={{
+                        mt: "24px",
+                        height: "1px",
+                        background: "#e5deed",
+                      }}
+                    />
+
+                    <Typography
+                      sx={{
+                        mt: "18px",
+                        fontFamily: "Manrope, sans-serif",
+                        fontSize: "12px",
+                        color: "#65606b",
+                      }}
+                    >
+                      Submit your repository for evaluation.
+                    </Typography>
+                  </Box>
+                </Box>
+              )}
+
+              <Box
+                sx={{
+                  position: "absolute",
+                  left: "24px",
+                  bottom: "24px",
+                  px: "14px",
+                  py: "9px",
+                  borderRadius: "999px",
+                  background: "rgba(15,15,15,.82)",
+                  color: "#ffffff",
+                  fontFamily: "Manrope, sans-serif",
+                  fontSize: "10px",
+                  fontWeight: 600,
+                  letterSpacing: ".06em",
+                }}
+              >
+                {visual.label}
+              </Box>
+            </Box>
+          ))}
+        </Box>
+        </Box>
+
+        
+
+    </Box>
+  );
+}
+
+
 export default function Values() {
   return (
     <Box
@@ -878,7 +1352,7 @@ export default function Values() {
 
         color: "#111111",
 
-        overflow: "hidden",
+        overflow: "clip",
 
         pt: {
           xs: "80px",
@@ -907,6 +1381,10 @@ export default function Values() {
             sm: "40px",
             md: "70px",
             lg: "90px",
+          },
+          minHeight: {
+            xs: "auto",
+            md: "180vh",
           },
         }}
       >
@@ -1109,10 +1587,17 @@ export default function Values() {
               md: "70px",
             },
 
+            
             mt: {
-              xs: "40px",
-              md: "55px",
+              xs: "50px",
+              md: "70px",
             },
+            mb: {
+              xs: "45px",
+              sm: "55px",
+              md: "80px",
+            },
+
           }}
         >
           <MaskTextReveal>
@@ -1177,163 +1662,8 @@ export default function Values() {
             IMAGE 01 — ENTER THE CHALLENGE
         ================================================== */}
 
-        <Box
-          sx={{
-            mt: {
-              xs: "50px",
-              md: "75px",
-            },
-          }}
-        >
-          <EditorialImage
-            src={learningImage}
-            alt="Students solving real-world challenge briefs on ProxBytes"
-            number="01"
-            label="CHALLENGE BRIEF"
-            height={{
-              xs: "300px",
-              sm: "390px",
-              md: "500px",
-            }}
-          />
-        </Box>
-
-
-        {/* ==================================================
-            LEARN TEXT
-        ================================================== */}
-
-        <Box
-          sx={{
-            mt: {
-              xs: "45px",
-              md: "65px",
-            },
-
-            display: "grid",
-
-            gridTemplateColumns: {
-              xs: "1fr",
-              sm: "1fr 1fr",
-            },
-
-            gap: {
-              xs: "40px",
-              md: "70px",
-            },
-          }}
-        >
-          <StepText
-            step={steps[0]}
-            index={0}
-          />
-
-          <Box
-            sx={{
-              display: {
-                xs: "none",
-                sm: "block",
-              },
-            }}
-          />
-        </Box>
-
-
-        {/* ==================================================
-            BUILD + SOLVE
-        ================================================== */}
-
-        <Box
-          sx={{
-            mt: {
-              xs: "80px",
-              md: "110px",
-            },
-
-            display: "grid",
-
-            gridTemplateColumns: {
-              xs: "1fr",
-              md: "1.2fr .8fr",
-            },
-
-            gap: {
-              xs: "45px",
-              md: "65px",
-            },
-
-            alignItems: "start",
-          }}
-        >
-
-          {/* BUILD IMAGE */}
-
-          <EditorialImage
-            src={buildingImage}
-            alt="Students building production solutions for contest challenges"
-            number="02"
-            label="SPRINT"
-            height={{
-              xs: "300px",
-              sm: "380px",
-              md: "470px",
-            }}
-          />
-
-
-          {/* BUILD TEXT */}
-
-          <StepText
-            step={steps[1]}
-            index={1}
-          />
-        </Box>
-
-
-        {/* ==================================================
-            SOLVE / COMPETE
-        ================================================== */}
-
-        <Box
-          sx={{
-            mt: {
-              xs: "80px",
-              md: "110px",
-            },
-
-            display: "grid",
-
-            gridTemplateColumns: {
-              xs: "1fr",
-              md: ".8fr 1.2fr",
-            },
-
-            gap: {
-              xs: "45px",
-              md: "65px",
-            },
-
-            alignItems: "center",
-          }}
-        >
-
-          {/* SOLVE TEXT */}
-
-          <StepText
-            step={steps[2]}
-            index={2}
-          />
-
-
-          {/* SOLVE VISUAL */}
-
-          <VisualPlaceholder
-            number="03"
-            label="LEADERBOARD"
-            title="Real-time ranking."
-            accent="#c9a8ff"
-          />
-        </Box>
+        
+        <ScrollTrackedChallenges /> 
 
 
         {/* ==================================================
