@@ -570,7 +570,7 @@ export default function Hero() {
               },
             }}
           >
-            Go Beyond Learning. Prove It.
+            Go Beyond Learning • Prove It
           </Typography>
 
         </motion.div>
@@ -736,7 +736,7 @@ export default function Hero() {
                   pointerEvents: "none",
                 }}
               >
-                <CursorArrow color="#ffff00" />
+                <CursorArrow color="#ffffff" />
               </Box>
 
 
@@ -758,7 +758,7 @@ export default function Hero() {
 
                   borderRadius: "999px",
 
-                  background: "#ffff00",
+                  background: "#ffffff",
 
                   color: "#111111",
 
@@ -1033,9 +1033,8 @@ export default function Hero() {
           >
 
 
-            {/* =================================================
-                LET'S TALK
-            ================================================== */}
+           
+          
 
            <Button
         href="#how-it-works"
@@ -1081,7 +1080,7 @@ export default function Hero() {
             "background-color .35s ease",
 
           "&:hover": {
-            background: "#ffff00",
+            background: "#ffffff",
             color:"black"
           },
 

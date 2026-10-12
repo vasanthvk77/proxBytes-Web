@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import {
   Box,
@@ -55,8 +55,34 @@ const navigation = [
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [pastHome, setPastHome] = useState(false);
+  const [atPageTop, setAtPageTop] = useState(true);
   const cancelScrollRef = useRef(null);
   const pendingNavigationRef = useRef(null);
+
+  useEffect(() => {
+    const updatePageTop = () => setAtPageTop(window.scrollY <= 0);
+    updatePageTop();
+    window.addEventListener("scroll", updatePageTop, { passive: true });
+
+    const homeSection = document.getElementById("home");
+    if (!homeSection) {
+      return () => window.removeEventListener("scroll", updatePageTop);
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setPastHome(!entry.isIntersecting),
+      {
+        rootMargin: "-88px 0px 0px 0px",
+      }
+    );
+
+    observer.observe(homeSection);
+    return () => {
+      window.removeEventListener("scroll", updatePageTop);
+      observer.disconnect();
+    };
+  }, []);
 
 
   /* =========================================================
@@ -161,7 +187,7 @@ export default function Header() {
       <Box
         component="header"
         sx={{
-          position: "absolute",
+          position: "fixed",
 
           top: 0,
           left: 0,
@@ -175,7 +201,24 @@ export default function Header() {
             md: "88px",
           },
 
-          background: "transparent",
+          background:
+            mobileOpen || pastHome
+              ? "rgba(79, 46, 156, 0.46)"
+              : "transparent",
+          backdropFilter:
+            mobileOpen || pastHome ? "blur(12px)" : "none",
+          WebkitBackdropFilter:
+            mobileOpen || pastHome ? "blur(12px)" : "none",
+          opacity:
+            atPageTop || pastHome || mobileOpen ? 1 : 0,
+          pointerEvents:
+            atPageTop || pastHome || mobileOpen ? "auto" : "none",
+          transform:
+            atPageTop || pastHome || mobileOpen
+              ? "translateY(0)"
+              : "translateY(-8px)",
+          transition:
+            "opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease, backdrop-filter 0.3s ease",
 
           color: "#ffffff",
         }}

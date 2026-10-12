@@ -484,18 +484,19 @@ export default function Footer() {
             >
               <Typography
                 sx={{
-                  fontSize: { xs: 24, sm: 32 },
-                  fontWeight: 600,
-                  letterSpacing: "-0.05em",
+                  fontSize: { xs: 24, sm: 15 },
+                  
+                
+                  letterSpacing: "0.01em",
                   lineHeight: 1,
                 }}
               >
-                {BRAND}
+                info@proxbytes.com
               </Typography>
 
               <Typography
                 sx={{
-                  fontSize: { xs: 13, sm: 18 },
+                  fontSize: { xs: 10, sm: 15 },
                   lineHeight: 1.6,
                   letterSpacing: "-0.02em",
                   color: "rgba(255,255,255,0.6)",
