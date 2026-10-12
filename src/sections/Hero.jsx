@@ -1038,6 +1038,7 @@ export default function Hero() {
             ================================================== */}
 
            <Button
+        href="#how-it-works"
         sx={{
           position: "relative",
 
@@ -1055,9 +1056,9 @@ export default function Hero() {
 
           borderRadius: "6px",
 
-          background: "#cbb0f5",
+          background: "#9b52f5",
 
-          color: "#111111",
+          color: "#ffffff",
 
           textTransform: "none",
 
@@ -1081,6 +1082,7 @@ export default function Hero() {
 
           "&:hover": {
             background: "#ffff00",
+            color:"black"
           },
 
           /* =====================================================
@@ -1248,13 +1250,13 @@ export default function Hero() {
 
 
             {/* =================================================
-                SEE OUR WORKS
+                EXPLORE CHALLENGES
             ================================================== */}
 
             <Button
             onClick={() =>
               document
-                .getElementById("works")
+                .getElementById("challenges")
                 ?.scrollIntoView({
                   behavior: "smooth",
                 })

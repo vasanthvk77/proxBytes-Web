@@ -1,33 +1,48 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
+import {
+  BusinessRounded,
+  GroupsRounded,
+  HandshakeRounded,
+  SchoolRounded,
+} from "@mui/icons-material";
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import Reveal from "../components/Reveal";
+import SectionTitle from "../components/SectionTitle";
 
 const data = [
   {
-    name: "SEO Marketing",
-    value: 100,
-    copy: "By conducting in-depth keyword research, we ensure website aligns.",
+    name: "Students in ProxBytes",
+    value: "800+",
+    barWidth: "100%",
+    copy: "Students participating in the ProxBytes learning and challenge ecosystem.",
     color: "#DCC5FF",
+    icon: GroupsRounded,
   },
   {
-    name: "Social Media",
-    value: 80,
-    copy: "We create personalized campaigns that build brand awareness.",
+    name: "Students in FORGE",
+    value: "700+",
+    barWidth: "88%",
+    copy: "Students taking their skills further through advanced challenges in FORGE.",
     color: "#F8F8DE",
+    icon: SchoolRounded,
   },
   {
-    name: "Content Marketing",
-    value: 90,
-    copy: "From blog posts and videos, we develop content that speaks directly.",
+    name: "Students connected with industry",
+    value: "500+",
+    barWidth: "72%",
+    copy: "Students building connections and exploring opportunities with industry.",
     color: "#DFEDFF",
+    icon: HandshakeRounded,
   },
   {
-    name: "Email Marketing",
-    value: 60,
-    copy: "A tool for connecting directly with a powerful audience.",
+    name: "Industry partners",
+    value: "100+",
+    barWidth: "58%",
+    copy: "Industry partners bringing real-world challenges and perspectives to students.",
     color: "#DDF8D5",
+    icon: BusinessRounded,
   },
 ];
 
@@ -48,12 +63,13 @@ export default function Growth() {
       sx={{
         bgcolor: "#f9f9f9",
         color: "#080808",
-        py: { xs: 8, md: 12 },
+        py: { xs: 8, md: 1 },
         overflow: "hidden",
       }}
     >
       <Box
         className="container"
+        id="community"
         sx={{
           maxWidth: "1500px",
           width: "100%",
@@ -61,43 +77,14 @@ export default function Growth() {
           px: { xs: 2.5, sm: 4, md: 7 },
         }}
       >
-        {/* SECTION HEADING */}
-        <Reveal>
-          <Box
-            sx={{
-              textAlign: "center",
-              mb: { xs: 7, md: 10 },
-            }}
-          >
-            <Typography
-              component="h2"
-              sx={{
-                fontSize: {
-                  xs: "clamp(40px, 9vw, 58px)",
-                  md: "clamp(64px, 6vw, 82px)",
-                },
-                fontWeight: 500,
-                lineHeight: 1,
-                letterSpacing: "-.075em",
-                color: "#080808",
-              }}
-            >
-              Annual Growth
-            </Typography>
-
-            <Typography
-              sx={{
-                mt: 2,
-                color: "#718090",
-                fontSize: { xs: 14, md: 18 },
-                lineHeight: 1.7,
-              }}
-            >
-              Several key factors, including market trends, the agency’s
-              ability to adapt
-            </Typography>
-          </Box>
-        </Reveal>
+        <SectionTitle
+          eyebrow="Our growing community"
+          prominent
+          title="ProxBytes in Numbers"
+          description="A growing community connecting students with practical challenges and industry opportunities."
+          align="center"
+          sx={{ mb: { xs: 7, md: 10 } }}
+        />
 
         {/* MAIN CONTENT */}
         <Box
@@ -112,41 +99,8 @@ export default function Growth() {
             alignItems: "start",
           }}
         >
-          {/* LEFT: GROWTH RATE + ANIMATED PILLS */}
+          {/* LEFT: COMMUNITY METRICS */}
           <Box>
-            <Reveal>
-              <Box
-                sx={{
-                  mb: { xs: 6, md: 10 },
-                }}
-              >
-                <Typography
-                  sx={{
-                    fontSize: {
-                      xs: 66,
-                      sm: 76,
-                      md: 80,
-                    },
-                    fontWeight: 500,
-                    lineHeight: 0.95,
-                    letterSpacing: "-.075em",
-                  }}
-                >
-                  79%
-                </Typography>
-
-                <Typography
-                  sx={{
-                    mt: 1,
-                    fontSize: { xs: 14, md: 18 },
-                    color: "#718090",
-                  }}
-                >
-                  Growth Rate in 2025
-                </Typography>
-              </Box>
-            </Reveal>
-
             <Box
               ref={barsRef}
               sx={{
@@ -177,7 +131,7 @@ export default function Growth() {
                         ? {
                             x: 0,
                             opacity: 1,
-                            width: `${item.value}%`,
+                            width: item.barWidth,
                           }
                         : {
                             x: -100,
@@ -226,16 +180,45 @@ export default function Growth() {
                       pointerEvents: "none",
                     }}
                   >
-                    <Typography
+                    <Box
                       sx={{
-                        fontSize: { xs: 12, sm: 14, md: 17 },
-                        fontWeight: 500,
-                        letterSpacing: "-.035em",
-                        whiteSpace: "nowrap",
+                        minWidth: 0,
+                        display: "flex",
+                        alignItems: "center",
+                        gap: { xs: 0.75, sm: 1.25 },
                       }}
                     >
-                      {item.name}
-                    </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: { xs: 12, sm: 14, md: 17 },
+                          fontWeight: 500,
+                          letterSpacing: "-.035em",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                        }}
+                      >
+                        {item.name}
+                      </Typography>
+                      <motion.span
+                        aria-hidden="true"
+                        initial={{ opacity: 0, scale: 0.55, rotate: -18, y: 8 }}
+                        whileInView={{ opacity: 1, scale: 1, rotate: 0, y: 0 }}
+                        viewport={{ once: true, amount: 0.4 }}
+                        transition={{
+                          duration: 0.65,
+                          delay: 0.2 + index * 0.1,
+                          ease,
+                        }}
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          flexShrink: 0,
+                        }}
+                      >
+                        <item.icon sx={{ fontSize: { xs: 17, sm: 20, md: 23 } }} />
+                      </motion.span>
+                    </Box>
 
                     <Typography
                       sx={{
@@ -244,7 +227,7 @@ export default function Growth() {
                         flexShrink: 0,
                       }}
                     >
-                      {item.value}%
+                      {item.value}
                     </Typography>
                   </Box>
                 </Box>
@@ -292,19 +275,47 @@ export default function Growth() {
                           fontWeight: 500,
                         }}
                       >
-                        {item.value}%
+                        {item.value}
                       </Typography>
                     </Box>
 
-                    <Typography
+                    <Box
                       sx={{
-                        fontSize: { xs: 14, md: 18 },
-                        fontWeight: 500,
-                        letterSpacing: "-.035em",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "space-between",
+                        gap: 1,
                       }}
                     >
-                      {item.name}
-                    </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: { xs: 14, md: 18 },
+                          fontWeight: 500,
+                          letterSpacing: "-.035em",
+                        }}
+                      >
+                        {item.name}
+                      </Typography>
+                      <motion.span
+                        aria-hidden="true"
+                        initial={{ opacity: 0, scale: 0.55, rotate: -18, y: 8 }}
+                        whileInView={{ opacity: 1, scale: 1, rotate: 0, y: 0 }}
+                        viewport={{ once: true, amount: 0.4 }}
+                        transition={{
+                          duration: 0.65,
+                          delay: 0.2 + index * 0.1,
+                          ease,
+                        }}
+                        style={{
+                          display: "inline-flex",
+                          alignItems: "center",
+                          color: "#9b52f5",
+                          flexShrink: 0,
+                        }}
+                      >
+                        <item.icon sx={{ fontSize: { xs: 19, md: 23 } }} />
+                      </motion.span>
+                    </Box>
                   </Box>
 
                   <Typography

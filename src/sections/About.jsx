@@ -11,6 +11,7 @@ import {
   NorthEastRounded,
 
 } from "@mui/icons-material";
+import SectionTitle from "../components/SectionTitle";
 
 const ease = [0.16, 1, 0.3, 1];
 
@@ -106,7 +107,7 @@ function Reveal({
   );
 }
 
-function Eyebrow({ children, number }) {
+function Eyebrow({ children }) {
   return (
     <Box
       sx={{
@@ -136,14 +137,6 @@ function Eyebrow({ children, number }) {
           textTransform: "uppercase",
         }}
       >
-        {number && (
-          <Box
-            component="span"
-            sx={{ color: "#9b52f5", mr: 1.5 }}
-          >
-            {number}
-          </Box>
-        )}
         {children}
       </Typography>
     </Box>
@@ -152,7 +145,7 @@ function Eyebrow({ children, number }) {
 
 const audiences = [
   {
-    number: "01",
+    number: "",
     icon: <GroupsRounded />,
     label: "FOR STUDENTS",
     title: "Potential deserves a platform.",
@@ -166,7 +159,7 @@ const audiences = [
     ],
   },
   {
-    number: "02",
+    number: "",
     icon: <BusinessCenterRounded />,
     label: "FOR INDUSTRY",
     title: "Talent deserves better signals.",
@@ -198,7 +191,7 @@ const principles = [
     description:
       "Connect technical ambition with opportunities that give students a reason to apply themselves and grow.",
     accent: "#7d83ff",
-    image: "/images/evidence-over-assumptions.jpg",
+    image: "/assests/Values-1.png",
   },
   {
     number: "03",
@@ -225,9 +218,9 @@ export default function About() {
         color: "#111111",
         fontFamily: "Manrope, sans-serif",
         py: {
-          xs: "76px",
-          sm: "100px",
-          md: "130px",
+          xs: "72px",
+          sm: "88px",
+          md: "112px",
         },
       }}
     >
@@ -236,26 +229,26 @@ export default function About() {
         aria-hidden
         sx={{
           position: "absolute",
-          zIndex: -1,
-          top: "-100px",
-          right: "-180px",
-          width: { xs: 280, md: 520 },
-          height: { xs: 280, md: 520 },
+          zIndex: -100,
+          top: { xs: "-120px", md: "-220px" },
+          right: { xs: "-180px", md: "-340px" },
+          width: { xs: 280, md: 500 },
+          height: { xs: 280, md: 500 },
           borderRadius: "50%",
-          border: "1px solid #f0e8fb",
+          border: "1px solid rgba(112, 52, 196, .45)",
           "&::before": {
             content: '""',
             position: "absolute",
             inset: 35,
             borderRadius: "50%",
-            border: "1px solid #f6f0fc",
+            border: "1px solid rgba(149, 86, 212, .4)",
           },
           "&::after": {
             content: '""',
             position: "absolute",
             inset: 75,
             borderRadius: "50%",
-            border: "1px solid #faf6fd",
+            border: "1px solid rgba(197, 141, 241, .38)",
           },
         }}
       />
@@ -290,41 +283,28 @@ export default function About() {
       >
         {/* SECTION 01 — THE MISSION */}
 
-        <Box
-          sx={{
-            display: "grid",
-            gridTemplateColumns: {
-              xs: "1fr",
-              md: "minmax(0, 1.3fr) minmax(240px, .7fr)",
-            },
-            gap: { xs: 5, md: 8 },
-            alignItems: "end",
-            mb: { xs: 12, md: 18 },
-          }}
-        >
-          <Box>
-            <Reveal>
-              <Eyebrow number="01">
-                About ProxBytes
-              </Eyebrow>
-            </Reveal>
-
-            <Reveal delay={0.08} variant="fadeUp" duration={1}>
-              <Typography
-                component="h1"
-                sx={{
-                  m: 0,
-                  maxWidth: 1000,
-                  fontSize: {
-                    xs: "clamp(46px, 11vw, 66px)",
-                    sm: "76px",
-                    md: "clamp(76px, 7.4vw, 112px)",
-                  },
-                  fontWeight: 500,
-                  letterSpacing: "-.075em",
-                  lineHeight: ".96",
-                }}
-              >
+        <Box sx={{ mb: { xs: 10, md: 14 } }}>
+          <SectionTitle
+            eyebrow="About ProxBytes"
+            prominent
+            layout="split"
+            titleSx={{
+              fontSize: {
+                xs: "clamp(42px, 8vw, 58px)",
+                md: "clamp(64px, 5.4vw, 80px)",
+              },
+              lineHeight: 0.99,
+            }}
+            sx={{
+              gridTemplateColumns: {
+                xs: "1fr",
+                md: "minmax(0, 1.08fr) minmax(340px, .92fr)",
+              },
+              alignItems: { xs: "start", md: "center" },
+              gap: { xs: 4, md: 8 },
+            }}
+            title={
+              <>
                 Potential is
                 <br />
                 everywhere.
@@ -337,69 +317,44 @@ export default function About() {
                   <br />
                   should be too.
                 </Box>
-              </Typography>
-            </Reveal>
-          </Box>
-
-          <Reveal delay={0.16} variant="blur" duration={0.9}>
-            <Box sx={{ pb: { md: 1.5 }, maxWidth: 420 }}>
-              <Typography
-                sx={{
-                  fontSize: { xs: 16, md: 19 },
-                  lineHeight: 1.8,
-                  color: "#6f6b74",
-                  letterSpacing: "-.025em",
-                }}
-              >
+              </>
+            }
+            description={
+              <>
                 ProxBytes exists to help close the gap
                 between what students are capable of and
                 what the world gets to see.
-              </Typography>
-
-              <Typography
-                sx={{
-                  mt: 2,
-                  fontSize: { xs: 16, md: 19 },
-                  lineHeight: 1.8,
-                  color: "#17131d",
-                  fontWeight: 600,
-                  letterSpacing: "-.025em",
-                }}
-              >
-                Because talent should have more than one
-                way to be recognised.
-              </Typography>
-
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1.2,
-                  mt: 3,
-                  color: "#8b58d9",
-                }}
-              >
                 <Box
+                  component="span"
                   sx={{
-                    width: 34,
-                    height: 1,
-                    bgcolor: "#b58aff",
+                    display: "block",
+                    mt: 2,
+                    color: "#17131d",
+                    fontWeight: 600,
                   }}
-                />
-
-                <Typography
+                >
+                  Because talent should have more than one way to be recognised.
+                </Box>
+                <Box
+                  component="span"
                   sx={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 1.2,
+                    mt: 3,
+                    color: "#8b58d9",
                     fontSize: 11,
                     fontWeight: 700,
                     letterSpacing: ".1em",
                     textTransform: "uppercase",
                   }}
                 >
-                  Our reason for existing
-                </Typography>
-              </Box>
-            </Box>
-          </Reveal>
+                 
+               
+                </Box>
+              </>
+            }
+          />
         </Box>
 
         {/* SECTION 02 — THE PROBLEM */}
@@ -411,35 +366,12 @@ export default function About() {
             mb: { xs: 13, md: 20 },
           }}
         >
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: {
-                xs: "1fr",
-                md: "minmax(0, .8fr) minmax(0, 1.2fr)",
-              },
-              gap: { xs: 5, md: 10 },
-              alignItems: "start",
-            }}
-          >
-            <Reveal delay={0.15} variant="blur" duration={0.9}>
-              <Eyebrow number="02">
-                The gap we see
-              </Eyebrow>
-
-              <Typography
-                component="h2"
-                sx={{
-                  m: 0,
-                  fontSize: {
-                    xs: "clamp(38px, 9vw, 58px)",
-                    md: "clamp(60px, 5.6vw, 82px)",
-                  },
-                  lineHeight: 1,
-                  letterSpacing: "-.07em",
-                  fontWeight: 500,
-                }}
-              >
+          <SectionTitle
+            eyebrow="The gap we see"
+            layout="split"
+            sx={{ alignItems: "start" }}
+            title={
+              <>
                 A résumé tells
                 <br />
                 <Box
@@ -448,18 +380,10 @@ export default function About() {
                 >
                   part of the story.
                 </Box>
-              </Typography>
-            </Reveal>
-
-            <Reveal delay={0.1}>
-              <Typography
-                sx={{
-                  maxWidth: 700,
-                  fontSize: { xs: 16, md: 20 },
-                  lineHeight: 1.85,
-                  color: "#706b75",
-                }}
-              >
+              </>
+            }
+            description={
+              <>
                 Students spend years developing knowledge,
                 experimenting with ideas, and discovering
                 what they can do. Yet communicating that
@@ -483,92 +407,23 @@ export default function About() {
                   making practical ability easier to
                   demonstrate and easier to discover.
                 </Box>
-              </Typography>
-            </Reveal>
-          </Box>
+              </>
+            }
+          />
 
-          {/* Editorial statement */}
-          <Reveal delay={0.12} variant="scale" duration={0.9}>
-            <Box
-              sx={{
-                mt: { xs: 7, md: 10 },
-                p: {
-                  xs: "28px 22px",
-                  sm: "36px",
-                  md: "48px 52px",
-                },
-                bgcolor: "#f7f3fc",
-                borderLeft: "3px solid #b58aff",
-                display: "grid",
-                gridTemplateColumns: {
-                  xs: "1fr",
-                  md: "1fr auto",
-                },
-                alignItems: "end",
-                gap: 4,
-              }}
-            >
-              <Typography
-                sx={{
-                  maxWidth: 850,
-                  fontSize: {
-                    xs: 25,
-                    sm: 32,
-                    md: 42,
-                  },
-                  lineHeight: 1.25,
-                  letterSpacing: "-.055em",
-                  fontWeight: 500,
-                  color: "#201b27",
-                }}
-              >
-                Capability should be something you can
-                demonstrate, not just something you claim.
-              </Typography>
-
-              <NorthEastRounded
-                sx={{
-                  fontSize: 32,
-                  color: "#9b52f5",
-                }}
-              />
-            </Box>
-          </Reveal>
+   
+          
         </Box>
 
         {/* SECTION 03 — WHO WE SERVE */}
 
         <Box sx={{ mb: { xs: 13, md: 20 } }}>
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: {
-                xs: "1fr",
-                md: "1fr .7fr",
-              },
-              gap: { xs: 4, md: 8 },
-              alignItems: "end",
-              mb: { xs: 6, md: 9 },
-            }}
-          >
-            <Reveal>
-              <Eyebrow number="03">
-                One platform, two perspectives
-              </Eyebrow>
-
-              <Typography
-                component="h2"
-                sx={{
-                  m: 0,
-                  fontSize: {
-                    xs: "clamp(40px, 9vw, 60px)",
-                    md: "clamp(64px, 6vw, 90px)",
-                  },
-                  lineHeight: 1,
-                  letterSpacing: "-.075em",
-                  fontWeight: 500,
-                }}
-              >
+          <Box sx={{ mb: { xs: 6, md: 9 } }}>
+            <SectionTitle
+              eyebrow="One platform, two perspectives"
+              layout="split"
+              title={
+                <>
                 Different needs.
                 <br />
                 <Box
@@ -577,24 +432,17 @@ export default function About() {
                 >
                   Shared purpose.
                 </Box>
-              </Typography>
-            </Reveal>
-
-            <Reveal delay={0.1}>
-              <Typography
-                sx={{
-                  maxWidth: 450,
-                  color: "#706b75",
-                  fontSize: { xs: 15, md: 18 },
-                  lineHeight: 1.8,
-                }}
-              >
+                </>
+              }
+              description={
+                <>
                 Better opportunities for students and
                 better visibility for companies begin
                 with the same thing: a clearer picture
                 of practical capability.
-              </Typography>
-            </Reveal>
+                </>
+              }
+            />
           </Box>
 
           <Box
@@ -747,630 +595,495 @@ export default function About() {
           </Box>
         </Box>
 
-        {/* SECTION 04 — OUR PRINCIPLES */}
-
-        {/* <Box
-          sx={{
-            mb: { xs: 13, md: 20 },
-            borderTop: "1px solid #ded9e4",
-            pt: { xs: 6, md: 9 },
-          }}
-        >
-          <Box
-            sx={{
-              display: "grid",
-              gridTemplateColumns: {
-                xs: "1fr",
-                md: "minmax(0, .85fr) minmax(0, 1.15fr)",
-              },
-              gap: { xs: 5, md: 10 },
-              mb: { xs: 5, md: 8 },
-            }}
-          >
-            <Reveal>
-              <Eyebrow number="04">
-                What guides us
-              </Eyebrow>
-
-              <Typography
-                component="h2"
-                sx={{
-                  m: 0,
-                  fontSize: {
-                    xs: "clamp(40px, 9vw, 58px)",
-                    md: "clamp(62px, 5.7vw, 84px)",
-                  },
-                  lineHeight: 1,
-                  letterSpacing: "-.075em",
-                  fontWeight: 500,
-                }}
-              >
-                The thinking
-                <br />
-                <Box
-                  component="span"
-                  sx={{ color: "#a56af5" }}
-                >
-                  behind the platform.
-                </Box>
-              </Typography>
-            </Reveal>
-
-            <Reveal delay={0.1}>
-              <Typography
-                sx={{
-                  alignSelf: "end",
-                  maxWidth: 590,
-                  color: "#706b75",
-                  fontSize: { xs: 15, md: 18 },
-                  lineHeight: 1.8,
-                }}
-              >
-                The experience matters, but so does the
-                thinking behind it. These principles
-                shape the kind of opportunities ProxBytes
-                aims to create.
-              </Typography>
-            </Reveal>
-          </Box>
-
-          <Box
-            sx={{
-              borderTop: "1px solid #e7e2eb",
-            }}
-          >
-            {principles.map((item, index) => (
-              <Reveal
-                key={item.number}
-                delay={index * 0.07}
-              >
-                <Box
-                  sx={{
-                    display: "grid",
-                    gridTemplateColumns: {
-                      xs: "42px minmax(0, 1fr)",
-                      md: "70px minmax(0, .85fr) minmax(0, 1.15fr)",
-                    },
-                    gap: { xs: 2, md: 4 },
-                    alignItems: "start",
-                    py: { xs: 4, md: 5 },
-                    borderBottom: "1px solid #e7e2eb",
-                    transition: "background .3s",
-                    "&:hover .principle-title": {
-                      color: item.accent,
-                    },
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      pt: 0.5,
-                      fontSize: 11,
-                      fontWeight: 800,
-                      letterSpacing: ".08em",
-                      color: item.accent,
-                    }}
-                  >
-                    {item.number}
-                  </Typography>
-
-                  <Typography
-                    className="principle-title"
-                    component="h3"
-                    sx={{
-                      m: 0,
-                      fontSize: {
-                        xs: 22,
-                        md: 28,
-                      },
-                      lineHeight: 1.25,
-                      letterSpacing: "-.045em",
-                      fontWeight: 500,
-                      transition: "color .25s",
-                      gridColumn: {
-                        xs: "2",
-                        md: "2",
-                      },
-                    }}
-                  >
-                    {item.title}
-                  </Typography>
-
-                  <Typography
-                    sx={{
-                      gridColumn: {
-                        xs: "2",
-                        md: "3",
-                      },
-                      fontSize: 13,
-                      lineHeight: 1.85,
-                      color: "#77717c",
-                      maxWidth: 490,
-                    }}
-                  >
-                    {item.description}
-                  </Typography>
-                </Box>
-              </Reveal>
-            ))}
-          </Box>
-        </Box> */}
-
-
-        
-{/* SECTION 04 — OUR PRINCIPLES ACCORDION */}
-
 <Box
   sx={{
-    mb: { xs: 13, md: 20 },
+    mb: { xs: 5, md: 5 },
     borderTop: "1px solid #ded9e4",
     pt: { xs: 6, md: 9 },
   }}
 >
-  {/* Section heading */}
-  <Box
-    sx={{
-      display: "grid",
-      gridTemplateColumns: {
-        xs: "1fr",
-        md: "minmax(0, .85fr) minmax(0, 1.15fr)",
-      },
-      gap: { xs: 5, md: 10 },
-      alignItems: "end",
-      mb: { xs: 6, md: 9 },
-    }}
-  >
-    <Reveal variant="fadeUp" duration={0.8}>
-      <Eyebrow number="04">What guides us</Eyebrow>
-
-      <Typography
-        component="h2"
-        sx={{
-          m: 0,
-          fontSize: {
-            xs: "clamp(40px, 9vw, 58px)",
-            md: "clamp(62px, 5.7vw, 84px)",
-          },
-          lineHeight: 1,
-          letterSpacing: "-.075em",
-          fontWeight: 500,
-        }}
-      >
+  <SectionTitle
+    eyebrow="What guides us"
+    title={
+      <>
         The thinking
         <br />
         <Box component="span" sx={{ color: "#a56af5" }}>
           behind the platform.
         </Box>
-      </Typography>
-    </Reveal>
-
-    
-  </Box>
+      </>
+    }
+    sx={{ mb: { xs: 6, md: 9 } }}
+  />
 
   {/* Accordion */}
-  <Box sx={{ borderTop: "1px solid #ded9e4" }}>
-    {principles.map((item, index) => {
-      const isOpen = activePrinciple === index;
-
-      return (
-        <Box
-          key={item.number}
-          sx={{
-            borderBottom: "1px solid #ded9e4",
-          }}
-        >
-          {/* Accordion header */}
-        <Box
-  component="button"
-  type="button"
-  aria-expanded={isOpen}
-  onMouseEnter  ={() => setActivePrinciple(index)}
-  onFocus={() => setActivePrinciple(index)}
-  onClick={() =>
-    setActivePrinciple(isOpen ? -1 : index)
-  }
-            sx={{
-              width: "100%",
-              display: "grid",
-              gridTemplateColumns: {
-                xs: "42px minmax(0, 1fr) 32px",
-                md: "70px minmax(0, 1fr) 42px",
-              },
-              alignItems: "center",
-              gap: { xs: 1.5, md: 4 },
-              py: { xs: 4, md: 5 },
-              px: 0,
-              border: 0,
-              bgcolor: "transparent",
-              color: "#17131d",
-              textAlign: "left",
-              cursor: "pointer",
-              fontFamily: "inherit",
-              "&:hover .principle-accordion-title": {
-                color: item.accent,
-              },
-              "&:focus-visible": {
-                outline: `2px solid ${item.accent}`,
-                outlineOffset: 4,
-              },
-            }}
-          >
-            <Typography
-              component="span"
-              sx={{
-                fontSize: 11,
-                fontWeight: 800,
-                letterSpacing: ".08em",
-                color: item.accent,
-              }}
-            >
-              {item.number}
-            </Typography>
-
-            <Typography
-              component="span"
-              className="principle-accordion-title"
-              sx={{
-                fontSize: {
-                  xs: 21,
-                  sm: 25,
-                  md: 30,
-                },
-                lineHeight: 1.25,
-                letterSpacing: "-.045em",
-                fontWeight: 500,
-                transition: "color .3s ease",
-              }}
-            >
-              {item.title}
-            </Typography>
-
-            {/* Plus / minus control */}
-            
 <Box
-  component="span"
-  aria-hidden="true"
   sx={{
-    width: 36,
-    height: 36,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    justifySelf: "end",
-    borderRadius: "50%",
-    bgcolor: isOpen ? "#f3ebfc" : "transparent",
-    color: isOpen ? item.accent : "#17131d",
-    transition: "background-color .2s ease, color .2s ease",
+    borderTop: "1px solid #ded9e4",
+    width: "100%",
   }}
 >
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="1.8"
-    strokeLinecap="round"
-    aria-hidden="true"
-  >
-    {/* Horizontal line remains visible */}
-    <path d="M5 12h14" />
+  {principles.map((item, index) => {
+    const isOpen = activePrinciple === index;
 
-    {/* Vertical line disappears to form a minus */}
-    <motion.path
-      d="M12 5v14"
-      animate={{
-        scaleY: isOpen ? 0 : 1,
-        opacity: isOpen ? 0 : 1,
-      }}
-      transition={{ duration: 0.18, ease: "easeOut" }}
-      style={{ transformOrigin: "center" }}
-    />
-  </svg>
-</Box>
+    const principlePoints = {
+      "Evidence over assumptions": [
+        "Practical work matters",
+        "Show what you can build",
+        "Make capability easier to recognise",
+      ],
+      "Opportunity with purpose": [
+        "Turn ambition into action",
+        "Learn through real challenges",
+        "Create meaningful outcomes",
+      ],
+      "A stronger connection": [
+        "Connect students with industry",
+        "Highlight demonstrated skills",
+        "Build pathways to opportunity",
+      ],
+    };
 
-          </Box>
+    return (
+      <Box
+        key={item.number}
+        sx={{
+          borderBottom: "1px solid #ded9e4",
+        }}
+      >
+        {/* Accordion Header */}
+        <Box
+          component="button"
+          type="button"
+          aria-expanded={isOpen}
+          onMouseEnter={() => setActivePrinciple(index)}
+          onFocus={() => setActivePrinciple(index)}
+          onClick={() =>
+            setActivePrinciple(isOpen ? -1 : index)
+          }
+          sx={{
+            width: "100%",
+            display: "grid",
+            gridTemplateColumns: {
+              xs: "36px minmax(0, 1fr) 34px",
+              sm: "48px minmax(0, 1fr) 36px",
+              md: "56px minmax(0, 1fr) 40px",
+            },
+            alignItems: "center",
+            columnGap: { xs: 1.5, md: 2.5 },
+            py: { xs: 2.75, sm: 3, md: 3.5 },
+            px: 0,
+            border: 0,
+            bgcolor: "transparent",
+            color: "#17131d",
+            textAlign: "left",
+            cursor: "pointer",
+            fontFamily: "inherit",
+            transition: "background-color 0.2s ease",
 
-          {/* Expandable content */}
-          <AnimatePresence initial={false}>
-            {isOpen && (
-              <motion.div
-                key={`content-${item.number}`}
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
+            "&:hover .principle-accordion-title": {
+              color: item.accent,
+            },
+
+            "&:hover .principle-toggle": {
+              borderColor: item.accent,
+              bgcolor: "#f3ebfc",
+            },
+
+            "&:focus-visible": {
+              outline: `2px solid ${item.accent}`,
+              outlineOffset: 3,
+              borderRadius: "4px",
+            },
+          }}
+        >
+          {/* Number */}
+          <Typography
+            component="span"
+            sx={{
+              fontSize: 11,
+              fontWeight: 800,
+              letterSpacing: ".08em",
+              color: item.accent,
+              lineHeight: 1.4,
+            }}
+          >
+            {item.number}
+          </Typography>
+
+          {/* Title */}
+          <Typography
+            component="span"
+            className="principle-accordion-title"
+            sx={{
+              fontSize: {
+                xs: 18,
+                sm: 22,
+                md: 26,
+                lg: 28,
+              },
+              lineHeight: 1.3,
+              letterSpacing: "-.035em",
+              fontWeight: 500,
+              color: "#17131d",
+              transition: "color 0.25s ease",
+              overflowWrap: "break-word",
+            }}
+          >
+            {item.title}
+          </Typography>
+
+          {/* Expand / Collapse Icon */}
+          <Box
+            component="span"
+            className="principle-toggle"
+            aria-hidden="true"
+            sx={{
+              width: { xs: 32, md: 36 },
+              height: { xs: 32, md: 36 },
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              justifySelf: "end",
+              border: "1px solid",
+              borderColor: isOpen
+                ? `${item.accent}55`
+                : "#ded9e4",
+              borderRadius: "50%",
+              bgcolor: isOpen ? "#f3ebfc" : "transparent",
+              color: isOpen ? item.accent : "#17131d",
+              flexShrink: 0,
+              transition:
+                "background-color .25s ease, color .25s ease, border-color .25s ease",
+            }}
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              aria-hidden="true"
+            >
+              <path d="M5 12h14" />
+
+              <motion.path
+                d="M12 5v14"
+                animate={{
+                  scaleY: isOpen ? 0 : 1,
+                  opacity: isOpen ? 0 : 1,
+                }}
                 transition={{
-                  height: {
-                    duration: 0.55,
-                    ease: [0.22, 1, 0.36, 1],
-                  },
-                  opacity: {
-                    duration: 0.25,
-                  },
+                  duration: 0.2,
+                  ease: "easeOut",
                 }}
                 style={{
-                  overflow: "hidden",
+                  transformOrigin: "center",
+                }}
+              />
+            </svg>
+          </Box>
+        </Box>
+
+        {/* Expandable Content */}
+        <AnimatePresence initial={false}>
+          {isOpen && (
+            <motion.div
+              key={`content-${item.number}`}
+              initial={{
+                height: 0,
+                opacity: 0,
+              }}
+              animate={{
+                height: "auto",
+                opacity: 1,
+              }}
+              exit={{
+                height: 0,
+                opacity: 0,
+              }}
+              transition={{
+                height: {
+                  duration: 0.45,
+                  ease: [0.22, 1, 0.36, 1],
+                },
+                opacity: {
+                  duration: 0.25,
+                },
+              }}
+              style={{
+                overflow: "hidden",
+              }}
+            >
+              <Box
+                sx={{
+                  display: "grid",
+                  gridTemplateColumns: {
+                    xs: "minmax(0, 1fr)",
+                    md: "minmax(0, 0.92fr) minmax(0, 1.08fr)",
+                  },
+                  gap: {
+                    xs: 3,
+                    sm: 3.5,
+                    md: 5,
+                    lg: 6,
+                  },
+                  pb: {
+                    xs: 3.5,
+                    md: 4.5,
+                  },
+                  alignItems: "center",
                 }}
               >
+                {/* Image */}
                 <Box
                   sx={{
-                    display: "grid",
-                    gridTemplateColumns: {
-                      xs: "1fr",
-                      md: "minmax(0, .9fr) minmax(0, 1.1fr)",
+                    position: "relative",
+                    overflow: "hidden",
+                    width: "100%",
+                    borderRadius: {
+                      xs: "6px",
+                      md: "8px",
                     },
-                    gap: { xs: 4, md: 7 },
-                    pb: { xs: 5, md: 7 },
-                    alignItems: "center",
+                    bgcolor: "#f5f0fa",
+
+                    // Reduced image height on desktop.
+                    aspectRatio: {
+                      xs: "16 / 10",
+                      md: "16 / 10",
+                    },
+
+                    maxHeight: {
+                      md: 300,
+                      lg: 330,
+                    },
+
+                    isolation: "isolate",
                   }}
                 >
-                  {/* Image: closes toward its vertical center */}
+                  <motion.img
+                    key={`image-${item.number}`}
+                    src={item.image}
+                    alt={item.title}
+                    initial={{
+                      clipPath: "inset(50% 0 50% 0)",
+                      scale: 1.035,
+                      opacity: 0,
+                    }}
+                    animate={{
+                      clipPath: "inset(0% 0 0% 0)",
+                      scale: 1,
+                      opacity: 1,
+                    }}
+                    exit={{
+                      clipPath: "inset(50% 0 50% 0)",
+                      scale: 1.02,
+                      opacity: 0,
+                    }}
+                    transition={{
+                      clipPath: {
+                        duration: 0.8,
+                        ease: [0.76, 0, 0.24, 1],
+                      },
+                      scale: {
+                        duration: 1.2,
+                        ease: [0.22, 1, 0.36, 1],
+                      },
+                      opacity: {
+                        duration: 0.35,
+                      },
+                    }}
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      width: "100%",
+                      height: "100%",
+                      objectFit: "cover",
+                      objectPosition: "center",
+                      display: "block",
+                    }}
+                  />
+
+                  {/* Image Counter */}
                   <Box
                     sx={{
-                      position: "relative",
-                      overflow: "hidden",
-                      borderRadius: { xs: "6px", md: "9px" },
-                      bgcolor: "#f5f0fa",
-                      aspectRatio: { xs: "16 / 10", md: "5 / 4" },
+                      position: "absolute",
+                      left: { xs: 12, md: 14 },
+                      bottom: { xs: 12, md: 14 },
+                      px: 1.5,
+                      py: 0.75,
+                      borderRadius: "30px",
+                      bgcolor: "rgba(255,255,255,.94)",
+                      color: "#17131d",
+                      fontSize: 10,
+                      fontWeight: 800,
+                      letterSpacing: ".08em",
+                      lineHeight: 1.4,
+                      boxShadow: "0 2px 10px rgba(23,19,29,.06)",
                     }}
                   >
-                    <motion.img
-                      key={`image-${item.number}`}
-                      src={item.image}
-                      alt={item.title}
-                      initial={{
-                        clipPath: "inset(50% 0 50% 0)",
-                        scale: 1.04,
-                        opacity: 0,
-                      }}
-                      animate={{
-                        clipPath: "inset(0% 0 0% 0)",
-                        scale: 1,
-                        opacity: 1,
-                      }}
-                      exit={{
-                        clipPath: "inset(50% 0 50% 0)",
-                        scale: 1.02,
-                        opacity: 0,
-                      }}
-                      transition={{
-                        clipPath: {
-                          duration: 1,
-                          ease: [0.76, 0, 0.24, 1],
-                        },
-                        scale: {
-                          duration: 2,
-                          ease: [0.22, 1, 0.36, 1],
-                        },
-                        opacity: {
-                          duration: 2,
-                        },
-                      }}
-                      style={{
-                        position: "absolute",
-                        inset: 0,
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
-                        display: "block",
-                      }}
-                    />
-
-                    {/* Image index */}
-                    <Box
-                      sx={{
-                        position: "absolute",
-                        left: 16,
-                        bottom: 16,
-                        px: 1.5,
-                        py: 0.75,
-                        borderRadius: "30px",
-                        bgcolor: "rgba(255,255,255,.92)",
-                        color: "#17131d",
-                        fontSize: 10,
-                        fontWeight: 800,
-                        letterSpacing: ".08em",
-                      }}
-                    >
-                      {item.number} / 03
-                    </Box>
+                    {item.number} / 03
                   </Box>
+                </Box>
 
-                  {/* Description */}
+                {/* Description */}
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start",
+                    minWidth: 0,
+                    py: { md: 0.5 },
+                  }}
+                >
+                  {/* Eyebrow */}
                   <Box
                     sx={{
                       display: "flex",
-                      flexDirection: "column",
-                      alignItems: "flex-start",
+                      alignItems: "center",
+                      gap: 1.25,
+                      mb: { xs: 1.75, md: 2 },
                     }}
                   >
                     <Box
                       sx={{
+                        width: 34,
+                        height: 34,
                         display: "flex",
                         alignItems: "center",
-                        gap: 1.25,
-                        mb: 2.5,
+                        justifyContent: "center",
+                        borderRadius: "50%",
+                        bgcolor: `${item.accent}18`,
+                        color: item.accent,
+                        flexShrink: 0,
+
+                        "& svg": {
+                          fontSize: 18,
+                        },
                       }}
                     >
-                      <Box
-                        sx={{
-                          width: 36,
-                          height: 36,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          borderRadius: "50%",
-                          bgcolor: `${item.accent}18`,
-                          color: item.accent,
-                          "& svg": { fontSize: 19 },
-                        }}
-                      >
-                        {item.icon}
-                      </Box>
-
-                      <Typography
-                        sx={{
-                          fontSize: 10,
-                          fontWeight: 800,
-                          letterSpacing: ".12em",
-                          color: item.accent,
-                          textTransform: "uppercase",
-                        }}
-                      >
-                        Our principle
-                      </Typography>
+                      {item.icon}
                     </Box>
 
                     <Typography
-                      component="h3"
+                      component="span"
                       sx={{
-                        m: 0,
-                        fontSize: {
-                          xs: 25,
-                          md: 34,
-                        },
-                        lineHeight: 1.2,
-                        letterSpacing: "-.055em",
-                        fontWeight: 500,
-                        color: "#17131d",
+                        fontSize: 10,
+                        fontWeight: 800,
+                        letterSpacing: ".12em",
+                        color: item.accent,
+                        textTransform: "uppercase",
+                        lineHeight: 1.5,
                       }}
                     >
-                      {item.title}
+                      Our principle
                     </Typography>
+                  </Box>
 
-                    <Typography
-                      sx={{
-                        mt: 2,
-                        maxWidth: 520,
-                        fontSize: { xs: 14, md: 15 },
-                        lineHeight: 1.85,
-                        color: "#77717c",
-                      }}
-                    >
-                      {item.description}
-                    </Typography>
+                  {/* Heading */}
+                  <Typography
+                    component="h3"
+                    sx={{
+                      m: 0,
+                      fontSize: {
+                        xs: 23,
+                        sm: 26,
+                        md: 29,
+                        lg: 32,
+                      },
+                      lineHeight: 1.2,
+                      letterSpacing: "-.045em",
+                      fontWeight: 500,
+                      color: "#17131d",
+                      maxWidth: 480,
+                    }}
+                  >
+                    {item.title}
+                  </Typography>
 
+                  {/* Description Text */}
+                  <Typography
+                    component="p"
+                    sx={{
+                      mt: 1.5,
+                      mb: 0,
+                      maxWidth: 500,
+                      fontSize: {
+                        xs: 13.5,
+                        md: 14,
+                      },
+                      lineHeight: 1.8,
+                      letterSpacing: ".002em",
+                      color: "#77717c",
+                    }}
+                  >
+                    {item.description}
+                  </Typography>
+
+                  {/* Principle Points */}
+                  {principlePoints[item.title] && (
                     <Box
+                      component="ul"
                       sx={{
-                        mt: 3,
+                        mt: 2.5,
+                        mb: 0,
+                        p: 0,
+                        width: "100%",
                         display: "flex",
                         flexDirection: "column",
-                        gap: 1.75,
+                        gap: 1.25,
+                        listStyle: "none",
                       }}
                     >
-                      {item.title === "Evidence over assumptions" &&
-                        [
-                          "Practical work matters",
-                          "Show what you can build",
-                          "Make capability easier to recognise",
-                        ].map((point) => (
+                      {principlePoints[item.title].map(
+                        (point) => (
                           <Box
+                            component="li"
                             key={point}
                             sx={{
                               display: "flex",
-                              alignItems: "center",
-                              gap: 1.5,
+                              alignItems: "flex-start",
+                              gap: 1.25,
                             }}
                           >
                             <Box
+                              component="span"
                               sx={{
                                 width: 6,
                                 height: 6,
+                                mt: "7px",
                                 borderRadius: "50%",
                                 bgcolor: item.accent,
                                 flexShrink: 0,
                               }}
                             />
-                            <Typography
-                              sx={{
-                                fontSize: 12,
-                                lineHeight: 1.6,
-                                color: "#514b58",
-                              }}
-                            >
-                              {point}
-                            </Typography>
-                          </Box>
-                        ))}
 
-                      {item.title === "Opportunity with purpose" &&
-                        [
-                          "Turn ambition into action",
-                          "Learn through real challenges",
-                          "Create meaningful outcomes",
-                        ].map((point) => (
-                          <Box
-                            key={point}
-                            sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 1.5,
-                            }}
-                          >
-                            <Box
-                              sx={{
-                                width: 6,
-                                height: 6,
-                                borderRadius: "50%",
-                                bgcolor: item.accent,
-                                flexShrink: 0,
-                              }}
-                            />
                             <Typography
+                              component="span"
                               sx={{
                                 fontSize: 12,
-                                lineHeight: 1.6,
+                                lineHeight: 1.7,
                                 color: "#514b58",
                               }}
                             >
                               {point}
                             </Typography>
                           </Box>
-                        ))}
-
-                      {item.title === "A stronger connection" &&
-                        [
-                          "Connect students with industry",
-                          "Highlight demonstrated skills",
-                          "Build pathways to opportunity",
-                        ].map((point) => (
-                          <Box
-                            key={point}
-                            sx={{
-                              display: "flex",
-                              alignItems: "center",
-                              gap: 1.5,
-                            }}
-                          >
-                            <Box
-                              sx={{
-                                width: 6,
-                                height: 6,
-                                borderRadius: "50%",
-                                bgcolor: item.accent,
-                                flexShrink: 0,
-                              }}
-                            />
-                            <Typography
-                              sx={{
-                                fontSize: 12,
-                                lineHeight: 1.6,
-                                color: "#514b58",
-                              }}
-                            >
-                              {point}
-                            </Typography>
-                          </Box>
-                        ))}
+                        )
+                      )}
                     </Box>
-                  </Box>
+                  )}
                 </Box>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </Box>
-      );
-    })}
-  </Box>
+              </Box>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </Box>
+    );
+  })}
+</Box>
 </Box>
 
 

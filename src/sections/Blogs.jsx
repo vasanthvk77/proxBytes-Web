@@ -3,6 +3,7 @@ import { Box, Typography,Button  } from "@mui/material";
 import { ArrowOutward } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import Reveal from "../components/Reveal";
+import SectionTitle from "../components/SectionTitle";
 
 const blogs = [
   {
@@ -71,21 +72,11 @@ export default function Blogs() {
           }}
         >
           <Box sx={{ maxWidth: 780 }}>
-            <Reveal>
-              <Typography
-                component="h2"
-                sx={{
-                  m: 0,
-                  fontSize: {
-                    xs: "clamp(42px, 8vw, 58px)",
-                    md: "clamp(64px, 6vw, 78px)",
-                  },
-                  fontWeight: 500,
-                  lineHeight: 1,
-                  letterSpacing: "-.075em",
-                  color: "#080808",
-                }}
-              >
+            <SectionTitle
+              eyebrow="Ideas and inspiration"
+              prominent
+              title={
+                <>
                 Explore ideas.
                 <br />
                 <Box
@@ -94,23 +85,15 @@ export default function Blogs() {
                 >
                   Build what matters.
                 </Box>
-              </Typography>
-            </Reveal>
-
-            <Reveal delay={0.08}>
-              <Typography
-                sx={{
-                  mt: 2.5,
-                  maxWidth: 600,
-                  color: "#718090",
-                  fontSize: { xs: 14, md: 18 },
-                  lineHeight: 1.7,
-                }}
-              >
+                </>
+              }
+              description={
+                <>
                 Insights on coding, practical learning, contests,
                 and turning technical skills into opportunities.
-              </Typography>
-            </Reveal>
+                </>
+              }
+            />
           </Box>
 
           {/* <Reveal delay={0.12}>

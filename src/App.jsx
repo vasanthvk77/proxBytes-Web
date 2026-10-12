@@ -3,14 +3,10 @@ import { Box } from "@mui/material";
 import { motion } from "framer-motion";
 import Header from "./sections/Header";
 import Hero from "./sections/Hero";
-import Values from "./sections/Values";
 import About from "./sections/About";
-import Services from "./sections/Services";
 import Growth from "./sections/Growth";
-import Works from "./sections/Works";
-import Testimonials from "./sections/Testimonials";
+import PlatformContent from "./sections/PlatformContent";
 import Blogs from "./sections/Blogs";
-import CTA from "./sections/CTA";
 import Footer from "./sections/Footer";
 
 export default function App() {
@@ -32,14 +28,10 @@ export default function App() {
       <Header />
       <main>
         <Hero />
-        <Values />
         <About />
-        {/* <Services /> */}
         <Growth />
-        {/* <Works /> */}
-        <Testimonials />
+        <PlatformContent />
         <Blogs />
-        {/* <CTA /> */}
       </main>
       <Footer />
     </Box>

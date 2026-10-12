@@ -1,4 +1,5 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+
 import {
   Box,
   Button,
@@ -13,6 +14,7 @@ import {
   Typography,
   Zoom,
 } from "@mui/material";
+
 import NorthEastIcon from "@mui/icons-material/NorthEast";
 
 const BRAND = "ProxBytes";
@@ -21,32 +23,20 @@ const COLUMNS = [
   {
     title: "Quick Links",
     links: [
-      { label: "Home 01", href: "#home-1" },
-      { label: "Home 02", href: "#home-2" },
+      { label: "Home", href: "#home" },
       { label: "About Us", href: "#about" },
-      { label: "Project", href: "#project" },
-      { label: "Blog", href: "#blog" },
-      { label: "Contact Us", href: "#contact" },
+      { label: "How It Works", href: "#how-it-works" },
+      { label: "Challenges", href: "#challenges" },
+      { label: "Bounties", href: "#rewards" },
+      { label: "Blogs", href: "#blogs" },
     ],
   },
   {
-    title: "Resources",
+    title: "Explore",
     links: [
-      { label: "Pricing", href: "#pricing" },
-      { label: "Services", href: "#services" },
-      { label: "Career", href: "#career" },
-      { label: "Blog Single", href: "#blog-single" },
-      { label: "Project Single", href: "#project-single" },
-      { label: "Services Single", href: "#services-single" },
-    ],
-  },
-  {
-    title: "Utility Pages",
-    links: [
-      { label: "Style Guide", href: "#style-guide" },
-      { label: "Licenses", href: "#licenses" },
-      { label: "Changelog", href: "#changelog" },
-      { label: "404", href: "#404" },
+      { label: "ProxBytes Bytes", href: "#bytes" },
+      { label: "FORGE", href: "#forge" },
+      { label: "For Colleges", href: "#partners" },
     ],
   },
 ];
@@ -84,8 +74,12 @@ function useInView(threshold = 0.15) {
   return [ref, inView];
 }
 
-/* Fit the wordmark to its container without a fixed font size. */
-function useFitText(text) {
+/*
+ * Automatically fit the wordmark to its available width.
+ * Desktop measures ProxBytes.
+ * Mobile measures the wider individual word, Bytes.
+ */
+function useFitText() {
   const wrapRef = useRef(null);
   const textRef = useRef(null);
   const [fontSize, setFontSize] = useState(100);
@@ -106,12 +100,32 @@ function useFitText(text) {
 
         if (!availableWidth) return;
 
+        const isMobile = window.matchMedia("(max-width: 599px)").matches;
+
+        const desktopText = element.querySelector(
+          ".footer-wordmark-desktop"
+        );
+
+        const mobileWords = Array.from(
+          element.querySelectorAll(".footer-wordmark-mobile")
+        );
+
         element.style.fontSize = "100px";
 
-        const naturalWidth = element.scrollWidth;
+        let naturalWidth = 0;
+
+        if (isMobile && mobileWords.length) {
+          naturalWidth = Math.max(
+            ...mobileWords.map((word) => word.scrollWidth)
+          );
+        } else if (desktopText) {
+          naturalWidth = desktopText.scrollWidth;
+        }
 
         if (naturalWidth > 0) {
-          setFontSize((availableWidth / naturalWidth) * 100);
+          setFontSize(
+            Math.min((availableWidth / naturalWidth) * 100, 200)
+          );
         }
       });
     };
@@ -125,18 +139,21 @@ function useFitText(text) {
       document.fonts.ready.then(fit);
     }
 
+    window.addEventListener("resize", fit);
+
     return () => {
       cancelAnimationFrame(frameId);
       resizeObserver.disconnect();
+      window.removeEventListener("resize", fit);
     };
-  }, [text]);
+  }, []);
 
   return { wrapRef, textRef, fontSize };
 }
 
 const linkSx = {
   color: "rgba(255,255,255,0.8)",
-  fontSize: 18,
+  fontSize: { xs: 16, md: 18 },
   letterSpacing: "-0.02em",
   textDecoration: "none",
   width: "fit-content",
@@ -168,7 +185,7 @@ const linkSx = {
 
 export default function Footer() {
   const [footerRef, inView] = useInView();
-  const { wrapRef, textRef, fontSize } = useFitText(BRAND);
+  const { wrapRef, textRef, fontSize } = useFitText();
 
   return (
     <Box
@@ -177,22 +194,24 @@ export default function Footer() {
       sx={{
         bgcolor: "#050505",
         color: "#fff",
-        pt: { xs: 5, md: 8.5 },
-        pb: { xs: 3, md: 4 },
+        pt: { xs: 2.5, sm: 5, md: 8.5 },
+        pb: { xs: 2, sm: 3, md: 4 },
         overflow: "hidden",
+        minHeight: { xs: "100vh", sm: "auto" },
+        boxSizing: "border-box",
       }}
     >
       <Container
         maxWidth={false}
         sx={{
           maxWidth: 1440,
-          px: { xs: 2.5, md: 3 },
+          px: { xs: 2, sm: 2.5, md: 3 },
         }}
       >
         {/* TOP: CONTACT CARD + NAVIGATION */}
         <Grid
           container
-          spacing={{ xs: 5, md: 4 }}
+          spacing={{ xs: 3, sm: 5, md: 4 }}
           justifyContent="space-between"
           alignItems="start"
         >
@@ -204,8 +223,12 @@ export default function Footer() {
                   bgcolor: "#dcc3ff",
                   color: "#0a0a0a",
                   borderRadius: "8px",
-                  p: { xs: 3, md: 8 },
-                  pt: { xs: 4, md: 6.5 },
+
+                  /* Reduced mobile padding and card height */
+                  p: { xs: 2.5, sm: 3, md: 8 },
+                  pt: { xs: 2.5, sm: 4, md: 6.5 },
+                  pb: { xs: 2.5, sm: 3, md: 8 },
+
                   minHeight: { md: 364 },
                   display: "flex",
                   flexDirection: "column",
@@ -215,7 +238,7 @@ export default function Footer() {
                 <Typography
                   component="h2"
                   sx={{
-                    fontSize: { xs: 40, md: 56 },
+                    fontSize: { xs: 32, sm: 40, md: 56 },
                     fontWeight: 500,
                     lineHeight: 1.1,
                     letterSpacing: "-0.05em",
@@ -226,17 +249,17 @@ export default function Footer() {
 
                 <Typography
                   sx={{
-                    mt: 2.5,
+                    mt: { xs: 1.5, sm: 2.5 },
                     maxWidth: 540,
-                    fontSize: 18,
-                    lineHeight: 1.7,
+                    fontSize: { xs: 15, sm: 18 },
+                    lineHeight: 1.6,
                     letterSpacing: "-0.02em",
                     color: "rgba(10,10,10,0.65)",
                   }}
                 >
-                  We believe in more than just delivering services – we believe
-                  in building long-term partnerships that help students grow
-                  through practical experience.
+                  We believe in more than just delivering services – we
+                  believe in building long-term partnerships that help
+                  students grow through practical experience.
                 </Typography>
 
                 <Zoom
@@ -247,7 +270,7 @@ export default function Footer() {
                   }}
                 >
                   <Button
-                    href="#contact"
+                    href="#partners"
                     disableElevation
                     endIcon={
                       <NorthEastIcon
@@ -259,17 +282,17 @@ export default function Footer() {
                       />
                     }
                     sx={{
-                      mt: { xs: 4, md: 6 },
+                      mt: { xs: 2.5, sm: 4, md: 6 },
                       bgcolor: "#fff",
                       color: "#0a0a0a",
                       textTransform: "none",
-                      fontSize: 18,
+                      fontSize: { xs: 15, sm: 18 },
                       fontWeight: 500,
                       letterSpacing: "-0.03em",
                       borderRadius: "6px",
-                      px: 4.2,
-                      py: 2,
-                      gap: 2,
+                      px: { xs: 2.5, sm: 4.2 },
+                      py: { xs: 1.3, sm: 2 },
+                      gap: 1,
                       transition:
                         "background-color .3s ease, color .3s ease, transform .3s ease",
 
@@ -284,16 +307,16 @@ export default function Footer() {
                       },
                     }}
                   >
-                    Let’s Talk
+                    Partner with us
                   </Button>
                 </Zoom>
               </Box>
             </Slide>
           </Grid>
 
-          {/* THREE NAVIGATION COLUMNS */}
+          {/* NAVIGATION COLUMNS */}
           <Grid size={{ xs: 12, md: 6 }}>
-            <Grid container spacing={{ xs: 4, md: 2 }}>
+            <Grid container spacing={{ xs: 3, sm: 4, md: 2 }}>
               {COLUMNS.map((column, columnIndex) => (
                 <Grid
                   size={{ xs: 6, sm: 4 }}
@@ -311,17 +334,17 @@ export default function Footer() {
                     <Typography
                       component="h3"
                       sx={{
-                        fontSize: 20,
+                        fontSize: { xs: 17, sm: 20 },
                         fontWeight: 500,
                         letterSpacing: "-0.03em",
-                        mb: 3,
+                        mb: { xs: 2, sm: 3 },
                       }}
                     >
                       {column.title}
                     </Typography>
                   </Fade>
 
-                  <Stack spacing={2.2}>
+                  <Stack spacing={{ xs: 1.5, sm: 2.2 }}>
                     {column.links.map((link, linkIndex) => (
                       <Grow
                         key={link.label}
@@ -330,7 +353,11 @@ export default function Footer() {
                         style={{
                           transformOrigin: "left center",
                           transitionDelay: inView
-                            ? `${300 + columnIndex * 150 + linkIndex * 80}ms`
+                            ? `${
+                                300 +
+                                columnIndex * 150 +
+                                linkIndex * 80
+                              }ms`
                             : "0ms",
                         }}
                       >
@@ -356,7 +383,7 @@ export default function Footer() {
         <Box
           ref={wrapRef}
           sx={{
-            mt: { xs: 5, md: 5 },
+            mt: { xs: 3, sm: 5, md: 5 },
             width: "100%",
             display: "flex",
             justifyContent: "center",
@@ -385,7 +412,7 @@ export default function Footer() {
                 component="div"
                 aria-label={BRAND}
                 sx={{
-                  fontSize: "200px",
+                  fontSize: `${fontSize}px`,
                   fontWeight: 600,
                   lineHeight: 1.05,
                   letterSpacing: "-0.06em",
@@ -395,9 +422,39 @@ export default function Footer() {
                   pb: "0.08em",
                   userSelect: "none",
                   textAlign: "center",
+
+                  "& .footer-wordmark-desktop": {
+                    display: { xs: "none", sm: "inline" },
+                  },
+
+                  "& .footer-wordmark-mobile": {
+                    display: { xs: "block", sm: "none" },
+                    fontSize: "1em",
+                    lineHeight: 0.9,
+                    whiteSpace: "nowrap",
+                  },
                 }}
               >
-                {BRAND}
+                <Box
+                  component="span"
+                  className="footer-wordmark-desktop"
+                >
+                  {BRAND}
+                </Box>
+
+                <Box
+                  component="span"
+                  className="footer-wordmark-mobile"
+                >
+                  Prox
+                </Box>
+
+                <Box
+                  component="span"
+                  className="footer-wordmark-mobile"
+                >
+                  Bytes
+                </Box>
               </Typography>
             </Box>
           </Slide>
@@ -411,7 +468,7 @@ export default function Footer() {
             transitionDelay: inView ? "800ms" : "0ms",
           }}
         >
-          <Box sx={{ mt: { xs: 4, md: 5 } }}>
+          <Box sx={{ mt: { xs: 2.5, sm: 4, md: 5 } }}>
             <Divider
               sx={{
                 borderColor: "rgba(255,255,255,0.14)",
@@ -422,12 +479,12 @@ export default function Footer() {
               direction={{ xs: "column", md: "row" }}
               justifyContent="space-between"
               alignItems={{ xs: "flex-start", md: "center" }}
-              spacing={2}
-              sx={{ pt: 4 }}
+              spacing={{ xs: 1.5, md: 2 }}
+              sx={{ pt: { xs: 2.5, sm: 4 } }}
             >
               <Typography
                 sx={{
-                  fontSize: 32,
+                  fontSize: { xs: 24, sm: 32 },
                   fontWeight: 600,
                   letterSpacing: "-0.05em",
                   lineHeight: 1,
@@ -438,13 +495,14 @@ export default function Footer() {
 
               <Typography
                 sx={{
-                  fontSize: 18,
+                  fontSize: { xs: 13, sm: 18 },
+                  lineHeight: 1.6,
                   letterSpacing: "-0.02em",
                   color: "rgba(255,255,255,0.6)",
                 }}
               >
-                © {new Date().getFullYear()} - All rights reserved, Developed
-                by{" "}
+                © {new Date().getFullYear()} - All rights reserved,
+                Developed by{" "}
                 <Box
                   component="span"
                   sx={{ color: "#fff" }}
