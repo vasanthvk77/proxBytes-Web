@@ -1375,19 +1375,8 @@ export default function Values() {
       }}
     >
       <Box
+        className="content-container"
         sx={{
-          width: "100%",
-
-          maxWidth: "1500px",
-
-          mx: "auto",
-
-          px: {
-            xs: "24px",
-            sm: "40px",
-            md: "70px",
-            lg: "90px",
-          },
           minHeight: {
             xs: "auto",
             md: "180vh",

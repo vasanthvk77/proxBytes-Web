@@ -48,7 +48,20 @@ const CursorArrow = ({ color = "#ffff00" }) => (
   </Box>
 );
 
-export default function Hero() {
+export default function Hero({
+  eyebrow = "Go Beyond Learning • Prove It",
+  title = (
+    <>
+      Real-world challenges.
+      <br />
+      Real skills.
+      <br />
+      Real rewards.
+    </>
+  ),
+  description,
+  bringBadgesCloser = false,
+} = {}) {
   const heroRef = useRef(null);
 
 
@@ -503,23 +516,11 @@ export default function Hero() {
       ====================================================== */}
 
       <Box
+        className="content-container"
         sx={{
           position: "relative",
 
           zIndex: 2,
-
-          width: "100%",
-
-          maxWidth: "1450px",
-
-          mx: "auto",
-
-          px: {
-            xs: 2.5,
-            sm: 4,
-            md: 6,
-            lg: 8,
-          },
 
           textAlign: "center",
         }}
@@ -570,7 +571,7 @@ export default function Hero() {
               },
             }}
           >
-            Go Beyond Learning • Prove It
+            {eyebrow}
           </Typography>
 
         </motion.div>
@@ -630,11 +631,11 @@ export default function Hero() {
                   "Manrope, sans-serif",
 
                 fontSize: {
-                  xs: "40px",
-                  sm: "55px",
+                  xs: "60px",
+                  sm: "60px",
                   md: "72px",
                   lg: "92px",
-                  xl: "102px",
+                  xl: "85px",
                 },
 
                 lineHeight: {
@@ -645,18 +646,12 @@ export default function Hero() {
                 letterSpacing:
                   "-.055em",
 
-                fontWeight: 500,
+                fontWeight: 550,
 
                 color: "#ffffff",
               }}
             >
-              Real-world challenges.
-              <br />
-
-              Real skills.
-              <br />
-
-              Real rewards.
+              {title}
             </Typography>
 
           </motion.div>
@@ -700,10 +695,11 @@ export default function Hero() {
 
                 left: {
                   xs: "0%",
-                  md: "-9%",
+                  md: bringBadgesCloser ? "-3%" : "-9%",
+                  lg: bringBadgesCloser ? "-5%" : "4%",
                 },
 
-                top: "58%",
+                top: "70%",
 
                 display: {
                   xs: "none",
@@ -746,16 +742,15 @@ export default function Hero() {
 
               <Box
                 sx={{
-                  width: {
-                    md: "108px",
-                    lg: "118px",
-                  },
+               width: {
+                  md: "120px",
+                  lg: "90px",
+                },
 
-                  height: {
-                    md: "58px",
-                    lg: "62px",
-                  },
-
+                height: {
+                  md: "50px",
+                  lg: "50px",
+                },
                   borderRadius: "999px",
 
                   background: "#ffffff",
@@ -823,13 +818,13 @@ export default function Hero() {
 
               right: {
                 xs: "0%",
-                md: "-4%",
-                lg: "-6%",
+                md: bringBadgesCloser ? "-4%" : "-6%",
+                lg: bringBadgesCloser ? "-2%" : "-2%",
               },
 
               top: {
                 md: "-14%",
-                lg: "-16%",
+                lg: "10%",
               },
 
               display: {
@@ -874,13 +869,13 @@ export default function Hero() {
             <Box
               sx={{
                 width: {
-                  md: "145px",
-                  lg: "155px",
+                  md: "120px",
+                  lg: "130px",
                 },
 
                 height: {
-                  md: "58px",
-                  lg: "62px",
+                  md: "50px",
+                  lg: "50px",
                 },
 
                 borderRadius: "999px",
@@ -898,7 +893,7 @@ export default function Hero() {
                 fontFamily:
                   "Manrope, sans-serif",
 
-                fontSize: "20px",
+                fontSize: "18px",
 
                 fontWeight: 600,
 
@@ -966,19 +961,20 @@ export default function Hero() {
                 "rgba(255,255,255,.68)",
             }}
           >
-            Turn what you learn into something you can{" "}
-
-            <Box
-              component="strong"
-
-              sx={{
-                color: "#ffffff",
-
-                fontWeight: 700,
-              }}
-            >
-              build, solve, defend and prove.
-            </Box>
+            {description ?? (
+              <>
+                Turn what you learn into something you can{" "}
+                <Box
+                  component="strong"
+                  sx={{
+                    color: "#ffffff",
+                    fontWeight: 700,
+                  }}
+                >
+                  build, solve, defend and prove.
+                </Box>
+              </>
+            )}
 
           </Typography>
 

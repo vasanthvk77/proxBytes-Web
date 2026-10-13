@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { Box, Typography } from "@mui/material";
 import {
   BusinessRounded,
@@ -7,7 +7,6 @@ import {
   SchoolRounded,
 } from "@mui/icons-material";
 import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
 import Reveal from "../components/Reveal";
 import SectionTitle from "../components/SectionTitle";
 
@@ -50,11 +49,7 @@ const ease = [0.22, 1, 0.36, 1];
 
 export default function Growth() {
   const barsRef = useRef(null);
-
-  const barsInView = useInView(barsRef, {
-    once: true,
-    amount: 0.2,
-  });
+  const barsInView = useInView(barsRef, { once: true, amount: 0.2 });
 
   return (
     <Box
@@ -63,27 +58,22 @@ export default function Growth() {
       sx={{
         bgcolor: "#f9f9f9",
         color: "#080808",
-        py: { xs: 8, md: 1 },
-        overflow: "hidden",
+        minHeight: "100vh",
+        boxSizing: "border-box",
+        display: "flex",
+        alignItems: "center",
+        py: { xs: 8, md: 4 },
+        overflowX: "clip",
       }}
     >
-      <Box
-        className="container"
-        id="community"
-        sx={{
-          maxWidth: "1500px",
-          width: "100%",
-          mx: "auto",
-          px: { xs: 2.5, sm: 4, md: 7 },
-        }}
-      >
+      <Box className="content-container" id="community">
         <SectionTitle
           eyebrow="Our growing community"
           prominent
           title="ProxBytes in Numbers"
           description="A growing community connecting students with practical challenges and industry opportunities."
           align="center"
-          sx={{ mb: { xs: 7, md: 10 } }}
+          sx={{ mb: { xs: 7, md: 9 } }}
         />
 
         {/* MAIN CONTENT */}
@@ -96,18 +86,54 @@ export default function Growth() {
             },
             columnGap: { xs: 5, md: 12 },
             rowGap: { xs: 7, md: 0 },
-            alignItems: "start",
+            alignItems: "stretch",
           }}
         >
-          {/* LEFT: COMMUNITY METRICS */}
-          <Box>
+          {/* LEFT: BIG NUMBER (top) + BARS (bottom) */}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "space-between",
+              gap: { xs: 6, md: 4 },
+              minWidth: 0,
+            }}
+          >
+            {/* Top number */}
+            <Reveal>
+              <Box sx={{ pt: { md: 1.5 } }}>
+                <Typography
+                  component="div"
+                  sx={{
+                    fontSize: { xs: 72, sm: 84, md: 96 },
+                    fontWeight: 500,
+                    lineHeight: 1,
+                    letterSpacing: "-.08em",
+                    color: "#080808",
+                  }}
+                >
+                  79%
+                </Typography>
+                <Typography
+                  sx={{
+                    mt: 0.75,
+                    fontSize: { xs: 14, md: 17 },
+                    lineHeight: 1.5,
+                    color: "#718090",
+                  }}
+                >
+                  Growth Rate in 2025
+                </Typography>
+              </Box>
+            </Reveal>
+
+            {/* Bars */}
             <Box
               ref={barsRef}
               sx={{
                 width: "100%",
                 maxWidth: 670,
                 overflow: "hidden",
-                pt: 0,
               }}
             >
               {data.map((item, index) => (
@@ -115,45 +141,22 @@ export default function Growth() {
                   key={item.name}
                   sx={{
                     position: "relative",
-                    height: { xs: 70, sm: 78, md: 92 },
-                    mt: index === 0 ? 0 : "-1px",
+                    height: { xs: 70, sm: 78, md: 101 },
+                    mt: index === 0 ? 0 : { xs: "-1px", md: "-14px" },
                     zIndex: index + 1,
                   }}
                 >
                   <motion.div
-                    initial={{
-                      x: -100,
-                      opacity: 0,
-                      width: "0%",
-                    }}
+                    initial={{ x: -100, opacity: 0, width: "0%" }}
                     animate={
                       barsInView
-                        ? {
-                            x: 0,
-                            opacity: 1,
-                            width: item.barWidth,
-                          }
-                        : {
-                            x: -100,
-                            opacity: 0,
-                            width: "0%",
-                          }
+                        ? { x: 0, opacity: 1, width: item.barWidth }
+                        : { x: -100, opacity: 0, width: "0%" }
                     }
                     transition={{
-                      x: {
-                        duration: 0.85,
-                        delay: index * 0.13,
-                        ease,
-                      },
-                      opacity: {
-                        duration: 0.35,
-                        delay: index * 0.13,
-                      },
-                      width: {
-                        duration: 1,
-                        delay: index * 0.13,
-                        ease,
-                      },
+                      x: { duration: 0.85, delay: index * 0.13, ease },
+                      opacity: { duration: 0.35, delay: index * 0.13 },
+                      width: { duration: 1, delay: index * 0.13, ease },
                     }}
                     style={{
                       position: "absolute",
@@ -177,6 +180,7 @@ export default function Growth() {
                       justifyContent: "space-between",
                       gap: 1,
                       px: { xs: 2, sm: 3, md: 4 },
+                      pb: { md: index === data.length - 1 ? 0 : "14px" },
                       pointerEvents: "none",
                     }}
                   >
@@ -235,24 +239,17 @@ export default function Growth() {
             </Box>
           </Box>
 
-          {/* RIGHT: CORRESPONDING DETAIL ROWS */}
-          <Box
-            sx={{
-              borderTop: "1px solid #dedede",
-            }}
-          >
+          {/* RIGHT: DETAIL ROWS (start at the top, level with the number) */}
+          <Box sx={{ borderTop: "1px solid #dedede", alignSelf: "start" }}>
             {data.map((item, index) => (
               <Reveal key={item.name} delay={index * 0.08}>
                 <Box
                   sx={{
                     display: "grid",
-                    gridTemplateColumns: {
-                      xs: "minmax(0, 1fr) minmax(0, 1fr)",
-                      md: "minmax(0, 1fr) minmax(0, 1fr)",
-                    },
+                    gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)",
                     columnGap: { xs: 2, md: 4 },
                     alignItems: "center",
-                    py: { xs: 3, md: 4.5 },
+                    py: { xs: 3, md: 3.5 },
                     borderBottom: "1px solid #dedede",
                   }}
                 >
@@ -269,11 +266,7 @@ export default function Growth() {
                       }}
                     >
                       <Typography
-                        sx={{
-                          fontSize: 14,
-                          lineHeight: 1.2,
-                          fontWeight: 500,
-                        }}
+                        sx={{ fontSize: 14, lineHeight: 1.2, fontWeight: 500,textAlign:"start" }}
                       >
                         {item.value}
                       </Typography>
@@ -289,7 +282,7 @@ export default function Growth() {
                     >
                       <Typography
                         sx={{
-                          fontSize: { xs: 14, md: 18 },
+                          fontSize: { xs: 14, md: 17   },
                           fontWeight: 500,
                           letterSpacing: "-.035em",
                         }}
@@ -320,7 +313,7 @@ export default function Growth() {
 
                   <Typography
                     sx={{
-                      fontSize: { xs: 12, md: 17 },
+                      fontSize: { xs: 12, md: 14 },
                       lineHeight: 1.7,
                       color: "#718090",
                     }}

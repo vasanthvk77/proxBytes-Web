@@ -1,42 +1,9 @@
 import React from "react";
 import { Box, Typography,Button  } from "@mui/material";
 import { ArrowOutward } from "@mui/icons-material";
-import { motion } from "framer-motion";
-import Reveal from "../components/Reveal";
+import BlogCard from "../components/BlogCard";
 import SectionTitle from "../components/SectionTitle";
-
-const blogs = [
-  {
-    tag: "Learning",
-    date: "ProxBytes",
-    title:
-      "Why practical problem-solving matters more than just learning to code.",
-    color: "#F8F8DE",
-    image:
-      "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1000&q=85",
-    link: "#blogs",
-  },
-  {
-    tag: "Competition",
-    date: "ProxBytes",
-    title:
-      "How coding contests help students prove their technical skills.",
-    color: "#E4EFFF",
-    image:
-      "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&w=1000&q=85",
-    link: "#blogs",
-  },
-  {
-    tag: "Opportunities",
-    date: "ProxBytes",
-    title:
-      "From GitHub projects to cash bounties and career opportunities.",
-    color: "#E3F9DA",
-    image:
-      "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=1000&q=85",
-    link: "#blogs",
-  },
-];
+import { newestFirstBlogs } from "../data/blogs";
 
 const ease = [0.76, 0, 0.24, 1];
 
@@ -53,11 +20,8 @@ export default function Blogs() {
       }}
     >
       <Box
+        className="content-container"
         sx={{
-          width: "100%",
-          maxWidth: 1400,
-          mx: "auto",
-          px: { xs: 2.5, sm: 4, md: 6 },
         }}
       >
         {/* SECTION HEADING */}
@@ -96,50 +60,9 @@ export default function Blogs() {
             />
           </Box>
 
-          {/* <Reveal delay={0.12}>
-            <Box
-              component="a"
-              href="#blogs"
-              sx={{
-                flexShrink: 0,
-                display: "inline-flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                gap: 3,
-                minWidth: { xs: 190, md: 220 },
-                px: 3,
-                py: 2,
-                bgcolor: "#d9c0ff",
-                border: "1px solid #cbb0f6",
-                borderRadius: "7px",
-                color: "#111111",
-                textDecoration: "none",
-                fontSize: 16,
-                fontWeight: 500,
-                transition: "background .25s ease",
-                "&:hover": {
-                  bgcolor: "#cbb0f6",
-                },
-                "&:hover .blogs-arrow": {
-                  transform: "translate(3px, -3px)",
-                },
-              }}
-            >
-              Read All Blogs
-              <ArrowOutward
-                className="blogs-arrow"
-                sx={{
-                  fontSize: 23,
-                  transition: "transform .3s ease",
-                }}
-              />
-            </Box>
-          </Reveal> */}
-
-
-
-
              <Button
+        component="a"
+        href="/blog"
         sx={{
           position: "relative",
 
@@ -361,246 +284,8 @@ export default function Blogs() {
             gap: { xs: 2, md: 2.5 },
           }}
         >
-          {blogs.map((blog, index) => (
-            <Reveal key={blog.title} delay={index * 0.1}>
-              <Box
-                component={motion.article}
-                initial="rest"
-                animate="rest"
-                whileHover="hover"
-                sx={{
-                  position: "relative",
-                  isolation: "isolate",
-                  minWidth: 0,
-                  height: { xs: 350, sm: 370, md: 355 },
-                  overflow: "hidden",
-                  borderRadius: "7px",
-                  border: "1px solid #e4e2e8",
-                  bgcolor: blog.color,
-                  cursor: "pointer",
-
-                  "&:focus-within .blog-title": {
-                    color: "#ffffff",
-                  },
-                }}
-              >
-                {/* LAYER 1: IMAGE UNDERNEATH */}
-                <Box
-                  sx={{
-                    position: "absolute",
-                    inset: 0,
-                    zIndex: 0,
-                    overflow: "hidden",
-                  }}
-                >
-                  <motion.img
-                    src={blog.image}
-                    alt=""
-                    loading="lazy"
-                    variants={{
-                      rest: {
-                        scale: 1.12,
-                      },
-                      hover: {
-                        scale: 1,
-                      },
-                    }}
-                    transition={{
-                      duration: 0.8,
-                      ease: [0.22, 1, 0.36, 1],
-                    }}
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      display: "block",
-                    }}
-                  />
-
-                  {/* IMAGE DARKENING */}
-                  <motion.div
-                    variants={{
-                      rest: { opacity: 0 },
-                      hover: { opacity: 0.32 },
-                    }}
-                    transition={{
-                      duration: 0.45,
-                      ease: "easeOut",
-                    }}
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      background: "#000000",
-                      pointerEvents: "none",
-                    }}
-                  />
-                </Box>
-
-                {/* LAYER 2: PASTEL SHUTTER */}
-                <motion.div
-                  variants={{
-                    rest: {
-                      y: "0%",
-                    },
-                    hover: {
-                      y: "-100%",
-                    },
-                  }}
-                  transition={{
-                    duration: 0.65,
-                    ease,
-                  }}
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    zIndex: 1,
-                    backgroundColor: blog.color,
-                    pointerEvents: "none",
-                    willChange: "transform",
-                  }}
-                />
-
-                {/* LAYER 3: CARD CONTENT */}
-                <Box
-                  sx={{
-                    position: "relative",
-                    zIndex: 2,
-                    height: "100%",
-                    p: { xs: 2.5, md: 3 },
-                    display: "flex",
-                    flexDirection: "column",
-                    justifyContent: "space-between",
-                    color: "#111111",
-                    transition: "color .35s ease",
-
-                    ".blog-title, .blog-date, .blog-learn-link": {
-                      transition: "color .35s ease",
-                    },
-
-                    "&:hover": {
-                      color: "#ffffff",
-                    },
-
-                    "&:hover .blog-title": {
-                      color: "#ffffff",
-                    },
-
-                    "&:hover .blog-date": {
-                      color: "#ffffff",
-                    },
-
-                    "&:hover .blog-learn-link": {
-                      color: "#ffffff",
-                      borderColor: "rgba(255,255,255,.55)",
-                    },
-
-                    "&:hover .blog-arrow-box": {
-                      bgcolor: "#ffffff",
-                      color: "#111111",
-                    },
-                  }}
-                >
-                  {/* CATEGORY AND DATE */}
-                  <Box
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      gap: 1,
-                    }}
-                  >
-                    <Typography
-                      component="span"
-                      sx={{
-                        px: 2,
-                        py: 0.75,
-                        borderRadius: "30px",
-                        bgcolor: "#ffffff",
-                        color: "#111111",
-                        fontSize: 13,
-                        fontWeight: 500,
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {blog.tag}
-                    </Typography>
-
-                    <Typography
-                      className="blog-date"
-                      sx={{
-                        fontSize: 13,
-                        color: "#718090",
-                        fontWeight: 500,
-                        textAlign: "right",
-                        transition: "color .35s ease",
-                      }}
-                    >
-                      {blog.date}
-                    </Typography>
-                  </Box>
-
-                  {/* TITLE AND LEARN MORE */}
-                  <Box>
-                    <Typography
-                      className="blog-title"
-                      component="h3"
-                      sx={{
-                        m: 0,
-                        maxWidth: 390,
-                        fontSize: { xs: 21, md: 22 },
-                        fontWeight: 400,
-                        lineHeight: 1.5,
-                        letterSpacing: "-.035em",
-                        color: "#111111",
-                        transition: "color .35s ease",
-                      }}
-                    >
-                      {blog.title}
-                    </Typography>
-
-                    <Box
-                      component="a"
-                      href={blog.link}
-                      className="blog-learn-link"
-                      sx={{
-                        mt: 2.5,
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: 1.5,
-                        color: "#111111",
-                        fontSize: 15,
-                        fontWeight: 500,
-                        textDecoration: "none",
-                        borderBottom: "1px solid rgba(0,0,0,.12)",
-                        pb: 1,
-                        transition: "color .35s ease, border-color .35s ease",
-                      }}
-                    >
-                      Learn more
-
-                      <Box
-                        component="span"
-                        className="blog-arrow-box"
-                        sx={{
-                          width: 27,
-                          height: 27,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          bgcolor: "#111111",
-                          color: "#ffffff",
-                          transition: "background .25s ease, color .25s ease",
-                        }}
-                      >
-                        <ArrowOutward sx={{ fontSize: 18 }} />
-                      </Box>
-                    </Box>
-                  </Box>
-                </Box>
-              </Box>
-            </Reveal>
+          {newestFirstBlogs.slice(0, 3).map((blog, index) => (
+            <BlogCard key={blog.title} blog={blog} index={index} />
           ))}
         </Box>
       </Box>

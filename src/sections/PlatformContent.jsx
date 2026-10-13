@@ -87,10 +87,9 @@ function AnimatedIcon({ icon: Icon, delay = 0, color = "#9b52f5", size = 26 }) {
 }
 
 const containerSx = {
-  width: "100%",
-  maxWidth: 1440,
+  width:
+    "min(var(--site-content-max), calc(100% - var(--site-content-gutter) - var(--site-content-gutter)))",
   mx: "auto",
-  px: { xs: 2.5, sm: 4, md: 7 },
 };
 
 export default function PlatformContent() {

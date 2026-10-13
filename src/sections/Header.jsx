@@ -32,19 +32,19 @@ const navigation = [
     label: "Our Impact",
     id: "community",
   },
-  {
-    label: "How It Works",
-    id: "how-it-works",
-  },
-  {
-    label: "Bounties",
-    id: "rewards",
-  },
-  {
-    label: "For Colleges",
-    dropdown: false,
-    id: "partners",
-  },
+  // {
+  //   label: "How It Works",
+  //   id: "how-it-works",
+  // },
+  // {
+  //   label: "Bounties",
+  //   id: "rewards",
+  // },
+  // {
+  //   label: "For Colleges",
+  //   dropdown: false,
+  //   id: "partners",
+  // },
   {
     label: "Blogs",
     dropdown: false,
@@ -53,7 +53,7 @@ const navigation = [
 ];
 
 
-export default function Header() {
+export default function Header({ blogPage = false }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [pastHome, setPastHome] = useState(false);
   const [atPageTop, setAtPageTop] = useState(true);
@@ -166,6 +166,20 @@ export default function Header() {
       return;
     }
 
+    if (blogPage) {
+      if (id === "blogs") {
+        scrollToSection(id);
+      } else {
+        window.location.href = `/#${id}`;
+      }
+      return;
+    }
+
+    if (id === "blogs") {
+      window.location.href = "/blog";
+      return;
+    }
+
     scrollToSection(id);
   };
 
@@ -174,7 +188,7 @@ export default function Header() {
     if (id === null) return;
 
     pendingNavigationRef.current = null;
-    window.requestAnimationFrame(() => scrollToSection(id));
+    window.requestAnimationFrame(() => navigateTo(id));
   };
 
 
@@ -187,7 +201,7 @@ export default function Header() {
       <Box
         component="header"
         sx={{
-          position: "fixed",
+          position: "absolute",
 
           top: 0,
           left: 0,
@@ -235,18 +249,9 @@ export default function Header() {
         ================================================== */}
 
         <Box
+          className="content-container"
           sx={{
-            width: {
-              xs: "calc(100% - 28px)",
-              sm: "calc(100% - 40px)",
-              md: "calc(100% - 80px)",
-            },
-
-            maxWidth: "1620px",
-
             height: "100%",
-
-            margin: "0 auto",
 
             display: "grid",
 
@@ -470,8 +475,49 @@ export default function Header() {
             }}
           >
 
-           
-
+            <Box
+              component="button"
+              type="button"
+              className="dark-work-linkk"
+              onClick={() => navigateTo("partners")}
+              sx={{
+  position: "relative",
+  display: "inline-flex",
+  alignItems: "center",
+  gap: "10px",
+  py: 0.75,
+  bgcolor: "transparent",
+  border: 0,
+  color: "#fff",
+  cursor: "pointer",
+  "&::before, &::after": {
+    content: '""',
+    position: "absolute",
+    left: 0,
+    bottom: 0,
+    height: "1px",
+    width: "100%",
+  },
+  "&::before": { bgcolor: "rgba(255,255,255,.25)" },
+  "&::after": {
+    bgcolor: "#fff",
+    transform: "scaleX(0)",
+    transformOrigin: "left",
+    transition: "transform .6s cubic-bezier(.22,1,.36,1)",
+  },
+  "&:hover::after": { transform: "scaleX(1)" },
+  "& > span": {
+    display: "inline-flex",
+    transition: "transform .45s cubic-bezier(.22,1,.36,1)",
+  },
+  "&:hover > span": { transform: "translate(5px,-5px)" },
+}}
+            >
+              Work with us
+              <Box component="span" >
+                <ArrowOutward />
+              </Box>
+            </Box>
 
             {/* =================================================
                 MOBILE MENU BUTTON
