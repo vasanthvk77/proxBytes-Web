@@ -561,7 +561,7 @@ export default function Hero({
               fontWeight: 500,
 
               letterSpacing:
-                "-.045em",
+                "-.05em",
 
               color: "#ffffff",
 
