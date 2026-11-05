@@ -29,22 +29,22 @@ const navigation = [
     id: "about",
   },
   {
-    label: "Our Impact",
-    id: "community",
+    label: "How It Works",
+    id: "how-it-works",
   },
-  // {
-  //   label: "How It Works",
-  //   id: "how-it-works",
-  // },
   // {
   //   label: "Bounties",
   //   id: "rewards",
   // },
-  // {
-  //   label: "For Colleges",
-  //   dropdown: false,
-  //   id: "partners",
-  // },
+  {
+    label: "For Colleges",
+    dropdown: false,
+    id: "partners",
+  },
+  {
+    label: "Our Impact",
+    id: "community",
+  },
   {
     label: "Blogs",
     dropdown: false,
@@ -90,73 +90,25 @@ export default function Header({ blogPage = false }) {
   ========================================================= */
 
   const scrollToSection = (id) => {
-    let target = 0;
-
-    if (id !== "home") {
-      const section = document.getElementById(id);
-      if (!section) return;
-      target = section.getBoundingClientRect().top + window.scrollY;
-    }
-
     cancelScrollRef.current?.();
 
-    const scrollingElement = document.scrollingElement;
-    if (!scrollingElement) return;
-
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      scrollingElement.scrollTop = target;
+    if (id === "home") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
-    const start = window.scrollY;
-    const distance = target - start;
-    const viewportHeight = window.innerHeight || 1;
-    const duration = Math.min(
-      5000,
-      Math.max(1200, (Math.abs(distance) / viewportHeight) * 1200)
-    );
-    let frame;
-    let active = true;
-    let startTime;
+    const section = document.getElementById(id);
+    if (!section) return;
 
-    const cleanup = () => {
-      if (!active) return;
-      active = false;
-      window.cancelAnimationFrame(frame);
-      window.removeEventListener("wheel", interruptScroll);
-      window.removeEventListener("touchstart", interruptScroll);
-      window.removeEventListener("keydown", interruptScroll);
-      cancelScrollRef.current = null;
-    };
+    // Smooth scroll directly to the section with proper header offset
+    const headerOffset = 70;
+    const elementPosition = section.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.scrollY - headerOffset;
 
-    const interruptScroll = () => cleanup();
-
-    window.addEventListener("wheel", interruptScroll, { passive: true });
-    window.addEventListener("touchstart", interruptScroll, { passive: true });
-    window.addEventListener("keydown", interruptScroll);
-    cancelScrollRef.current = cleanup;
-
-    const animateScroll = (timestamp) => {
-      if (!active) return;
-
-      if (startTime === undefined) startTime = timestamp;
-
-      const progress = Math.min((timestamp - startTime) / duration, 1);
-      const easedProgress =
-        progress < 0.5
-          ? 4 * progress * progress * progress
-          : 1 - Math.pow(-2 * progress + 2, 3) / 2;
-
-      scrollingElement.scrollTop = start + distance * easedProgress;
-
-      if (progress < 1) {
-        frame = window.requestAnimationFrame(animateScroll);
-      } else {
-        cleanup();
-      }
-    };
-
-    frame = window.requestAnimationFrame(animateScroll);
+    window.scrollTo({
+      top: Math.max(0, offsetPosition),
+      behavior: "smooth",
+    });
   };
 
   const navigateTo = (id) => {
@@ -479,7 +431,7 @@ export default function Header({ blogPage = false }) {
               component="button"
               type="button"
               className="dark-work-linkk"
-              onClick={() => navigateTo("partners")}
+              onClick={() => navigateTo("footer")}
               sx={{
   position: "relative",
   display: "inline-flex",

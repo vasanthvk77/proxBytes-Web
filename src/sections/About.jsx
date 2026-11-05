@@ -19,7 +19,9 @@ import SectionTitle from "../components/SectionTitle";
 
 import valuesImage from "../../assets/Values-2.png";
 
-import learningImage from "../../assets/Values-1.png";
+import ThinkingImage1 from "../../assets/Thinking1.png";
+import ThinkingImage2 from "../../assets/Thinking2.png";
+import ThinkingImage3 from "../../assets/Thinking3.png";
 
 const principles = [
 
@@ -35,7 +37,7 @@ const principles = [
 
     accent: "#a56af5",
 
-    image: valuesImage,
+    image: ThinkingImage1,
 
     tags: ["Practical work", "Demonstrated skills", "Student projects"],
 
@@ -53,7 +55,7 @@ const principles = [
 
     accent: "#7d83ff",
 
-    image: learningImage,
+    image: ThinkingImage2,
 
     tags: ["Real challenges", "Skill development", "Career growth"],
 
@@ -71,7 +73,7 @@ const principles = [
 
     accent: "#e58bc8",
 
-    image: valuesImage,
+    image: ThinkingImage3,
 
     tags: ["Students", "Industry", "Opportunity"],
 
@@ -587,8 +589,8 @@ export default function About() {
               >
 
                 {[
-                  { value: 8, suffix: "+", padStart: 2, detail: "Industry partners" },
-                  { value: 10, suffix: "K", detail: "Students reached" },
+                  { value: 100, suffix: "+", padStart: 3, detail: "Industry partners" },
+                  { value: 800, suffix: "+", detail: "Students in ecosystem" },
                 ].map((item, index) => (
 
                   <Box

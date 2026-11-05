@@ -38,9 +38,9 @@ export default function App() {
         <main>
           <Hero />
           <About />
-          <Growth />
           <Works />
-          {/* <PlatformContent /> */}
+          <PlatformContent />
+          <Growth />
           <Testimonials />
           <Blogs />
         </main>

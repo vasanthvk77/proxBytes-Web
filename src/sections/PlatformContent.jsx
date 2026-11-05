@@ -520,7 +520,7 @@ export default function PlatformContent() {
         </Box>
       </Box>
 
-      <Box
+      {/* <Box
         component="section"
         id="rewards"
         sx={{
@@ -600,7 +600,7 @@ export default function PlatformContent() {
             ))}
           </Box>
         </Box>
-      </Box>
+      </Box> */}
 
       <Box
         component="section"
@@ -911,7 +911,10 @@ export default function PlatformContent() {
             />
             <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
               <Button
-                href="#how-it-works"
+                component="a"
+                href="https://app.proxbytes.com"
+                target="_blank"
+                rel="noopener noreferrer"
                 endIcon={<ArrowOutward />}
                 sx={{
                   px: 2.5,
@@ -926,7 +929,13 @@ export default function PlatformContent() {
                 Enter ProxBytes
               </Button>
               <Button
-                href="#about"
+                component="a"
+                href="#footer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  const footer = document.getElementById("footer") || document.querySelector("footer");
+                  footer?.scrollIntoView({ behavior: "smooth" });
+                }}
                 endIcon={<ArrowOutward />}
                 sx={{
                   px: 2.5,

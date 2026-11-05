@@ -13,27 +13,29 @@ import {
   useTransform,
 } from "framer-motion";
 import Reveal from "../components/Reveal";
-import firstWorkImage from "../../assets/Values-1.png";
+
 import secondWorkImage from "../../assets/Values-2.png";
+import RealWorldChellenge from  "../../assets/RealWorldChellenge.png";
+import BountiesAndRecognition from "../../assets/BountiesAndRecognition.png";
 
 const works = [
   {
-    title: "Social Media Planning",
+    title: "Real-World Challenges",
     description:
-      "Benefits by create personalized campaigns that build brand awareness and media.",
-    image: firstWorkImage,
+      "Take on industry-specific use cases and turn ideas into working solutions that prove your capability.",
+    image: RealWorldChellenge,
   },
   {
-    title: "SEO for Grisy",
+    title: "Build, Defend & Win",
     description:
-      "In-depth keyword research, we ensure website aligns for conversion.",
+      "Your code gets evaluated, your approach gets explored, and your technical thinking gets demonstrated.",
     image: secondWorkImage,
   },
   {
-    title: "Content for Visou.",
+    title: "Bounties & Recognition",
     description:
-      "Content started from blog posts video, we develop content that speaks directly to users.",
-    image: firstWorkImage,
+      "Earn Bytes, cash bounties, and direct visibility with top tech companies seeking verified talent.",
+    image: BountiesAndRecognition,
   },
 ];
 
@@ -115,7 +117,14 @@ function WorkItem({ item, index, active, progress }) {
       </Typography>
 
       <Button
-        href="#about"
+        href="#how-it-works"
+        onClick={(e) => {
+          e.preventDefault();
+          const target = document.getElementById("how-it-works");
+          if (target) {
+            target.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }}
         endIcon={<ArrowOutward />}
         sx={{
           mt: 2.25,
@@ -223,7 +232,7 @@ export default function Works() {
                 fontWeight: 600,
               }}
             >
-              Our Works
+              How It Works
             </Typography>
             </Reveal>
             <Reveal delay={0.12}>
@@ -237,7 +246,7 @@ export default function Works() {
                 lineHeight: 1.6,
               }}
             >
-              Many works on competitive markets or specialized areas like SEO
+              Turn what you learn into something you can build, solve, defend and prove.
             </Typography>
             </Reveal>
           </Box>
