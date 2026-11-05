@@ -1,25 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import {
   Box,
   Drawer,
   IconButton,
+  Typography 
 } from "@mui/material";
 
 import {
   Menu,
+  Close,
   KeyboardArrowDown,
   ShoppingBagOutlined,
   ArrowOutward,
 } from "@mui/icons-material";
 
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 
 const navigation = [
   {
     label: "Home",
-    dropdown: true,
+    dropdown: false,
     id: "home",
   },
   {
@@ -27,53 +29,118 @@ const navigation = [
     id: "about",
   },
   {
-    label: "Project",
-    id: "works",
+    label: "How It Works",
+    id: "how-it-works",
+  },
+  // {
+  //   label: "Bounties",
+  //   id: "rewards",
+  // },
+  {
+    label: "For Colleges",
+    dropdown: false,
+    id: "partners",
   },
   {
-    label: "Pricing",
-    id: "pricing",
+    label: "Our Impact",
+    id: "community",
   },
   {
-    label: "Services",
-    id: "services",
-  },
-  {
-    label: "Pages",
-    dropdown: true,
-    id: "pages",
+    label: "Blogs",
+    dropdown: false,
+    id: "blogs",
   },
 ];
 
 
-export default function Header() {
+export default function Header({ blogPage = false }) {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [pastHome, setPastHome] = useState(false);
+  const [atPageTop, setAtPageTop] = useState(true);
+  const cancelScrollRef = useRef(null);
+  const pendingNavigationRef = useRef(null);
+
+  useEffect(() => {
+    const updatePageTop = () => setAtPageTop(window.scrollY <= 0);
+    updatePageTop();
+    window.addEventListener("scroll", updatePageTop, { passive: true });
+
+    const homeSection = document.getElementById("home");
+    if (!homeSection) {
+      return () => window.removeEventListener("scroll", updatePageTop);
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setPastHome(!entry.isIntersecting),
+      {
+        rootMargin: "-88px 0px 0px 0px",
+      }
+    );
+
+    observer.observe(homeSection);
+    return () => {
+      window.removeEventListener("scroll", updatePageTop);
+      observer.disconnect();
+    };
+  }, []);
 
 
   /* =========================================================
      NAVIGATION
   ========================================================= */
 
-  const navigateTo = (id) => {
-    setMobileOpen(false);
+  const scrollToSection = (id) => {
+    cancelScrollRef.current?.();
 
     if (id === "home") {
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
-
+      window.scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
 
-    const element = document.getElementById(id);
+    const section = document.getElementById(id);
+    if (!section) return;
 
-    if (element) {
-      element.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
+    // Smooth scroll directly to the section with proper header offset
+    const headerOffset = 70;
+    const elementPosition = section.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+    window.scrollTo({
+      top: Math.max(0, offsetPosition),
+      behavior: "smooth",
+    });
+  };
+
+  const navigateTo = (id) => {
+    if (mobileOpen) {
+      pendingNavigationRef.current = id;
+      setMobileOpen(false);
+      return;
     }
+
+    if (blogPage) {
+      if (id === "blogs") {
+        scrollToSection(id);
+      } else {
+        window.location.href = `/#${id}`;
+      }
+      return;
+    }
+
+    if (id === "blogs") {
+      window.location.href = "/blog";
+      return;
+    }
+
+    scrollToSection(id);
+  };
+
+  const handleMobileDrawerExited = () => {
+    const id = pendingNavigationRef.current;
+    if (id === null) return;
+
+    pendingNavigationRef.current = null;
+    window.requestAnimationFrame(() => navigateTo(id));
   };
 
 
@@ -92,7 +159,7 @@ export default function Header() {
           left: 0,
           right: 0,
 
-          zIndex: 1000,
+          zIndex: mobileOpen ? 1301 : 1000,
 
           height: {
             xs: "64px",
@@ -100,7 +167,24 @@ export default function Header() {
             md: "88px",
           },
 
-          background: "transparent",
+          background:
+            mobileOpen || pastHome
+              ? "rgba(79, 46, 156, 0.46)"
+              : "transparent",
+          backdropFilter:
+            mobileOpen || pastHome ? "blur(12px)" : "none",
+          WebkitBackdropFilter:
+            mobileOpen || pastHome ? "blur(12px)" : "none",
+          opacity:
+            atPageTop || pastHome || mobileOpen ? 1 : 0,
+          pointerEvents:
+            atPageTop || pastHome || mobileOpen ? "auto" : "none",
+          transform:
+            atPageTop || pastHome || mobileOpen
+              ? "translateY(0)"
+              : "translateY(-8px)",
+          transition:
+            "opacity 0.3s ease, transform 0.3s ease, background-color 0.3s ease, backdrop-filter 0.3s ease",
 
           color: "#ffffff",
         }}
@@ -117,18 +201,9 @@ export default function Header() {
         ================================================== */}
 
         <Box
+          className="content-container"
           sx={{
-            width: {
-              xs: "calc(100% - 28px)",
-              sm: "calc(100% - 40px)",
-              md: "calc(100% - 80px)",
-            },
-
-            maxWidth: "1620px",
-
             height: "100%",
-
-            margin: "0 auto",
 
             display: "grid",
 
@@ -184,7 +259,7 @@ export default function Header() {
 
               fontWeight: 500,
 
-              letterSpacing: "-0.075em",
+              letterSpacing: "0.1em",
 
               lineHeight: 1,
 
@@ -352,238 +427,59 @@ export default function Header() {
             }}
           >
 
-            {/* =================================================
-                SHOPPING BAG
-            ================================================== */}
-
-            {/* <Box
-              component="button"
-              type="button"
-              aria-label="Shopping bag"
-              sx={{
-                position: "relative",
-
-                border: 0,
-
-                outline: 0,
-
-                background:
-                  "transparent",
-
-                color: "#ffffff",
-
-                cursor: "pointer",
-
-                padding: 0,
-
-                margin: 0,
-
-                width: {
-                  xs: "27px",
-                  md: "32px",
-                },
-
-                height: {
-                  xs: "27px",
-                  md: "32px",
-                },
-
-                display: "flex",
-
-                alignItems: "center",
-
-                justifyContent:
-                  "center",
-
-                transition:
-                  "opacity .25s ease",
-
-                "&:hover": {
-                  opacity: 0.65,
-                },
-              }}
-            >
-
-              <ShoppingBagOutlined
-                sx={{
-                  fontSize: {
-                    xs: "22px",
-                    md: "27px",
-                  },
-                }}
-              />
-
-{/* 
-              CART COUNT */}
-{/* 
-              <Box
-                sx={{
-                  position: "absolute",
-
-                  top: {
-                    xs: "-7px",
-                    md: "-6px",
-                  },
-
-                  right: {
-                    xs: "-7px",
-                    md: "-6px",
-                  },
-
-                  width: {
-                    xs: "17px",
-                    md: "21px",
-                  },
-
-                  height: {
-                    xs: "17px",
-                    md: "21px",
-                  },
-
-                  borderRadius: "50%",
-
-                  background: "#ffffff",
-
-                  color: "#111111",
-
-                  display: "flex",
-
-                  alignItems: "center",
-
-                  justifyContent:
-                    "center",
-
-                  fontFamily:
-                    "Manrope, sans-serif",
-
-                  fontSize: {
-                    xs: "8px",
-                    md: "9px",
-                  },
-
-                  fontWeight: 700,
-
-                  lineHeight: 1,
-                }}
-              >
-                0
-              </Box> */}
-
-            {/* </Box> */} 
-
-            {/* =================================================
-                WORK WITH US
-            ================================================== */}
-
             <Box
               component="button"
               type="button"
-              onClick={() =>
-                navigateTo("cta")
-              }
+              className="dark-work-linkk"
+              onClick={() => navigateTo("footer")}
               sx={{
-                display: {
-                  xs: "none",
-                  md: "flex",
-                },
-
-                alignItems: "center",
-
-                gap: "18px",
-
-                border: 0,
-
-                borderBottom:
-                  "1px solid rgba(255,255,255,.4)",
-
-                background:
-                  "transparent",
-
-                color: "#ffffff",
-
-                cursor: "pointer",
-
-                padding:
-                  "0 0 9px 0",
-
-                margin: 0,
-
-                fontFamily:
-                  "Manrope, sans-serif",
-
-                fontSize: "14px",
-
-                fontWeight: 600,
-
-                whiteSpace:
-                  "nowrap",
-
-                transition:
-                  "opacity .25s ease, border-color .25s ease",
-
-                "&:hover": {
-                  opacity: 0.75,
-
-                  borderColor:
-                    "#ffffff",
-                },
-
-                "&:hover .header-arrow": {
-                  transform:
-                    "translate(2px, -2px)",
-                },
-              }}
+  position: "relative",
+  display: "inline-flex",
+  alignItems: "center",
+  gap: "10px",
+  py: 0.75,
+  bgcolor: "transparent",
+  border: 0,
+  color: "#fff",
+  cursor: "pointer",
+  "&::before, &::after": {
+    content: '""',
+    position: "absolute",
+    left: 0,
+    bottom: 0,
+    height: "1px",
+    width: "100%",
+  },
+  "&::before": { bgcolor: "rgba(255,255,255,.25)" },
+  "&::after": {
+    bgcolor: "#fff",
+    transform: "scaleX(0)",
+    transformOrigin: "left",
+    transition: "transform .6s cubic-bezier(.22,1,.36,1)",
+  },
+  "&:hover::after": { transform: "scaleX(1)" },
+  "& > span": {
+    display: "inline-flex",
+    transition: "transform .45s cubic-bezier(.22,1,.36,1)",
+  },
+  "&:hover > span": { transform: "translate(5px,-5px)" },
+}}
             >
-
-              <span>
-                Work with us
-              </span>
-
-              <Box
-                className="header-arrow"
-                sx={{
-                  width: "31px",
-
-                  height: "31px",
-
-                  display: "flex",
-
-                  alignItems: "center",
-
-                  justifyContent:
-                    "center",
-
-                  background:
-                    "#ffffff",
-
-                  color: "#111111",
-
-                  transition:
-                    "transform .3s ease",
-                }}
-              >
-
-                <ArrowOutward
-                  sx={{
-                    fontSize:
-                      "18px",
-                  }}
-                />
-
+              Work with us
+              <Box component="span" >
+                <ArrowOutward />
               </Box>
-
             </Box>
-
 
             {/* =================================================
                 MOBILE MENU BUTTON
             ================================================== */}
 
             <IconButton
-              aria-label="Open menu"
-              onClick={() =>
-                setMobileOpen(true)
-              }
+                aria-label={mobileOpen ? "Close menu" : "Open menu"}
+                aria-expanded={mobileOpen}
+                aria-controls="mobile-navigation"
+                onClick={() => setMobileOpen((open) => !open)}
               sx={{
                 display: {
                   xs: "flex",
@@ -602,16 +498,36 @@ export default function Header() {
                 },
               }}
             >
-
-              <Menu
-                sx={{
-                  fontSize: {
-                    xs: "25px",
-                    sm: "27px",
-                  },
-                }}
-              />
-
+              <AnimatePresence mode="wait" initial={false}>
+                <motion.span
+                  key={mobileOpen ? "close" : "menu"}
+                  initial={{ opacity: 0, rotate: -35, scale: 0.85 }}
+                  animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                  exit={{ opacity: 0, rotate: 35, scale: 0.85 }}
+                  transition={{ duration: 0.18, ease: "easeInOut" }}
+                  style={{ display: "flex" }}
+                >
+                  {mobileOpen ? (
+                    <Close
+                      sx={{
+                        fontSize: {
+                          xs: "25px",
+                          sm: "27px",
+                        },
+                      }}
+                    />
+                  ) : (
+                    <Menu
+                      sx={{
+                        fontSize: {
+                          xs: "25px",
+                          sm: "27px",
+                        },
+                      }}
+                    />
+                  )}
+                </motion.span>
+              </AnimatePresence>
             </IconButton>
 
           </Box>
@@ -625,136 +541,226 @@ export default function Header() {
           MOBILE MENU
       ====================================================== */}
 
-      <Drawer
-        anchor="right"
+<Drawer
+  anchor="right"
+  open={mobileOpen}
+  onClose={() => setMobileOpen(false)}
+  ModalProps={{
+    onTransitionExited: handleMobileDrawerExited,
+  }}
+  PaperProps={{
+    sx: {
+      width: {
+        xs: "calc(100% - 32px)",
+        sm: "350px",
+      },
+      maxWidth: "350px",
+      boxSizing: "border-box",
 
-        open={mobileOpen}
+      background:
+        "linear-gradient(155deg, #100d16 0%, #050505 45%, #09070d 100%)",
 
-        onClose={() =>
-          setMobileOpen(false)
-        }
+      color: "#ffffff",
 
-        PaperProps={{
-          sx: {
-            width: {
-              xs: "calc(100% - 28px)",
-              sm: "350px",
-            },
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderTop: "none",
+      borderRadius: "0 0 14px 14px",
 
-            maxWidth: "350px",
+      top: {
+        xs: "64px",
+        sm: "72px",
+      },
 
-            background:
-              "#050505",
+      height: "auto",
+      maxHeight: {
+        xs: "calc(100dvh - 76px)",
+        sm: "calc(100dvh - 84px)",
+      },
+      overflowY: "auto",
 
+      boxShadow:
+        "0 24px 65px rgba(0,0,0,0.55)",
+
+      // Subtle purple accent without changing the theme
+      "&::before": {
+        content: '""',
+        position: "absolute",
+        top: 0,
+        left: 0,
+        width: "3px",
+        height: "100%",
+        background:
+          "linear-gradient(180deg, #542b80 0%, rgba(84,43,128,0.12) 75%, transparent 100%)",
+        pointerEvents: "none",
+      },
+
+      "&::-webkit-scrollbar": {
+        width: "4px",
+      },
+
+      "&::-webkit-scrollbar-thumb": {
+        background: "rgba(255,255,255,0.18)",
+        borderRadius: "10px",
+      },
+    },
+  }}
+>
+  <Box
+    sx={{
+      px: {
+        xs: 2.5,
+        sm: 3,
+      },
+      pt: {
+        xs: 1.25,
+        sm: 1.5,
+      },
+      pb: 2,
+      position: "relative",
+    }}
+  >
+    {/* Mobile Navigation */}
+    <Box
+      component="nav"
+      id="mobile-navigation"
+      aria-label="Mobile navigation"
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        gap: 0.5,
+      }}
+    >
+      {navigation.map((item, index) => (
+        <motion.button
+          key={item.label}
+          type="button"
+          whileHover={{
+            x: 3,
+          }}
+          whileTap={{
+            scale: 0.985,
+          }}
+          onClick={() => navigateTo(item.id)}
+          style={{
+            width: "100%",
+            minHeight: "46px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: "12px",
+
+            background: "transparent",
             color: "#ffffff",
+            border: "1px solid transparent",
+            borderRadius: "7px",
 
-            borderRadius:
-              "0 0 14px 14px",
+            padding: "11px 12px",
 
-            top: {
-              xs: "44px",
-              sm: "52px",
-            },
+            cursor: "pointer",
+            fontFamily: "Manrope, sans-serif",
+            fontSize: "13px",
+            fontWeight: 600,
+            lineHeight: 1.5,
+            textAlign: "left",
 
-            height: "auto",
+            transition:
+              "background 0.2s ease, border-color 0.2s ease",
+          }}
+          onMouseEnter={(event) => {
+            event.currentTarget.style.background =
+              "rgba(84,43,128,0.18)";
 
-            maxHeight:
-              "calc(100vh - 55px)",
+            event.currentTarget.style.borderColor =
+              "rgba(139,92,190,0.18)";
+          }}
+          onMouseLeave={(event) => {
+            event.currentTarget.style.background =
+              "transparent";
 
-            boxShadow:
-              "0 25px 80px rgba(0,0,0,.55)",
-          },
-        }}
-      >
-
-        <Box
-          sx={{
-            px: {
-              xs: 2,
-              sm: 2.5,
-            },
-
-            py: {
-              xs: 1,
-              sm: 1.5,
-            },
+            event.currentTarget.style.borderColor =
+              "transparent";
           }}
         >
+          <Box
+            component="span"
+            sx={{
+              display: "flex",
+              alignItems: "center",
+              gap: 1.5,
+              minWidth: 0,
+            }}
+          >
+            {/* Navigation Number */}
+            
 
-          {/* =============================================
-              MOBILE NAVIGATION
-          ============================================== */}
-
-          {navigation.map((item) => (
-
-            <motion.button
-              key={item.label}
-
-              type="button"
-
-              whileHover={{
-                x: 5,
-              }}
-
-              onClick={() =>
-                navigateTo(item.id)
-              }
-
-              style={{
-                width: "100%",
-
-                display: "flex",
-
-                alignItems: "center",
-
-                justifyContent:
-                  "space-between",
-
-                background:
-                  "transparent",
-
-                color: "#ffffff",
-
-                border: 0,
-
-                padding:
-                  "12px 0",
-
-                cursor: "pointer",
-
-                fontFamily:
-                  "Manrope, sans-serif",
-
-                fontSize: "14px",
-
-                fontWeight: 500,
-
-                lineHeight: 1.3,
-
-                textAlign: "left",
+            {/* Navigation Label */}
+            <Box
+              component="span"
+              sx={{
+                color: "#f5f3f7",
+                transition: "color 0.2s ease",
               }}
             >
+              {item.label}
+            </Box>
+          </Box>
 
-              <span>
-                {item.label}
-              </span>
+          {/* Dropdown Indicator */}
+          {item.dropdown ? (
+            <KeyboardArrowDown
+              sx={{
+                fontSize: 18,
+                color: "rgba(255,255,255,0.6)",
+                flexShrink: 0,
+              }}
+            />
+          ) : (
+            <Box
+              component="span"
+              aria-hidden="true"
+              sx={{
+                width: 5,
+                height: 5,
+                borderRadius: "50%",
+                bgcolor: "rgba(139,92,190,0.7)",
+                opacity: 0,
+                flexShrink: 0,
+                transition: "opacity 0.2s ease",
 
-              {item.dropdown && (
-                <KeyboardArrowDown
-                  sx={{
-                    fontSize:
-                      "16px",
-                  }}
-                />
-              )}
+                "button:hover &": {
+                  opacity: 1,
+                },
+              }}
+            />
+          )}
+        </motion.button>
+      ))}
+    </Box>
 
-            </motion.button>
+    {/* Bottom Accent */}
+    <Box
+      sx={{
+        mt: 2,
+        pt: 2,
+        borderTop: "1px solid rgba(255,255,255,0.09)",
+      }}
+    >
+      <Typography
+        component="span"
+        sx={{
+          fontSize: 10,
+          fontWeight: 500,
+          letterSpacing: ".04em",
+          lineHeight: 1.7,
+          color: "rgba(255,255,255,0.45)",
+        }}
+      >
+        Challenges. Real skills. Real rewards.
+      </Typography>
+    </Box>
 
-          ))}
-
-        </Box>
-
-      </Drawer>
+  </Box>
+</Drawer>
     </>
   );
 }

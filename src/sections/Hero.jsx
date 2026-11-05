@@ -48,7 +48,20 @@ const CursorArrow = ({ color = "#ffff00" }) => (
   </Box>
 );
 
-export default function Hero() {
+export default function Hero({
+  eyebrow = "Go Beyond Learning • Prove It",
+  title = (
+    <>
+      Real-world challenges.
+      <br />
+      Real skills.
+      <br />
+      Real rewards.
+    </>
+  ),
+  description,
+  bringBadgesCloser = false,
+} = {}) {
   const heroRef = useRef(null);
 
 
@@ -82,11 +95,11 @@ export default function Hero() {
     [0, -130]
   );
 
-  // AGENCY moves downward
+  // AGENCY moves upward so it stays clear above the text
   const agencyScrollY = useTransform(
     scrollYProgress,
     [0, 1],
-    [0, 110]
+    [0, -120]
   );
 
 
@@ -375,7 +388,7 @@ export default function Hero() {
               "rotate(-12deg)",
 
             boxShadow:
-              "-35px 0 80px rgba(0,0,0,.45)",
+              "-35px 0 80px rgba(85, 29, 169, 0.62)",
 
             opacity: 0.95,
           }}
@@ -386,7 +399,7 @@ export default function Hero() {
             CURVED LINE 1
         ================================================== */}
 
-        <Box
+        {/* <Box
           sx={{
             position: "absolute",
 
@@ -408,14 +421,14 @@ export default function Hero() {
 
             opacity: 0.8,
           }}
-        />
+        /> */}
 
 
         {/* =================================================
             CURVED LINE 2
         ================================================== */}
 
-        <Box
+        {/* <Box
           sx={{
             position: "absolute",
 
@@ -437,14 +450,14 @@ export default function Hero() {
 
             opacity: 0.8,
           }}
-        />
+        /> */}
 
 
         {/* =================================================
             CURVED LINE 3
         ================================================== */}
 
-        <Box
+        {/* <Box
           sx={{
             position: "absolute",
 
@@ -466,7 +479,7 @@ export default function Hero() {
 
             opacity: 0.7,
           }}
-        />
+        /> */}
 
 
         {/* =================================================
@@ -503,23 +516,11 @@ export default function Hero() {
       ====================================================== */}
 
       <Box
+        className="content-container"
         sx={{
           position: "relative",
 
           zIndex: 2,
-
-          width: "100%",
-
-          maxWidth: "1450px",
-
-          mx: "auto",
-
-          px: {
-            xs: 2.5,
-            sm: 4,
-            md: 6,
-            lg: 8,
-          },
 
           textAlign: "center",
         }}
@@ -560,7 +561,7 @@ export default function Hero() {
               fontWeight: 500,
 
               letterSpacing:
-                "-.045em",
+                "-.05em",
 
               color: "#ffffff",
 
@@ -570,7 +571,7 @@ export default function Hero() {
               },
             }}
           >
-            Go Beyond Learning. Prove It.
+            {eyebrow}
           </Typography>
 
         </motion.div>
@@ -630,11 +631,11 @@ export default function Hero() {
                   "Manrope, sans-serif",
 
                 fontSize: {
-                  xs: "40px",
-                  sm: "55px",
+                  xs: "60px",
+                  sm: "60px",
                   md: "72px",
                   lg: "92px",
-                  xl: "102px",
+                  xl: "85px",
                 },
 
                 lineHeight: {
@@ -645,18 +646,12 @@ export default function Hero() {
                 letterSpacing:
                   "-.055em",
 
-                fontWeight: 500,
+                fontWeight: 550,
 
                 color: "#ffffff",
               }}
             >
-              Real-world challenges.
-              <br />
-
-              Real skills.
-              <br />
-
-              Real rewards.
+              {title}
             </Typography>
 
           </motion.div>
@@ -700,10 +695,11 @@ export default function Hero() {
 
                 left: {
                   xs: "0%",
-                  md: "-9%",
+                  md: bringBadgesCloser ? "-3%" : "-9%",
+                  lg: bringBadgesCloser ? "-5%" : "4%",
                 },
 
-                top: "58%",
+                top: "70%",
 
                 display: {
                   xs: "none",
@@ -736,7 +732,7 @@ export default function Hero() {
                   pointerEvents: "none",
                 }}
               >
-                <CursorArrow color="#ffff00" />
+                <CursorArrow color="#ffffff" />
               </Box>
 
 
@@ -746,19 +742,18 @@ export default function Hero() {
 
               <Box
                 sx={{
-                  width: {
-                    md: "108px",
-                    lg: "118px",
-                  },
+               width: {
+                  md: "120px",
+                  lg: "90px",
+                },
 
-                  height: {
-                    md: "58px",
-                    lg: "62px",
-                  },
-
+                height: {
+                  md: "50px",
+                  lg: "50px",
+                },
                   borderRadius: "999px",
 
-                  background: "#ffff00",
+                  background: "#ffffff",
 
                   color: "#111111",
 
@@ -823,10 +818,14 @@ export default function Hero() {
 
               right: {
                 xs: "0%",
-                md: "-1%",
+                md: bringBadgesCloser ? "-4%" : "-6%",
+                lg: bringBadgesCloser ? "-2%" : "-2%",
               },
 
-              top: "28%",
+              top: {
+                md: "-14%",
+                lg: "10%",
+              },
 
               display: {
                 xs: "none",
@@ -846,8 +845,8 @@ export default function Hero() {
               sx={{
                 position: "absolute",
 
-                top: "-24px",
-                left: "-27px",
+                top: "-22px",
+                left: "-25px",
 
                 width: "28px",
                 height: "28px",
@@ -870,13 +869,13 @@ export default function Hero() {
             <Box
               sx={{
                 width: {
-                  md: "145px",
-                  lg: "155px",
+                  md: "120px",
+                  lg: "130px",
                 },
 
                 height: {
-                  md: "58px",
-                  lg: "62px",
+                  md: "50px",
+                  lg: "50px",
                 },
 
                 borderRadius: "999px",
@@ -894,7 +893,7 @@ export default function Hero() {
                 fontFamily:
                   "Manrope, sans-serif",
 
-                fontSize: "20px",
+                fontSize: "18px",
 
                 fontWeight: 600,
 
@@ -903,7 +902,7 @@ export default function Hero() {
                 userSelect: "none",
               }}
             >
-              AGENCY
+              INDUSTRY
             </Box>
           </MotionBox>
 
@@ -962,19 +961,20 @@ export default function Hero() {
                 "rgba(255,255,255,.68)",
             }}
           >
-            Turn what you learn into something you can{" "}
-
-            <Box
-              component="strong"
-
-              sx={{
-                color: "#ffffff",
-
-                fontWeight: 700,
-              }}
-            >
-              build, solve, defend and prove.
-            </Box>
+            {description ?? (
+              <>
+                Turn what you learn into something you can{" "}
+                <Box
+                  component="strong"
+                  sx={{
+                    color: "#ffffff",
+                    fontWeight: 700,
+                  }}
+                >
+                  build, solve, defend and prove.
+                </Box>
+              </>
+            )}
 
           </Typography>
 
@@ -1029,31 +1029,34 @@ export default function Hero() {
           >
 
 
-            {/* =================================================
-                LET'S TALK
-            ================================================== */}
+           
+          
 
            <Button
+        component="a"
+        href="https://app.proxbytes.com"
+        target="_blank"
+        rel="noopener noreferrer"
         sx={{
           position: "relative",
 
           minWidth: {
-            xs: "180px",
-            md: "230px",
+            xs: "150px",
+            md: "210px",
           },
 
           height: {
-            xs: "62px",
-            md: "74px",
+            xs: "45px",
+            md: "60px",
           },
 
           px: 4,
 
           borderRadius: "6px",
 
-          background: "#cbb0f5",
+          background: "#9b52f5",
 
-          color: "#111111",
+          color: "#ffffff",
 
           textTransform: "none",
 
@@ -1076,7 +1079,8 @@ export default function Hero() {
             "background-color .35s ease",
 
           "&:hover": {
-            background: "#ffff00",
+            background: "#ffffff",
+            color:"black"
           },
 
           /* =====================================================
@@ -1240,21 +1244,21 @@ export default function Hero() {
     </Box>
 
   </Box>
-</Button>
+            </Button>
 
 
             {/* =================================================
-                SEE OUR WORKS
+                PARTNER WITH US
             ================================================== */}
 
             <Button
-            onClick={() =>
-              document
-                .getElementById("works")
-                ?.scrollIntoView({
-                  behavior: "smooth",
-                })
-            }
+            component="a"
+            href="#footer"
+            onClick={(e) => {
+              e.preventDefault();
+              const footer = document.getElementById("footer") || document.querySelector("footer");
+              footer?.scrollIntoView({ behavior: "smooth" });
+            }}
             sx={{
               position: "relative",
 

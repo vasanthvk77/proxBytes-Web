@@ -7,19 +7,19 @@ import VisualCard from "../components/VisualCard";
 
 const services = [
   {
-    no: "001",
+    no: "1",
     title: "SEO Marketing",
     text: "leverages platforms like medias Facebook, Instagram, LinkedIn to engage to attract.",
     variant: "service-a"
   },
   {
-    no: "002",
+    no: "2",
     title: "Social Media",
     text: "leverages platforms like medias Facebook, Instagram, LinkedIn to engage to attract.",
     variant: "service-b"
   },
   {
-    no: "003",
+    no: "3",
     title: "Content Marketing",
     text: "leverages platforms like medias Facebook, Instagram, LinkedIn to engage to attract.",
     variant: "service-c"
