@@ -11,15 +11,31 @@ import Blogs from "./sections/Blogs";
 import Footer from "./sections/Footer";
 import Testimonials from "./sections/Testimonials";
 import BlogPage from "./sections/BlogPage";
+import TermsAndConditions from "./sections/TermsAndCondiotions";
+import PrivacyPolicy from "./sections/PrivacyPolicy";
+
+function getNormalizedPath() {
+  return window.location.pathname.replace(/\/+$/, "").toLowerCase();
+}
 
 export default function App() {
   const [loaded, setLoaded] = useState(false);
-  const isBlogPage = window.location.pathname.replace(/\/+$/, "") === "/blog";
+  const [currentPath, setCurrentPath] = useState(getNormalizedPath());
 
   useEffect(() => {
     const timer = setTimeout(() => setLoaded(true), 350);
-    return () => clearTimeout(timer);
+    const handlePopState = () => setCurrentPath(getNormalizedPath());
+    window.addEventListener("popstate", handlePopState);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("popstate", handlePopState);
+    };
   }, []);
+
+  const isBlogPage = currentPath === "/blog";
+  const isTermsPage = currentPath === "/terms" || currentPath === "/terms-and-conditions";
+  const isPrivacyPage = currentPath === "/privacy" || currentPath === "/privacy-policy";
+  const isSubPage = isBlogPage || isTermsPage || isPrivacyPage;
 
   return (
     <Box className="site">
@@ -29,8 +45,16 @@ export default function App() {
         animate={{ scaleY: loaded ? 0 : 1 }}
         transition={{ duration: 0.9, ease: [0.76, 0, 0.24, 1] }}
       />
-      <Header blogPage={isBlogPage} />
-      {isBlogPage ? (
+      <Header blogPage={isSubPage} />
+      {isTermsPage ? (
+        <main>
+          <TermsAndConditions />
+        </main>
+      ) : isPrivacyPage ? (
+        <main>
+          <PrivacyPolicy />
+        </main>
+      ) : isBlogPage ? (
         <main>
           <BlogPage />
         </main>
@@ -38,14 +62,14 @@ export default function App() {
         <main>
           <Hero />
           <About />
+          <Growth />
           <Works />
           <PlatformContent />
-          <Growth />
           <Testimonials />
           <Blogs />
         </main>
       )}
-      <Footer blogPage={isBlogPage} />
+      <Footer blogPage={isSubPage} />
     </Box>
   );
 }

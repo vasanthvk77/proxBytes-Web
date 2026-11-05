@@ -291,7 +291,7 @@ export default function PrivacyPolicy() {
                         </MuiLink>
                       </Typography>
                       <Typography sx={{ color: "rgba(255, 255, 255, 0.8)" }}>
-                        Organization: ProxBytes
+                        Organization: PROdesX InfoTech Pvt Lmt.
                       </Typography>
                     </Box>
                   )}
