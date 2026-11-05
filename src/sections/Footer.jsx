@@ -622,43 +622,73 @@ export default function Footer({ blogPage = false }) {
                 {BRAND}
               </Typography>
 
-              <Typography
+              <Stack
+                direction={{ xs: "column", sm: "row" }}
+                alignItems="center"
+                spacing={{ xs: 1.5, sm: 3 }}
                 sx={{
-                  fontSize: {
-                    xs: 12,
-                    sm: 14,
-                    md: 16,
-                  },
-                  lineHeight: 1.6,
-                  letterSpacing: "-0.025em",
-                  color: "rgba(255,255,255,0.68)",
-                  textAlign: {
-                    xs: "center",
-                    md: "right",
-                  },
-                  maxWidth: {
-                    xs: 330,
-                    md: "none",
-                  },
-                  width: {
-                    xs: "100%",
-                    md: "auto",
-                  },
-                  overflowWrap: "anywhere",
+                  textAlign: { xs: "center", md: "right" },
                 }}
               >
-                © {new Date().getFullYear()} - All rights reserved,
-                Developed by{" "}
-                <Box
-                  component="span"
+                <Stack direction="row" spacing={2.5} alignItems="center">
+                  <Link
+                    href="/terms"
+                    underline="none"
+                    sx={{
+                      fontSize: { xs: 12, sm: 14 },
+                      color: "rgba(255,255,255,0.68)",
+                      letterSpacing: "-0.02em",
+                      transition: "color 0.2s ease",
+                      "&:hover": { color: "#fff" },
+                    }}
+                  >
+                    Terms & Conditions
+                  </Link>
+                  <Box
+                    component="span"
+                    sx={{ color: "rgba(255,255,255,0.25)", fontSize: 13 }}
+                  >
+                    •
+                  </Box>
+                  <Link
+                    href="/privacy"
+                    underline="none"
+                    sx={{
+                      fontSize: { xs: 12, sm: 14 },
+                      color: "rgba(255,255,255,0.68)",
+                      letterSpacing: "-0.02em",
+                      transition: "color 0.2s ease",
+                      "&:hover": { color: "#fff" },
+                    }}
+                  >
+                    Privacy Policy
+                  </Link>
+                </Stack>
+
+                <Typography
                   sx={{
-                    color: "#fff",
-                    fontWeight: 500,
+                    fontSize: {
+                      xs: 12,
+                      sm: 14,
+                      md: 15,
+                    },
+                    lineHeight: 1.6,
+                    letterSpacing: "-0.025em",
+                    color: "rgba(255,255,255,0.68)",
                   }}
                 >
-                  ProxBytes
-                </Box>
-              </Typography>
+                  © {new Date().getFullYear()} - All rights reserved, Developed by{" "}
+                  <Box
+                    component="span"
+                    sx={{
+                      color: "#fff",
+                      fontWeight: 500,
+                    }}
+                  >
+                    ProxBytes
+                  </Box>
+                </Typography>
+              </Stack>
             </Stack>
           </Box>
         </Fade>
