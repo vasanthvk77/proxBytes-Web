@@ -31,9 +31,9 @@ const COLUMNS = [
     links: [
       { label: "Home", href: "#home" },
       { label: "About Us", href: "#about" },
-      // { label: "How It Works", href: "#how-it-works" },
-      // { label: "Challenges", href: "#challenges" },
-      // { label: "Bounties", href: "#rewards" },
+      { label: "How It Works", href: "#how-it-works" },
+      { label: "Challenges", href: "#challenges" },
+      { label: "Bounties", href: "#rewards" },
       { label: "Blogs", href: "#blogs" },
     ],
   },
@@ -204,6 +204,7 @@ export default function Footer({ blogPage = false }) {
   return (
     <Box
       component="footer"
+      id="footer"
       ref={footerRef}
       sx={{
         bgcolor: "#050505",

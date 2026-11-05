@@ -9,33 +9,33 @@ import Reveal from "../components/Reveal";
 
 const testimonials = [
   {
-    name: "Alex Carter",
+    name: "Rahul Prasanth",
     role: "Student Developer",
-    initials: "AC",
+    initials: "RP",
     quote:
       "ProxBytes gave me a chance to demonstrate my coding skills through practical challenges. It helped me focus on building solutions instead of just collecting certificates.",
     rating: 4.9,
   },
   {
-    name: "Michael Thomas",
+    name: "Harish Raj",
     role: "Contest Participant",
-    initials: "MT",
+    initials: "HR",
     quote:
       "The contest experience pushed me to think beyond tutorials. Building solutions, submitting my work, and getting evaluated made learning feel much more practical.",
     rating: 5.0,
   },
   {
-    name: "Paul Jackson",
+    name: "Janarthanan",
     role: "Student Developer",
-    initials: "PJ",
+    initials: "J",
     quote:
       "I like the opportunity to solve real problems and showcase my work through GitHub. It gives me a practical way to demonstrate what I can actually build.",
     rating: 4.8,
   },
   {
-    name: "Olivia Bennett",
+    name: "Prem Kumar",
     role: "Contest Participant",
-    initials: "OB",
+    initials: "PK",
     quote:
       "ProxBytes connects learning with competition and recognition. It makes working on technical skills more purposeful and gives students something tangible to work toward.",
     rating: 5.0,
@@ -343,12 +343,12 @@ export default function Testimonials() {
           >
             <StatCard
               variant="blue"
-              label="Platform"
-              caption="Illustrative platform growth metric"
+              label="Capability"
+              caption="Practical evaluation & defense success rate"
               isInView={isInView}
               delay={0.15}
             >
-              <RollingNumber value={79} suffix="%" />
+              <RollingNumber value={85} suffix="%" />
             </StatCard>
 
             <Box
@@ -362,20 +362,20 @@ export default function Testimonials() {
             >
               <StatCard
                 label="Challenges"
-                caption="Sample challenge count"
+                caption="Real-world use cases"
                 isInView={isInView}
                 delay={0.3}
               >
-                <RollingNumber value={8} suffix="+" />
+                <RollingNumber value={50} suffix="+" />
               </StatCard>
 
               <StatCard
-                label="Rating"
-                caption="Sample rating"
+                label="Bounties"
+                caption="Earned by students"
                 isInView={isInView}
                 delay={0.45}
               >
-                <RollingNumber value={5} decimals={2} />
+                <RollingNumber value={10} suffix="L+" />
               </StatCard>
             </Box>
           </Box>

@@ -1033,7 +1033,10 @@ export default function Hero({
           
 
            <Button
-        href="#how-it-works"
+        component="a"
+        href="https://app.proxbytes.com"
+        target="_blank"
+        rel="noopener noreferrer"
         sx={{
           position: "relative",
 
@@ -1245,17 +1248,17 @@ export default function Hero({
 
 
             {/* =================================================
-                EXPLORE CHALLENGES
+                PARTNER WITH US
             ================================================== */}
 
             <Button
-            onClick={() =>
-              document
-                .getElementById("challenges")
-                ?.scrollIntoView({
-                  behavior: "smooth",
-                })
-            }
+            component="a"
+            href="#footer"
+            onClick={(e) => {
+              e.preventDefault();
+              const footer = document.getElementById("footer") || document.querySelector("footer");
+              footer?.scrollIntoView({ behavior: "smooth" });
+            }}
             sx={{
               position: "relative",
 

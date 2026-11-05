@@ -112,7 +112,7 @@ export default function Growth() {
                     color: "#080808",
                   }}
                 >
-                  79%
+                  92%
                 </Typography>
                 <Typography
                   sx={{
@@ -266,7 +266,7 @@ export default function Growth() {
                       }}
                     >
                       <Typography
-                        sx={{ fontSize: 14, lineHeight: 1.2, fontWeight: 500,textAlign:"start" }}
+                        sx={{ fontSize: 14, lineHeight: 1.2, fontWeight: 500, textAlign: "start" }}
                       >
                         {item.value}
                       </Typography>
@@ -282,7 +282,7 @@ export default function Growth() {
                     >
                       <Typography
                         sx={{
-                          fontSize: { xs: 14, md: 17   },
+                          fontSize: { xs: 14, md: 17 },
                           fontWeight: 500,
                           letterSpacing: "-.035em",
                         }}
